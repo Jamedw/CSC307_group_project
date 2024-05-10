@@ -8,6 +8,8 @@ import {
     Link,
 } from "react-router-dom";
 import Home from "./pages/Home";
+import Log_in from "./pages/Log_in.jsx"
+import Sign_up from "./pages/Sign_up.jsx"
 import Layout from "./pages/Layout";
 
 import "./App.css";
@@ -27,13 +29,13 @@ function App() {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/Layout">
-                    Layout
+                  <Link to="/Log_in">
+                    Log in
                   </Link>
                 </li>
                 <li>
-                  <Link to="/Layout">
-                    Layout
+                  <Link to="/Sign_up">
+                    Sign up
                   </Link>
                 </li>
 
@@ -44,8 +46,12 @@ function App() {
                   element={<Home />}
                 ></Route>
                 <Route
-                  path="/Layout"
-                  element={<Layout />}
+                  path="/Log_in"
+                  element={<Log_in />}
+                ></Route>
+                <Route
+                  path="/Sign_up"
+                  element={<Sign_up />}
                 ></Route>
               </Routes>
             </div>
