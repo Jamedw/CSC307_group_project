@@ -1,49 +1,25 @@
-
-
-
-function VideoList({ videos, emptyHeading }) {
-    const count = videos.length;
-    let heading = emptyHeading;
-    if (count > 0) {
-    const noun = count > 1 ? 'Videos' : 'Video';
-    heading = count + ' ' + noun;
-    }
-    return (
-    <section>
-        <h2>{heading}</h2>
-        {videos.map(video =>
-        <Video key={video.id} video={video} />
-        )}
-    </section>
-    );
-}
-
-function Video({ video }) {
-    return (
-      <div>
-
-        <a href={video.url}>
-          <h3>{video.title}</h3>
-          <p>{video.description}</p>
-        </a>
-
-      </div>
-    );
-  }
-function Login()
-{
-    return(
-        <button>
-            Log in
-        </button>
-    );
-}
+import Sidebar from "./Sidebar";
+import Poly_logo from "./componets/Poly_logo";
+import Log_in_button from "./componets/Log_in_button";
+import Search_bar from "./componets/Search_bar"
+import "./Home.css"
 
 function Home() {
     return (
         <div>
-            <h1>Home Page</h1>
-            <Login />
+            <div className="header">
+                This is a header
+            </div>
+            
+            <div className="topnav" >
+                
+                <Poly_logo  />
+                <Search_bar />
+                <Log_in_button />
+                
+            </div>
+
+            <Sidebar />
         </div>
     );
   };

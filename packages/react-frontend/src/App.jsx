@@ -20,25 +20,6 @@ function App() {
           <><h1>Reddit but better?</h1><Router>
             <div className="App">
               <ul className="App-header">
-                <li>
-                  <Link to="/">Home</Link>
-                </li>
-                <li>
-                  <Link to="/Layout">
-                    Layout
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/Log_in">
-                    Log in
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/Sign_up">
-                    Sign up
-                  </Link>
-                </li>
-
               </ul>
               <Routes>
                 <Route
