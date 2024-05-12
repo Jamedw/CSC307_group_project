@@ -6,14 +6,15 @@
 
  /* The navbar container */
  .topnav {
-    overflow: hidden;
+    overflow: auto;
     background-color: #ffd700;
   }
   
   /* Navbar links */
   .topnav a {
     
-    display: inline-block;
+    display: inline-flex;
+    white-space: nowrap;
     color: #f71616;
     padding: 10px 10px;
     
