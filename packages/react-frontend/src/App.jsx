@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // Filename - App.js
 
 import React, { Component } from "react";
@@ -9,8 +8,8 @@ import {
     Link,
 } from "react-router-dom";
 import Home from "./pages/Home";
-import Log_in from "./pages/Log_in.jsx"
-import Sign_up from "./pages/Sign_up.jsx"
+import Login from "./Login.jsx"
+import Signup from "./Signup.jsx"
 
 import "./App.css";
 
@@ -28,11 +27,11 @@ function App() {
                 ></Route>
                 <Route
                   path="/Log_in"
-                  element={<Log_in />}
+                  element={<Login />}
                 ></Route>
                 <Route
                   path="/Sign_up"
-                  element={<Sign_up />}
+                  element={<Signup />}
                 ></Route>
               </Routes>
             </div>
@@ -40,19 +39,6 @@ function App() {
         );
     
 }
-=======
-import React from 'react';
-import Login from './Login.jsx';
-import './App.css';
-
-const App = () => {
-  return (
-    <div className="app-container">
-      <Login />
-    </div>
-  );
-};
->>>>>>> 4c2f4de (added login page)
 
 export default App;
 
