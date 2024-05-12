@@ -5,15 +5,42 @@
   text-align: center;
 }
 
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  background-color: #42654D; /* Set background color to 42654D */
+}
+
+.header {
+  margin-bottom: 20px; /* Add margin to separate header from login container */
+}
+
+.header-image {
+  width: 200px; /* Adjust width as needed */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.login-container {
+  background-color: #B3B3B3; /* Set background color to B3B3B3 */
+  padding: 20px 15px; /* Adjust padding to make the grey box smaller in height */
+  height: calc(100vh - 40px); /* Set height to slightly less than 100vh to fit on screen */
+  overflow: hidden; /* Prevent scrolling */
+  border-radius: 10px; /* Add rounded corners */
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
