@@ -1,104 +1,89 @@
-// backend.js
 import express from "express";
+import mongoose from "mongoose";
+import cors from "cors";
+import User from "./users.js";
+import { verifyLogin, signup } from "./verify.js"; // Import the verification functions
 
 const app = express();
 const port = 8000;
 
-const users = {
-  users_list: [
-    {
-      id: "xyz789",
-      name: "Charlie",
-      job: "Janitor"
-    },
-    {
-      id: "abc123",
-      name: "Mac",
-      job: "Bouncer"
-    },
-    {
-      id: "ppp222",
-      name: "Mac",
-      job: "Professor"
-    },
-    {
-      id: "yat999",
-      name: "Dee",
-      job: "Aspiring actress"
-    },
-    {
-      id: "zap555",
-      name: "Dennis",
-      job: "Bartender"
-    }
-  ]
-};
-
+app.use(cors());
 app.use(express.json());
 
-const findUserById = (id) =>
-  users["users_list"].find((user) => user["id"] === id);
-
-const findUserByName = (name) => {
-  return users["users_list"].filter(
-    (user) => user["name"] === name
-  );
-};
-
-const findUsersByNameAndJob = (name, job) => {
-  return users["users_list"].filter(
-    (user) => user["name"] === name && user["job"] === job
-  );
-};
-
-app.get("/users/:id", (req, res) => {
-  const id = req.params["id"];
-  let result = findUserById(id);
-  if (result === undefined) {
-    res.status(404).send("Resource not found.");
-  } else {
-    res.send(result);
-  }
-});
-
-app.post("/users", (req, res) => {
-  const userToAdd = req.body;
-  users["users_list"].push(userToAdd);
-  res.send();
-});
+// Connect to MongoDB
+mongoose.connect("mongodb://localhost:27017/users_db", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log("MongoDB connected"))
+.catch((err) => console.log(err));
 
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+    res.send("Welcome to the backend server!");
 });
 
-app.get("/users", (req, res) => {
-  const name = req.query.name;
-  const job = req.query.job;
-  if (name && job) {
-    let result = findUsersByNameAndJob(name, job);
-    result = { users_list: result };
-    res.send(result);
-  } else if (name) {
-    let result = findUserByName(name);
-    result = { users_list: result };
-    res.send(result);
-  } else {
+// Endpoint to verify login
+app.post("/login", async (req, res) => {
+  const { usernameOrEmail, password } = req.body;
+  const result = await verifyLogin(usernameOrEmail, password);
+  res.send(result);
+});
+
+// Endpoint to handle signup
+app.post("/signup", async (req, res) => {
+  const { name, email, password } = req.body;
+  const result = await signup(name, email, password);
+  res.send(result);
+});
+
+// Endpoint to retrieve all users
+app.get("/users", async (req, res) => {
+  try {
+    const users = await User.find();
     res.send(users);
+  } catch (error) {
+    res.status(500).send(error.message);
   }
 });
 
-// DELETE operation to remove a user by id
-app.delete("/users/:id", (req, res) => {
-  const id = req.params.id;
-  const index = users.users_list.findIndex((user) => user.id === id);
-  if (index !== -1) {
-    users.users_list.splice(index, 1);
-    res.status(200).send("User deleted successfully");
-  } else {
-    res.status(404).send("User not found");
+// Endpoint to retrieve a user by their ID
+app.get("/users/:id", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+    res.send(user);
+  } catch (error) {
+    res.status(500).send(error.message);
   }
 });
 
+// Endpoint to add a new user
+app.post("/users", async (req, res) => {
+  try {
+    const newUser = new User(req.body);
+    await newUser.save();
+    res.status(201).send(newUser);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+});
+
+// Endpoint to delete a user by their ID
+app.delete("/users/:id", async (req, res) => {
+  try {
+    const deletedUser = await User.findByIdAndDelete(req.params.id);
+    if (!deletedUser) {
+      return res.status(404).send("User not found");
+    }
+    res.send(deletedUser);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+// Start the server
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
