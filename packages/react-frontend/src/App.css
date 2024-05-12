@@ -680,9 +680,12 @@ dd {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 .text-justify {
   text-align: justify;
 =======
+=======
+>>>>>>> 4c2f4de (added login page)
 .app-container {
   display: flex;
   flex-direction: column;
