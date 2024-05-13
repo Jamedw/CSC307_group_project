@@ -28,6 +28,7 @@ export default function search()
         onFocus={(e) => resetform(e)}
         onKeyPress={(e) => handleKeyPress(e)}       
         size={80}
+        style={{borderRadius:15,}}
         />
     );
 }

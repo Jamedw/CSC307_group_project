@@ -11,7 +11,7 @@ export default function Poly_logo()
 {
     return (
         <a href="\">
-        <img src={logo} style={{height:50 , width:50,borderRadius:50,}} alt="horsey" />
+        <img src={logo} style={{height:50 ,borderRadius:50 ,width:50,marginBottom:-10}} alt="horsey" />
         </a>
     );
 }

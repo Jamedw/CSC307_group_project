@@ -1,73 +1,67 @@
-.header {
-    background-color: #F1F1F1;
-    text-align: center;
-    padding: 20px;
+
+.top-nav {
+  display: table;
+  width: 100%;
 }
 
- /* The navbar container */
- .topnav {
-    overflow: auto;
-    background-color: #ffd700;
-  }
-  
-  /* Navbar links */
-  .topnav a {
-    
-    display: inline-flex;
-    white-space: nowrap;
-    color: #f71616;
-    padding: 10px 10px;
-    
-    text-decoration:dotted;
-  }
-  
+.post{
+  border: 3px solid #FFD80D;
+  border-radius: 50px;
+  padding: 30px;
+}
 
+.top-nav > div {
+  display: table-cell;
+}
+/* The following CSS is for background colors only */
+.top-nav  > div:nth-child(1) {
+  background-color: #FFD80D;
+  vertical-align: middle;
+  text-align: center;
+}
+.top-nav  > div:nth-child(2) {
+  text-align: center;
+  vertical-align: middle;
+  background-color: #FFD80D;
+}
+.top-nav > div:nth-child(3) {
+  vertical-align: middle;
+  text-align: right;
+  background-color: #FFD80D;
+}
 
+.sidebar {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  width: 20%;
+  height:  80vh;
+}
 
-   /* Create three equal columns that float next to each other */
-.column {
-    float: left;
-    width: 33.33%;
-  }
-  
-  /* Clear floats after the columns */
-  .row:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-  
-  /* Responsive layout - makes the three columns stack on top of each other instead of next to each other on smaller screens (600px wide or less) */
-  @media screen and (max-width: 600px) {
-    .column {
-      width: 100%;
-    }
-  } 
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+}
 
-  .column {
-    float: left;
-  }
-  
-  /* Left and right column */
-  .column.side {
-    width: 25%;
-  }
-  
-  /* Middle column */
-  .column.middle {
-    width: 50%;
-  }
-  
-  /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
-  @media screen and (max-width: 600px) {
-    .column.side, .column.middle {
-      width: 100%;
-    }
-  }
+.main,.sidebar {
+  border: 3px solid black;
+  padding: 15px;
+  background-color: #42654D;
+}
 
+.main {
+  width: 80%;
+  height: 520vh;
+  overflow: hidden;
+}
 
-.footer {
-    background-color: #F1F1F1;
-    text-align: center;
-    padding: 10px;
-  } 
+body {
+  background-color: #42654D;
+  font-family: sans-serif;
+  padding: 10px;
+}
+
+.footer{
+  background-color: #f5d55f;
+  text-align: center;
+}
