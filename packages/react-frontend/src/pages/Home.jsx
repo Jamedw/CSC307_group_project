@@ -1,9 +1,7 @@
 import Sidebar from "./Sidebar";
+import logo from "./images/calpoly.png"
 import React, {useState} from "react";
-import Poly_logo from "./componets/Poly_logo";
-import Log_in_button from "./componets/Log_in_button";
-import Search_bar from "./componets/Search_bar";
-import Posts from "./componets/Posts"
+import Posts from "./Posts"
 import "./Home.css"
 
 function Home() {
@@ -14,25 +12,7 @@ function Home() {
     },
 {profile: "test",
 header: "test"},{profile: "test",
-header: "test"},{profile: "test",
-header: "test"},{profile: "test",
-header: "test"},{profile: "test",
-header: "test"},{profile: "test",
-header: "test"},{profile: "test",
-header: "test"},{profile: "test",
-header: "test"},{profile: "test",
-header: "test"},{profile: "test",
-header: "test"},{profile: "test",
-header: "test"},{profile: "test",
-header: "test"},{profile: "test",
-header: "test"},{profile: "test",
-header: "test"},{profile: "test",
-header: "test"},{profile: "test",
-header: "test"},{profile: "test",
-header: "test"},{profile: "test",
-header: "test"},{profile: "test",
-header: "test"},{profile: "test",
-header: "test"},{profile: "test",
+header: "test"},{header: "test"},{profile: "test",
 header: "test"},{profile: "test",
 header: "test"},{profile: "test",
 header: "test"},{profile: "test",
@@ -57,9 +37,22 @@ header: "test"}]);
            
             <div className="top-nav" >
                 
-                <div> <Poly_logo /></div>
-                <div> <Search_bar /></div>
-                <div> <Log_in_button /> </div> 
+            <div> 
+                <a href="\">
+                    <img src={logo} style={{height:50 ,borderRadius:50 ,width:50,marginBottom:-10}} alt="horsey" />
+                </a>    
+            </div>
+            <div>
+                <input name="Community_Post"            
+        type="text"        
+        placeholder="Search For Post or Community"
+        className="input-field"/>
+            </div>
+            <div> 
+                    <a href="/Login" >
+                        <button>Log in</button>
+                    </a>
+            </div> 
                
             </div>
 

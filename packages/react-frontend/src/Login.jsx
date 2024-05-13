@@ -35,7 +35,10 @@ const Login = () => {
               className="input-field"
             />
           </div>
-          <button type="button" onClick={handleLogin} className="signup-button">Log In</button> {/* Maintain gold color */}
+            <a href="/Log_in" >
+            <button type="button" onClick={handleLogin} className="signup-button">Log In</button> {/* Maintain gold color */}
+          </a>
+          
         </form>
       </div>
       <Link to="/signup" className="signup-button">Sign Up</Link> {/* Link to the signup page */}

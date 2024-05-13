@@ -10,9 +10,6 @@ function TableBody(props)
       return (
  
         <div className="post">
-
-
-        
           <h1>
           {post.profile}
           </h1>
