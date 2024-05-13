@@ -1,55 +1,59 @@
 
+.home{
+  width: 100%;
+}
+
 .top-nav {
   display: table;
   width: 100%;
 }
 
-.post{
+.home .post{
   border: 3px solid #FFD80D;
   border-radius: 50px;
   padding: 30px;
 }
 
-.top-nav > div {
+.home .top-nav > div {
   display: table-cell;
 }
 /* The following CSS is for background colors only */
-.top-nav  > div:nth-child(1) {
+.home .top-nav  > div:nth-child(1) {
   background-color: #FFD80D;
   vertical-align: middle;
   text-align: center;
 }
-.top-nav  > div:nth-child(2) {
+.home .top-nav  > div:nth-child(2) {
   text-align: center;
   vertical-align: middle;
   background-color: #FFD80D;
 }
-.top-nav > div:nth-child(3) {
+.home .top-nav > div:nth-child(3) {
   vertical-align: middle;
   text-align: right;
   background-color: #FFD80D;
 }
 
-.sidebar {
+.home  .sidebar {
   position: -webkit-sticky;
   position: sticky;
   top: 0;
   width: 20%;
-  height:  80vh;
+  height:  90vh;
 }
 
-.wrapper {
+.home .wrapper {
   display: flex;
   justify-content: space-between;
 }
 
-.main,.sidebar {
+ .home, .main,.sidebar {
   border: 3px solid black;
   padding: 15px;
   background-color: #42654D;
 }
 
-.main {
+ .home .main {
   width: 80%;
   height: 520vh;
   overflow: hidden;

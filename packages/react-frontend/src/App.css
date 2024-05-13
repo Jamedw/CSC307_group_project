@@ -1,9 +1,7 @@
-<<<<<<< HEAD
-=======
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0rem;
   text-align: center;
 }
 
@@ -12,6 +10,7 @@
   flex-direction: column;
   align-items: center;
   height: 100vh;
+  width: 58rem;
   background-color: #42654D; /* Set background color to 42654D */
 }
 
@@ -69,4 +68,3 @@
 .read-the-docs {
   color: #888;
 }
->>>>>>> eb95b05 (merged homepage with login and signup)

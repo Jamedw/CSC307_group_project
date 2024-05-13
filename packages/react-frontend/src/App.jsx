@@ -16,29 +16,24 @@ import "./App.css";
 function App() {
    
         return (
-          <><h1>Reddit but better?</h1><Router>
-            <div className="App">
-              <ul className="App-header">
-              </ul>
+          <Router>
+            <div className="app-container">
               <Routes>
               <Route
                   path="/"
                   element={<Home />}
                 ></Route>
                 <Route
-
-
                   path="/Login"
                   element={<Login />}
                 ></Route>
                 <Route
                   path="/Signup"
-
                   element={<Signup />}
                 ></Route>
               </Routes>
             </div>
-          </Router></>
+          </Router>
         );
     
 }

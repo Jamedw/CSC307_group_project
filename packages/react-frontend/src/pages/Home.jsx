@@ -33,7 +33,7 @@ header: "test"}]);
     }
 
     return (
-        <div>
+        <div className="home">
            
             <div className="top-nav" >
                 
