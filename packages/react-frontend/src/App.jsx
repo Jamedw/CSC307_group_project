@@ -12,16 +12,20 @@ import Home from "./pages/Home.jsx";
 import Login from "./Login.jsx"
 import Signup from "./Signup.jsx"
 import "./App.css";
+import { div } from "prelude-ls";
+
+
 
 function App() {
    
         return (
-          <Router>
-            <div className="app-container">
+
+            
+                        <Router>
               <Routes>
               <Route
                   path="/"
-                  element={<Home />}
+                  element={<Home  />}
                 ></Route>
                 <Route
                   path="/Login"
@@ -32,8 +36,9 @@ function App() {
                   element={<Signup />}
                 ></Route>
               </Routes>
-            </div>
           </Router>
+ 
+   
         );
     
 }

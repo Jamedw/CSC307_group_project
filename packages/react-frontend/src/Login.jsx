@@ -13,7 +13,9 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
+
+      <div className='login'>
+        <div className="login-container" >
       <img src={calpolyLogo} alt="Cal Poly Logo" className="logo-image" /> {/* Image replacement for login */}
       <div className="form-container"> {/* New container for inputs and buttons */}
         <form>
@@ -38,11 +40,12 @@ const Login = () => {
             <a href="/Log_in" >
             <button type="button" onClick={handleLogin} className="signup-button">Log In</button> {/* Maintain gold color */}
           </a>
-          
         </form>
       </div>
       <Link to="/signup" className="signup-button">Sign Up</Link> {/* Link to the signup page */}
-    </div>
+      </div>
+      </div>
+
   );
 };
 

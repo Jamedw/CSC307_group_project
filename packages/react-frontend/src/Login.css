@@ -1,16 +1,29 @@
-body {
-  margin: 0; /* Remove default margin */
-  padding: 0; /* Remove default padding */
-  background-color: #42654D; /* Set background color to 42654D */
+.login{
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: auto;
+  background-color: #42654D;
+  height: auto;
+  vertical-align: middle;
+  text-align: center;
+  justify-content: center;
+  display: grid;
 }
 
+
 .login-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 80vh; /* Adjust the height as needed */
-  max-height: 80vh; /* Ensure the container doesn't exceed 80vh */
+  margin-top: 50px;
+  width: 300px;
+  height: 300px;
+  max-height: 500px;
+  vertical-align: middle;
+  text-align: center;
+
+
+
 }
 
 .input-container {
@@ -54,13 +67,6 @@ button {
   height: auto; /* Set height to auto to fit content */
   max-height: 80vh; /* Set maximum height to 80vh */
   overflow-y: auto; /* Add vertical scrollbar if content exceeds 80vh */
-}
-
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
 }
 
 .app-container {

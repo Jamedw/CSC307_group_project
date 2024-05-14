@@ -1,9 +1,10 @@
-
 .home{
+  background-color: #42654D;
   width: 100%;
+  height: 100%;
 }
 
-.top-nav {
+.home  .top-nav {
   display: table;
   width: 100%;
 }
@@ -21,7 +22,7 @@
 .home .top-nav  > div:nth-child(1) {
   background-color: #FFD80D;
   vertical-align: middle;
-  text-align: center;
+  text-align: left;
 }
 .home .top-nav  > div:nth-child(2) {
   text-align: center;
@@ -34,12 +35,12 @@
   background-color: #FFD80D;
 }
 
-.home  .sidebar {
+  .home .sidebar {
   position: -webkit-sticky;
   position: sticky;
   top: 0;
   width: 20%;
-  height:  90vh;
+  height:  100vh;
 }
 
 .home .wrapper {
@@ -47,7 +48,7 @@
   justify-content: space-between;
 }
 
- .home, .main,.sidebar {
+  .main, .sidebar {
   border: 3px solid black;
   padding: 15px;
   background-color: #42654D;

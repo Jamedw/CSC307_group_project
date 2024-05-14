@@ -13,7 +13,8 @@ const Signup = () => {
   };
 
   return (
-    <div className="signup-container">
+    <div className='signup'>
+      <div className="signup-container">
       <div className="form-container">
         <img src={calpolyLogo} alt="Cal Poly Logo" className="logo-image" />
         <form>
@@ -47,6 +48,7 @@ const Signup = () => {
           <button type="button" onClick={handleSignup} className="signup-button">Sign Up</button>
         </form>
       </div>
+    </div>
     </div>
   );
 };

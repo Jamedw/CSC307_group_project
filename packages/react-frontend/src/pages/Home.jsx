@@ -39,7 +39,7 @@ header: "test"}]);
                 
             <div> 
                 <a href="\">
-                    <img src={logo} style={{height:50 ,borderRadius:50 ,width:50,marginBottom:-10}} alt="horsey" />
+                    <img src={logo} style={{height:50 ,borderRadius:50 ,width:50,margin: 10}} alt="horsey" />
                 </a>    
             </div>
             <div>
@@ -50,7 +50,7 @@ header: "test"}]);
             </div>
             <div> 
                     <a href="/Login" >
-                        <button>Log in</button>
+                        <button style={{margin:10, paddingRight:20,paddingLeft:20}}>Log in</button>
                     </a>
             </div> 
                
