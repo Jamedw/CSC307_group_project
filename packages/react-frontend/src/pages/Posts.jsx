@@ -1,6 +1,6 @@
-import { green } from "color-name";
-import React, {useState} from "react";
 
+import React, {useState} from "react";
+import "./Post.css"
 
 function TableBody(props)
 {
@@ -10,9 +10,20 @@ function TableBody(props)
       return (
  
         <div className="post">
-          <h1>
-          {post.profile}
-          </h1>
+
+          if ({post.img} !== undefined)
+
+          <div className="title">
+            
+            <div>
+              <button />
+            </div>
+            <div>
+              <button />
+            </div>
+          
+          </div>
+
           {post.header}
           
         </div>

@@ -43,9 +43,9 @@ header: "test"}]);
                 </a>    
             </div>
             <div>
-                <input name="Community_Post"            
+                <input style={{borderRadius:20}} name="Community_Post"            
         type="text"        
-        placeholder="Search For Post or Community"
+        placeholder="Search For Post or Community" size={50}
         className="input-field"/>
             </div>
             <div> 
