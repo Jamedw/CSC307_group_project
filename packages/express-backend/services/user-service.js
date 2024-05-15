@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
-import userModel from "../models/user.js";
+import userModel from "../models/users.js";
+import dotenv from "dotenv"
+
+dotenv.config()
 
 mongoose.set("debug", true);
 mongoose   
-	.connect("mongodb://localhost:27017/users", {
-		useNewUrlParser: true,     
-		useUnifiedTopology: true,   
-	})   
+	.connect(process.env.MONGODB_URI)   
 	.catch((error) => console.log(error));  
 
 async function getUsers(name, job) {
@@ -51,7 +51,6 @@ async function findUserByNameAndJob(name, job) {
 	return await userModel.find({ name: name, job: job });
 }
 
-export default User-service
 export {   
 	addUser,   
 	getUsers,   

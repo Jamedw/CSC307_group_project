@@ -1,8 +1,16 @@
 import express from "express";
-import mongoose from "mongoose";
 import cors from "cors";
-import User from "./users.js";
-import { verifyLogin, signup } from "./verify.js"; // Import the verification functions
+import { registerUser, authenticateUser, loginUser } from "./auth.js"; // Import the functions from auth.js
+import User from "./models/users.js";
+import {   
+	addUser,   
+	getUsers,   
+	findUserById,   
+	findUserByName,   
+	findUserByJob,
+  findUserByNameAndJob,
+  findUserByIdAndDelete,
+} from "./services/user-service.js"
 
 const app = express();
 const port = 8000;
@@ -10,31 +18,24 @@ const port = 8000;
 app.use(cors());
 app.use(express.json());
 
-// Connect to MongoDB
+/* // Connect to MongoDB
 mongoose.connect("mongodb://localhost:27017/users_db", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
 .then(() => console.log("MongoDB connected"))
-.catch((err) => console.log(err));
+.catch((err) => console.log(err)); */
 
 app.get("/", (req, res) => {
     res.send("Welcome to the backend server!");
 });
 
 // Endpoint to verify login
-app.post("/login", async (req, res) => {
-  const { usernameOrEmail, password } = req.body;
-  const result = await verifyLogin(usernameOrEmail, password);
-  res.send(result);
-});
+app.post("/login", registerUser);
 
 // Endpoint to handle signup
-app.post("/signup", async (req, res) => {
-  const { name, email, password } = req.body;
-  const result = await signup(name, email, password);
-  res.send(result);
-});
+app.post("/signup", registerUser);
+
 
 // Endpoint to retrieve all users
 app.get("/users", async (req, res) => {
@@ -60,14 +61,11 @@ app.get("/users/:id", async (req, res) => {
 });
 
 // Endpoint to add a new user
-app.post("/users", async (req, res) => {
-  try {
-    const newUser = new User(req.body);
-    await newUser.save();
-    res.status(201).send(newUser);
-  } catch (error) {
-    res.status(400).send(error.message);
-  }
+app.post("/users", authenticateUser, (req, res) => {
+  const userToAdd = req.body;
+  Users.addUser(userToAdd).then((result) =>
+    res.status(201).send(result)
+  );
 });
 
 // Endpoint to delete a user by their ID
