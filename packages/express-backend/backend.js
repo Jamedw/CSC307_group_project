@@ -1,8 +1,16 @@
 import express from "express";
-import mongoose from "mongoose";
 import cors from "cors";
-import User from "./users.js";
+import User from "./models/users.js";
 import { verifyLogin, signup } from "./verify.js"; // Import the verification functions
+import {   
+	addUser,   
+	getUsers,   
+	findUserById,   
+	findUserByName,   
+	findUserByJob,
+  findUserByNameAndJob,
+  findUserByIdAndDelete,
+} from "./services/user-service.js"
 
 const app = express();
 const port = 8000;
@@ -10,13 +18,13 @@ const port = 8000;
 app.use(cors());
 app.use(express.json());
 
-// Connect to MongoDB
+/* // Connect to MongoDB
 mongoose.connect("mongodb://localhost:27017/users_db", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
 .then(() => console.log("MongoDB connected"))
-.catch((err) => console.log(err));
+.catch((err) => console.log(err)); */
 
 app.get("/", (req, res) => {
     res.send("Welcome to the backend server!");

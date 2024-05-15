@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import User from "./users.js"; // Import the User model
+import User from "./models/users.js"; // Import the User model
 
 // Function to generate a unique ID
 function generateUniqueId() {
