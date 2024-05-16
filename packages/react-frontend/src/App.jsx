@@ -14,7 +14,8 @@ import Login from "./Login.jsx"
 import Signup from "./Signup.jsx"
 import "./App.css";
 import { div } from "prelude-ls";
-
+// import "../../express-backend/auth";
+// import "../../express-backend/verify"
 
 
 function App() {
@@ -28,14 +29,14 @@ function App() {
                   path="/"
                   element={<Home  />}
                 ></Route>
-                <Route
+                {/* <Route
                   path="/Login"
-                  element={<Login />}
+                  element={<Login handleSubmit={loginUser} />}
                 ></Route>
                 <Route
                   path="/Signup"
-                  element={<Signup />}
-                ></Route>
+                  element={<Signup handleSubmit={signup}/>}
+                ></Route> */}
               </Routes>
           </Router>
  

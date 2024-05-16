@@ -3,14 +3,32 @@ import { Link } from 'react-router-dom'; // Import Link component
 import './Login.css'; // Import CSS for Login component styling
 import calpolyLogo from './assets/calpolylogo.png'; // Import the image
 
-const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+const Login = (props) => {
+  
+  const [creds, setCreds] = useState({
+    username: "",
+    pwd: ""
+  });
 
-  const handleLogin = () => {
-    // Handle login logic here, e.g., send credentials to server for authentication
-    console.log('Logging in with:', { username, password });
-  };
+
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+    switch (name) {
+      case "username":
+        setCreds({ ...creds, username: value });
+        break;
+      case "password":
+        setCreds({ ...creds, pwd: value });
+        break;
+    }
+  }
+
+
+  function submitForm() {
+    props.handleSubmit(creds);
+    setCreds({ username: "", pwd: "" });
+  }
 
   return (
 
@@ -22,8 +40,8 @@ const Login = () => {
           <div className="input-container"> {/* Container for username input */}
             <input
               type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={creds.username}
+              onChange={handleChange}
               placeholder="Username"
               className="input-field"
             />
@@ -31,14 +49,14 @@ const Login = () => {
           <div className="input-container"> {/* Container for password input */}
             <input
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={creds.pwd}
+              onChange={handleChange}
               placeholder="Password"
               className="input-field"
             />
           </div>
             <a href="/Log_in" >
-            <button type="button" onClick={handleLogin} className="signup-button">Log In</button> {/* Maintain gold color */}
+            <button type="button" onClick={submitForm} className="signup-button">Log In</button> {/* Maintain gold color */}
           </a>
         </form>
       </div>
