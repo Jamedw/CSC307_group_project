@@ -10,31 +10,6 @@
   padding: 30px;
 }
 
-.home  .top-nav {
-  display: table;
-  width: 100%;
-}
-
-.home .top-nav > div {
-  display: table-cell;
-}
-/* The following CSS is for background colors only */
-.home .top-nav  > div:nth-child(1) {
-  background-color: #FFD80D;
-  vertical-align: middle;
-  text-align: left;
-}
-.home .top-nav  > div:nth-child(2) {
-  text-align: center;
-  vertical-align: middle;
-  background-color: #FFD80D;
-}
-.home .top-nav > div:nth-child(3) {
-  vertical-align: middle;
-  text-align: right;
-  background-color: #FFD80D;
-}
-
   .home .sidebar {
   position: -webkit-sticky;
   position: sticky;
