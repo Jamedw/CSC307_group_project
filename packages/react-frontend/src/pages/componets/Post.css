@@ -8,7 +8,24 @@
   .post .title > div {
     display: table-cell;
   }
+
+  .img {
+    display: grid;
+  }
+
   /* The following CSS is for background colors only */
+  .img  > div:nth-child(1) {
+    background-color: #524d36;
+    vertical-align: middle;
+    object-fit:fill;
+  
+    text-align: center;
+  }
+  div > img {
+    display: block;
+    width: 100%;
+  }
+  
   .post .title  > div:nth-child(1) {
     background-color: #524d36;
     width: 20%;
