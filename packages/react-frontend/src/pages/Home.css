@@ -1,0 +1,42 @@
+.home{
+  background-color: #42654D;
+  width: 100%;
+  height: 100%;
+}
+
+.home .post{
+  border: 3px solid #FFD80D;
+  border-radius: 50px;
+  padding: 30px;
+}
+
+  .home .sidebar {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  width: 20%;
+  height:  100vh;
+}
+
+.home .wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+  .main, .sidebar {
+  border: 3px solid black;
+  padding: 15px;
+  background-color: #42654D;
+}
+
+ .home .main {
+  width: 80%;
+  height: 520vh;
+  overflow: hidden;
+}
+
+
+.footer{
+  background-color: #f5d55f;
+  text-align: center;
+}
