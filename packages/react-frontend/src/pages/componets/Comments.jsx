@@ -1,6 +1,6 @@
 
 import React, {useState} from "react";
-import "./Post.css"
+import "./Comments.css"
 
 function TableBody(props)
 {

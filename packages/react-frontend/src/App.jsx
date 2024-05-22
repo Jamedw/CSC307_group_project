@@ -17,6 +17,7 @@ import Login from "./Login.jsx"
 import Signup from "./Signup.jsx"
 import "./App.css";
 import { div } from "prelude-ls";
+import NotFound from "./pages/NotFound.jsx";
 
 
 
@@ -33,7 +34,7 @@ function App() {
           },
           {
           path: ":communityName/:postHeader",
-          element : <Home/>  
+          element : <Home />  
           }
         ]    
       },
@@ -47,7 +48,7 @@ function App() {
       },
       {
         path: "*",
-        element: <Home />
+        element: <NotFound />
       }])
 
     return (
