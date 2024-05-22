@@ -7,9 +7,14 @@ function TableBody(props)
   const rows = props.postData.map(
     (post, index) => 
     {
+      
       if (post.postimg !== undefined) {
         return (
+          
           <div className="post">
+            <a href={post.community}>
+              {post.community}
+            </a>
             <div className="img">
               <div>
                 <img src={post.postimg}  />
@@ -24,11 +29,10 @@ function TableBody(props)
               </div>
             
             </div>
-  
-            {post.header}
-            <div>
-            {post.community}
-            </div>
+            <a >
+              {post.header}
+            </a>
+
             
           </div>
           );
@@ -36,45 +40,60 @@ function TableBody(props)
       else
       {
         return (
- 
           <div className="post">
-  
+            <a href={post.community}>
+              {post.community}
+            </a>
             <div className="title">
-              
               <div>
                 <button />
               </div>
               <div>
                 <button />
               </div>
-            
             </div>
-  
             {post.header}
-            
           </div>
-  
-    
           );
       }
     }
   );
 
-  return(
-    <div>
-      {rows}
-    </div>
-  );
+   if (props.searchData.communityName && props.searchData.postHeader){
+    return(
+      <div>
+        <div className="post">
+        Welcome to the community!!!
+        </div>
+        {rows}
+      </div>
+    );
+    }
+  else if (props.searchData.communityName){
+    return(
+      <div>
+        <div className="post">
+        Welcome to the community!!!
+        </div>
+        {rows}
+      </div>
+    );
+  }
+  else {
+    return(
+      <div>
+        {rows}
+      </div>
+    );
+  }
+
 }
 
 function Posts(props)
 {
-
-
     return (
-      <TableBody postData={props.postData}/>
+      <TableBody searchData={props.searchData} postData={props.postData}/>
     );
-
 }
 
 export default Posts;
