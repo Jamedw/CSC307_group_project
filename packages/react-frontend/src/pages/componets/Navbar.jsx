@@ -6,7 +6,7 @@ export default function Navbar(props) {
     return (
         <div className="top-nav">
                 <div> 
-                    <a href="\">
+                    <a href="/">
                         <img src={logo} style={{height:50 ,borderRadius:50 ,width:50,margin: 10}} alt="horsey" />
                     </a>    
                 </div>
