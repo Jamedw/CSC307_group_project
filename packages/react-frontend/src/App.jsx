@@ -8,6 +8,9 @@ import {
     Routes,
     Route,
     Link,
+    createBrowserRouter,
+    RouterProvider,
+    useParams,
 } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import Login from "./Login.jsx"
@@ -18,29 +21,38 @@ import { div } from "prelude-ls";
 
 
 function App() {
-   
-        return (
+  const router = createBrowserRouter ([
+    {
+      path : "/",
+      element: <Home />,
+      children: 
+        [
+          {
+          path: ":communityName",
+          element: <Home />,
+          },
+          {
+          path: ":communityName/:postHeader",
+          element : <Home/>  
+          }
+        ]    
+      },
+      {
+        path: "/Signup",
+        element: <Signup />
+      },
+      {
+        path: "/Login",
+        element: <Login />
+      },
+      {
+        path: "*",
+        element: <Home />
+      }])
 
-            
-                        <Router>
-              <Routes>
-              <Route
-                  path="/"
-                  element={<Home  />}
-                ></Route>
-                <Route
-                  path="/Login"
-                  element={<Login />}
-                ></Route>
-                <Route
-                  path="/Signup"
-                  element={<Signup />}
-                ></Route>
-              </Routes>
-          </Router>
- 
-   
-        );
+    return (
+      <RouterProvider router={router} />
+    );
     
 }
 
