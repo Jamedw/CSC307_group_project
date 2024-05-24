@@ -1,6 +1,8 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
+//we neeed to be change this so its not stored in memory be rather in the database
+//note that the token is not store on the server but only returned to the client 
 const creds = [];
 
 export function registerUser(req, res) {
@@ -19,6 +21,7 @@ export function registerUser(req, res) {
             console.log("Token:", token);
             res.status(201).send({ token: token });
             creds.push({ username, hashedPassword });
+            //here we will need to 
           });
         });
     }
