@@ -1,32 +1,34 @@
 //post.js
 import mongoose from "mongoose";
 
+
+/*
+When a post is created the title of the post and the content
+of the post will be the only required fields
+*/
+
 const PostSchema = new mongoose.Schema({
   upVotes: {
     type: Number,
-    required: true,
+    required: false,
     default: 0
   },
   downVotes: {
     type: Number,
-    required: true,
+    required: false,
     default: 0
   },
-  password: {
+  postTitle: {
     type: String,
-    required: true,
-    trim: true,
+    required: true
+  },
+  postContent: {
+    type: String,
+    required: true
   },
   commentIds: {
     type: Array,
-    default: []
-  },
-  postIds: {
-    type: Array,
-    default: []
-  },
-  communitiyIds: {
-    type: Array,
+    required: false,
     default: []
   },
 });

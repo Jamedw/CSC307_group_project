@@ -1,6 +1,11 @@
 //community.js
 import mongoose from "mongoose";
 
+
+/*
+When a community is created the user who created the community will
+automatically be added to the member count.
+*/
 const CommunitySchema = new mongoose.Schema({
   name: {
     type: String,
@@ -9,11 +14,7 @@ const CommunitySchema = new mongoose.Schema({
   },
   memberCount: {
     type: Number,
-    required: true
-  },
-  memberIds: {
-    type: Array,
-    required: true
+    default: 1
   },
   postIds: {
     type: Array,
