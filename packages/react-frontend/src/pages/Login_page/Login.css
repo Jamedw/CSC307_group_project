@@ -1,18 +1,17 @@
-.login{
+.login {
   position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
   overflow: auto;
-  background-color: #42654D;
+  background-color: #42654d;
   height: auto;
   vertical-align: middle;
   text-align: center;
   justify-content: center;
   display: grid;
 }
-
 
 .login-container {
   margin-top: 50px;
@@ -31,10 +30,10 @@
 }
 
 /* Style for input fields */
-input[type="text"],
-input[type="password"],
+input[type='text'],
+input[type='password'],
 button {
-  background-color: #FFE8A3; /* Set background color to FFE8A3 */
+  background-color: #ffe8a3; /* Set background color to FFE8A3 */
   border: none; /* Remove border */
   padding: 10px; /* Add padding */
   margin: 5px 0; /* Add margin */
@@ -44,7 +43,7 @@ button {
 
 /* Additional styling for the sign-up button */
 .signup-button {
-  background-color: #FFE8A3; /* Set background color to FFE8A3 */
+  background-color: #ffe8a3; /* Set background color to FFE8A3 */
   border: none; /* Remove border */
   padding: 10px 20px; /* Add padding */
   margin-top: 10px; /* Adjust spacing as needed */
@@ -55,7 +54,7 @@ button {
 
 /* Style for the container around the input fields and buttons */
 .form-container {
-  background-color: #B3B3B3; /* Set background color to B3B3B3 */
+  background-color: #b3b3b3; /* Set background color to B3B3B3 */
   padding: 20px; /* Add padding */
   margin-top: 20px; /* Adjust spacing as needed */
   display: flex;
@@ -71,7 +70,7 @@ button {
   flex-direction: column;
   align-items: center;
   height: 100vh;
-  background-color: #42654D; /* Set background color to 42654D */
+  background-color: #42654d; /* Set background color to 42654D */
 }
 
 .header {
@@ -84,9 +83,11 @@ button {
 }
 
 .login-container {
-  background-color: #B3B3B3; /* Set background color to B3B3B3 */
+  background-color: #b3b3b3; /* Set background color to B3B3B3 */
   padding: 20px 15px; /* Adjust padding to make the grey box smaller in height */
-  height: calc(100vh - 40px); /* Set height to slightly less than 100vh to fit on screen */
+  height: calc(
+    100vh - 40px
+  ); /* Set height to slightly less than 100vh to fit on screen */
   overflow: hidden; /* Prevent scrolling */
   border-radius: 10px; /* Add rounded corners */
 }

@@ -12,42 +12,47 @@ const Signup = (props) => {
   };
 
   return (
-    <div className='signup'>
+    <div className="signup">
       <div className="signup-container">
-      <div className="form-container">
-        <img src={calpolyLogo} alt="Cal Poly Logo" className="logo-image" />
-        <form>
-          <div className="input-container">
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Username"
-              className="input-field"
-            />
-          </div>
-          <div className="input-container">
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password"
-              className="input-field"
-            />
-          </div>
-          <div className="input-container">
-            <input
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              placeholder="Confirm Password"
-              className="input-field"
-            />
-          </div>
-          <button type="button" onClick={handleSignup} className="signup-button">Sign Up</button>
-        </form>
+        <div className="form-container">
+          <img src={calpolyLogo} alt="Cal Poly Logo" className="logo-image" />
+          <form>
+            <div className="input-container">
+              <input
+                type="text"
+                value={username}
+                onChange={e => setUsername(e.target.value)}
+                placeholder="Username"
+                className="input-field"
+              />
+            </div>
+            <div className="input-container">
+              <input
+                type="password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                placeholder="Password"
+                className="input-field"
+              />
+            </div>
+            <div className="input-container">
+              <input
+                type="password"
+                value={confirmPassword}
+                onChange={e => setConfirmPassword(e.target.value)}
+                placeholder="Confirm Password"
+                className="input-field"
+              />
+            </div>
+            <button
+              type="button"
+              onClick={handleSignup}
+              className="signup-button">
+              Sign Up
+            </button>
+          </form>
+        </div>
       </div>
-    </div>
     </div>
   );
 };
