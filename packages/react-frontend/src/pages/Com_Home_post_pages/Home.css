@@ -10,6 +10,12 @@
   padding: 30px;
 }
 
+.home .comment{
+  border: 3px solid #FFD80D;
+  border-radius: 50px;
+  padding: 30px;
+}
+
   .home .sidebar {
   position: -webkit-sticky;
   position: sticky;
@@ -31,7 +37,6 @@
 
  .home .main {
   width: 55%;
-  height: 520vh;
   overflow: hidden;
 }
 
