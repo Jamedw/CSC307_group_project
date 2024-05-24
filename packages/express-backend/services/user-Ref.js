@@ -1,3 +1,8 @@
+/*this file is just here for reference 
+and should not be called anywhere */
+
+
+
 import mongoose from "mongoose";
 import userModel from "../models/users.js";
 import dotenv from "dotenv"
