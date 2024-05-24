@@ -7,7 +7,7 @@ When a post is created the title of the post and the content
 of the post will be the only required fields
 */
 
-const PostSchema = new mongoose.Schema({
+const PostsSchema = new mongoose.Schema({
   upVotes: {
     type: Number,
     required: false,
@@ -33,6 +33,6 @@ const PostSchema = new mongoose.Schema({
   },
 });
 
-const Post = mongoose.model("Post", PostSchema);
+const Posts = mongoose.model("Posts", PostSchema);
 
-export default Post;
+export default Posts;
