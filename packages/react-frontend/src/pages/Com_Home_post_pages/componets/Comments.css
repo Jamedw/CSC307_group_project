@@ -1,60 +1,56 @@
-
-
 .post .interact {
-    display: table;
-    width: 100%;
-  }
-  
-  .post .interact > div {
-    display: table-cell;
-  }
+  display: table;
+  width: 100%;
+}
 
-  .comment .interact {
-    display: flex;
-    width: 100%;
-  }
-  
-  .comment .interact > div {
-    display: table-cell;
-  }
+.post .interact > div {
+  display: table-cell;
+}
 
+.comment .interact {
+  display: flex;
+  width: 100%;
+}
 
-  .post .interact  > div:nth-child(1) {
-    background-color: #524d36;
-    width: 10%;
-    vertical-align: middle;
-    text-align: center;
-  }
-  .post .interact > div:nth-child(2) {
-    width: 10%;
-    text-align: center;
-    vertical-align: middle;
-    background-color: #918549;
-  }
-  .post .interact > div:nth-child(3) {
-    width: 10%;
-    text-align: center;
-    vertical-align: middle;
-    background-color: #918549;
-  }
+.comment .interact > div {
+  display: table-cell;
+}
 
-  
-  .comment .interact  > div:nth-child(1) {
-    background-color: #524d36;
-    width: 10%;
-    vertical-align: middle;
-    text-align: center;
-  }
-  .comment .interact > div:nth-child(2) {
-    width: 10%;
-    text-align: center;
-    vertical-align: middle;
-    background-color: #918549;
-  }
+.post .interact > div:nth-child(1) {
+  background-color: #524d36;
+  width: 10%;
+  vertical-align: middle;
+  text-align: center;
+}
+.post .interact > div:nth-child(2) {
+  width: 10%;
+  text-align: center;
+  vertical-align: middle;
+  background-color: #918549;
+}
+.post .interact > div:nth-child(3) {
+  width: 10%;
+  text-align: center;
+  vertical-align: middle;
+  background-color: #918549;
+}
 
-  .commment .interact > div:nth-child(3) {
-    width: 10%;
-    text-align: center;
-    vertical-align: middle;
-    background-color: #918549;
-  }
+.comment .interact > div:nth-child(1) {
+  background-color: #524d36;
+  width: 10%;
+  vertical-align: middle;
+  text-align: center;
+}
+.comment .interact > div:nth-child(2) {
+  width: 10%;
+  text-align: center;
+  vertical-align: middle;
+  background-color: #918549;
+}
+
+.commment .interact > div:nth-child(3) {
+  width: 10%;
+  text-align: center;
+  vertical-align: middle;
+  background-color: #918549;
+}
