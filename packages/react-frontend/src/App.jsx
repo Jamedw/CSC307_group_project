@@ -12,12 +12,12 @@ import {
     RouterProvider,
     useParams,
 } from "react-router-dom";
-import Home from "./pages/Home.jsx";
-import Login from "./Login.jsx"
-import Signup from "./Signup.jsx"
+import Home from "./pages/Com_Home_post_pages/Home.jsx"
+import Login from "./pages/Login_page/Login.jsx"
+import Signup from "./pages/Signup_page/Signup.jsx"
 import "./App.css";
 import { div } from "prelude-ls";
-import NotFound from "./pages/NotFound.jsx";
+import NotFound from "./pages/Com_Home_post_pages/NotFound.jsx";
 
 
 

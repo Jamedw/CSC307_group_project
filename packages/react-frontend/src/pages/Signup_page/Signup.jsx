@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Signup.css'; // Import CSS for Signup component styling
-import calpolyLogo from './assets/calpolylogo.png'; // Import the image
+import calpolyLogo from '../../assets/calpolylogo.png'; // Import the image
 
 const Signup = () => {
   const [username, setUsername] = useState('');

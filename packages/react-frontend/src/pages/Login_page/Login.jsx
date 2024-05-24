@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom'; // Import Link component
 import './Login.css'; // Import CSS for Login component styling
-import calpolyLogo from './assets/calpolylogo.png'; // Import the image
+import calpolyLogo from '../../assets/calpolylogo.png'; // Import the image
 
 const Login = () => {
   const [username, setUsername] = useState('');

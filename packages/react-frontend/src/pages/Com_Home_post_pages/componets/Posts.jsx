@@ -1,20 +1,22 @@
 
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./Post.css"
+import { NavLink, redirect, useNavigate } from "react-router-dom";
+
 
 function TableBody(props)
 {
+  const nav = useNavigate();
   const rows = props.postData.map(
     (post, index) => 
     {
       
       if (post.postimg !== undefined) {
         return (
-          
           <div className="post">
-            <a href={post.community}>
-              {post.community}
-            </a>
+            <NavLink to={post.community}>
+              C/ {post.community}
+            </NavLink>
             <div className="img">
               <div>
                 <img src={post.postimg}  />
@@ -27,13 +29,10 @@ function TableBody(props)
               <div>
                 {post.username}
               </div>
-            
-            </div>
-            <a >
+            <NavLink to={post.community +"/"+ post.header}>
               {post.header}
-            </a>
-
-            
+            </NavLink>
+            </div>
           </div>
           );
       } 
@@ -41,9 +40,9 @@ function TableBody(props)
       {
         return (
           <div className="post">
-            <a href={post.community}>
-              {post.community}
-            </a>
+            <NavLink to={"/"+post.community}>
+              C/ {post.community}
+            </NavLink>
             <div className="title">
               <div>
                 <button />
@@ -52,7 +51,10 @@ function TableBody(props)
                 <button />
               </div>
             </div>
-            {post.header}
+            <NavLink to={post.community +"/"+ post.header}>
+              {post.header}
+            </NavLink>
+            
           </div>
           );
       }
