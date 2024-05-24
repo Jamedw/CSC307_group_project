@@ -5,11 +5,6 @@ import mongoose from "mongoose";
 When a comment is created all fields will be required
 */
 const CommentSchema = new mongoose.Schema({
-    userId: {
-        type: String,
-        required: true,
-        trim: true
-    },
     userName: {
         type: String,
         required: true,
