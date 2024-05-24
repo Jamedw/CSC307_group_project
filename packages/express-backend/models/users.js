@@ -14,18 +14,15 @@ const UserSchema = new mongoose.Schema({
   },
   commentIds: {
     type: Array,
-    default: [],
-    required: true
+    default: []
   },
   postIds: {
     type: Array,
-    default: [],
-    required: true
+    default: []
   },
   communitiyIds: {
     type: Array,
-    default: [],
-    required: true
+    default: []
   },
 });
 

@@ -31,7 +31,7 @@ app.get("/", (req, res) => {
 });
 
 // Endpoint to verify login
-app.post("/Login", registerUser);
+app.post("/Login", loginUser);
 
 // Endpoint to handle signup
 app.post("/Signup", registerUser);
