@@ -1,11 +1,16 @@
-// users.js
+//post.js
 import mongoose from "mongoose";
 
-const UserSchema = new mongoose.Schema({
-  name: {
-    type: String,
+const PostSchema = new mongoose.Schema({
+  upVotes: {
+    type: Number,
     required: true,
-    trim: true,
+    default: 0
+  },
+  downVotes: {
+    type: Number,
+    required: true,
+    default: 0
   },
   password: {
     type: String,
@@ -29,6 +34,6 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
-const User = mongoose.model("User", UserSchema);
+const Post = mongoose.model("Post", PostSchema);
 
-export default User;
+export default Post;
