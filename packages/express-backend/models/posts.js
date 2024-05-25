@@ -1,6 +1,4 @@
-//post.js
 import mongoose from "mongoose";
-
 
 /*
 When a post is created the title of the post and the content
@@ -33,6 +31,6 @@ const PostsSchema = new mongoose.Schema({
   },
 });
 
-const Posts = mongoose.model("Posts", PostSchema);
+const Posts = mongoose.model("Posts", PostsSchema);
 
 export default Posts;
