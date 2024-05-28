@@ -1,39 +1,23 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Import Link component
+import { useNavigate } from 'react-router-dom'; // Import Link component
 import './Login.css'; // Import CSS for Login component styling
 import calpolyLogo from '../../assets/calpolylogo.png'; // Import the image
 
-const Login = (props) => {
-  
-  const [creds, setCreds] = useState({
-    username: "",
-    pwd: ""
-  });
+const Login = () => {
+  const navigate = useNavigate();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
-
-
-  function handleChange(event) {
-    const { name, value } = event.target;
-    switch (name) {
-      case "username":
-        setCreds({ ...creds, username: value });
-        break;
-      case "password":
-        setCreds({ ...creds, pwd: value });
-        break;
-    }
-  }
-
-
-  function submitForm() {
-    props.handleSubmit(creds);
-    setCreds({ username: "", pwd: "" });
-  }
+  const handleLogin = () => {
+    // Handle login logic here, e.g., send credentials to server for authentication
+    console.log('Logging in with:', { username, password });
+    navigate('/');
+  };
 
   return (
     <div className="login">
       <div className="login-container">
-        <img src={calpolyLogo} alt="Cal Poly Logo" className="logo-image" />{' '}
+        <img src={calpolyLogo} alt="Cal Poly Logo" className="logo" />{' '}
         {/* Image replacement for login */}
         <div className="form-container">
           {' '}
@@ -61,20 +45,22 @@ const Login = (props) => {
                 className="input-field"
               />
             </div>
-            <a href="/Log_in">
-              <button
-                type="button"
-                onClick={handleLogin}
-                className="signup-button">
-                Log In
-              </button>{' '}
-              {/* Maintain gold color */}
-            </a>
+
+            <button
+              role="button"
+              onClick={handleLogin}
+              className="signup-button">
+              Log In
+            </button>
+            {/* Maintain gold color */}
           </form>
         </div>
-        <Link to="/signup" className="signup-button">
-          Sign Up
-        </Link>{' '}
+        <button
+          role="button"
+          onClick={() => navigate('/signup')}
+          className="signup-button">
+          sign up
+        </button>
         {/* Link to the signup page */}
       </div>
     </div>

@@ -1,8 +1,10 @@
 import React from 'react';
 import './Navbar.css';
 import logo from '../../images/calpoly.png';
+import { useNavigate } from 'react-router-dom';
 
 export default function Navbar(props) {
+  const navigate = useNavigate();
   return (
     <div className="top-nav">
       <div>
@@ -25,11 +27,12 @@ export default function Navbar(props) {
         />
       </div>
       <div>
-        <a href="/Login">
-          <button style={{ margin: 10, paddingRight: 20, paddingLeft: 20 }}>
-            Log in
-          </button>
-        </a>
+        <button
+          onClick={() => navigate("/login")}
+          className="custom-button"
+          style={{ margin: 10, paddingRight: 20, paddingLeft: 20 }}>
+          Log in
+        </button>
       </div>
     </div>
   );

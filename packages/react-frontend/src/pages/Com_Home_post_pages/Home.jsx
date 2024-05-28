@@ -4,25 +4,50 @@ import Posts from './componets/Posts';
 import Comments from './componets/Comments';
 import Navbar from './componets/Navbar';
 import './Home.css';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import logo from '../images/stanchevmeme.png';
 
 function Home() {
   let params = useParams();
   console.log(params);
 
+  const [communities, setCommunities] = useState(
+   [ { communityName: 'myCommunity' , posts: ["firstpost","post?"]},
+    { communityName: 'myCommunity2' , posts: ["firstpost","test1"]},
+    { communityName: 'myCommunity3' , posts: ["firstpost","test1"]},
+    { communityName: 'myCommunity4' , posts: ["test","test1"]},
+    { communityName: 'myCommunity5' },
+    { communityName: 'myCommunity6' },
+    { communityName: 'myCommunity7' },
+    { communityName: 'test1' },
+    { communityName: 'test2' },
+    { communityName: 'test3' },
+    ])
+
+    function addUserCommunity(community){
+      setUserCommunites([community, ...userCommunities]);
+    }
+
+
+
   const [userCommunities, setUserCommunites] = useState([
     { communityName: 'myCommunity' },
-    { communityName: 'myCommunity' },
-    { communityName: 'myCommunity' },
-    { communityName: 'myCommunity' },
-    { communityName: 'myCommunity' },
-    { communityName: 'myCommunity' },
-    { communityName: 'myCommunity' },
+    { communityName: 'myCommunity2' },
+    { communityName: 'myCommunity3' },
+    { communityName: 'myCommunity4' },
+    { communityName: 'myCommunity5' },
+    { communityName: 'myCommunity6' },
+    { communityName: 'myCommunity7' },
   ]);
 
-  function updateComments(comment) {
-    setComments([...comments, comment]);
+  function submitComment(comment) {
+    console.log(comment);
+    setComments([comment, ...comments]);
+  }
+
+  function createCommunity(community) {
+    setUserCommunites([community, ...userCommunities]);
+    setCommunities(... communities , community) 
   }
 
   const [posts, setPosts] = useState([
@@ -63,41 +88,68 @@ function Home() {
     },
   ]);
 
-  function updateList(post) {
-    setPosts([...posts, post]);
-  }
-
-  const [post] = useState([
-    {
-      header: 'this is a post header',
-      text: 'test',
-      likes: 'test1',
-      dislikes: 'test',
-    },
-  ]);
+  const [post] = useState({
+    header: 'this is a post header',
+    text: 'test',
+    likes: 0,
+    dislikes: 0,
+  });
 
   const [comments, setComments] = useState([
     {
       text: 'test',
-      likes: 'test1',
-      dislikes: 'test',
+      likes: 0,
+      dislikes: 0,
     },
     {
       text: 'test',
-      likes: 'test1',
-      dislikes: 'test',
+      likes: 0,
+      dislikes: 0,
     },
     {
       text: 'test',
-      likes: 'test1',
-      dislikes: 'test',
+      likes: 0,
+      dislikes: 0,
     },
     {
       text: 'test',
-      likes: 'test1',
-      dislikes: 'test',
+      likes: 0,
+      dislikes: 0,
+    },
+    {
+      text: 'test',
+      likes: 0,
+      dislikes: 0,
+    },
+    {
+      text: 'test',
+      likes: 0,
+      dislikes: 0,
     },
   ]);
+
+  const [login, setLogin] = useState(true);
+
+  function search(array, searchValue) {
+
+    for (let i = 0; i < array.length; i++) {
+        const value = array[i].communityName
+        if (value === searchValue) {
+           return true
+        }
+     }
+    
+    return false;
+ }
+
+
+//  if(params.communityName){
+//   if(!search(communities, params.communityName)){
+//     useNavigate("*")
+//   }
+//  }
+
+
   //if the url contains /community/post
   //then the body of home has to load comments which is slightly
   //different then regulat post
@@ -109,10 +161,18 @@ function Home() {
         </div>
         <div class="wrapper">
           <div class="sidebar">
-            <Sidebar />
+            <Sidebar
+              login={login}
+              createCommunity={createCommunity}
+              userCommunities={userCommunities}
+            />
           </div>
           <div class="main">
-            <Comments postData={post} commentData={comments} />
+            <Comments
+              postData={post}
+              commentData={comments}
+              submitComment={submitComment}
+            />
           </div>
           <div></div>
         </div>
@@ -130,10 +190,19 @@ function Home() {
         </div>
         <div class="wrapper">
           <div class="sidebar">
-            <Sidebar />
+            <Sidebar
+              login={login}
+              createCommunity={createCommunity}
+              userCommunities={userCommunities}
+            />
           </div>
           <div class="main">
-            <Posts searchData={params} postData={posts} />
+            <Posts
+              userCommunities={userCommunities}
+              searchData={params}
+              postData={posts}
+              addUserCommunity={addUserCommunity}
+            />
           </div>
           <div></div>
         </div>

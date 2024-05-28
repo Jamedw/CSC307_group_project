@@ -1,24 +1,48 @@
 import Popup from 'reactjs-popup';
-import 'reactjs-popup/dist/index.css';
 import React, { useState } from 'react';
 import './Comments.css';
 
 function TableBody(props) {
-  const postData = props.postData;
+  const [comment, setComment] = useState({
+    text: '',
+    likes: 0,
+    dislikes: 0,
+  });
 
-  const rows = props.commentData.map((post, index) => {
+  function resetComment() {
+    setComment({
+      text: '',
+      likes: 0,
+      dislikes: 0,
+    });
+  }
+
+  function submitComment() {
+    console.log(comment);
+    props.submitComment(comment);
+    setComment({
+      text: '',
+      likes: 0,
+      dislikes: 0,
+    });
+  }
+
+  const postData = props.postData;
+  const commentData = props.commentData;
+
+  const handleCommentchange = event => {
+    setComment({
+      text: event.target.value,
+      likes: 0,
+      dislikes: 0,
+    });
+  };
+
+  const rows = props.commentData.map((commentData, index) => {
     return (
       <div className="comment">
-        <h1>{postData.header}</h1>
-        <div>{postData.text}</div>
-        <div className="interact">
-          <div>
-            <button>{postData.likes}</button>
-          </div>
-          <div>
-            <button>{postData.dislikes}</button>
-          </div>
-        </div>
+        {commentData.text}
+        <div className="interact"></div>
       </div>
     );
   });
@@ -27,23 +51,55 @@ function TableBody(props) {
     <div>
       <div className="post">
         <h1>{postData.header}</h1>
+        <div>{postData.text}</div>
         <div className="interact">
           <div>
-            <button>{postData.likes}</button>
+            <button role="button" className="custom-button" />
           </div>
           <div>
-            <button>{postData.dislikes}</button>
+            <button role="button" className="custom-button" />
           </div>
           <div>
             <Popup
-              trigger={<button> Click to open modal </button>}
+              onClose={resetComment}
+              contentStyle={{
+                opacity: 1,
+              }}
+              overlayStyle={{
+                backgroundColor: `rgba(0,0,0,.5)` ,
+              }}
+              trigger={
+                <button role="button" className="custom-button">
+                  +
+                </button>
+              }
               modal
               nested>
               {close => (
                 <div className="modal">
-                  <div className="content"></div>
-                  <div style={{ textJustify: 'center' }}>
-                    <button onClick={() => close()}>Comment</button>
+                  <div>Commment:</div>
+                  <div className="content">
+                    <div>
+                      <textarea
+                        name="commenttext"
+                        value={comment.text}
+                        onChange={handleCommentchange}
+                        id=""
+                        cols="40"
+                        rows="10"
+                        style={{ margin: 10 }}></textarea>
+                    </div>
+                  </div>
+                  <div>
+                    <button
+                      class="button-2"
+                      onClick={() => {
+                        submitComment();
+                        close();
+                      }}
+                      role="button">
+                      Post comment
+                    </button>
                   </div>
                 </div>
               )}
@@ -58,7 +114,11 @@ function TableBody(props) {
 
 function Posts(props) {
   return (
-    <TableBody postData={props.postData} commentData={props.commentData} />
+    <TableBody
+      postData={props.postData}
+      commentData={props.commentData}
+      submitComment={props.submitComment}
+    />
   );
 }
 
