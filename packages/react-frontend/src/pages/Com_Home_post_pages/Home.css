@@ -1,7 +1,6 @@
 .home {
   background-color: #42654d;
   width: 100%;
-  height: auto;
 }
 
 .home .community {
@@ -47,6 +46,8 @@
 
 .home .main {
   width: 55%;
+  min-height: 50rem;
+  height: auto;
   overflow: hidden;
 }
 
