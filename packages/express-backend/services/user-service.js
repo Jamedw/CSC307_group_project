@@ -2,11 +2,24 @@ import mongoose from "mongoose";
 import postsModel from "../models/users.js";
 import dotenv from "dotenv"
 
-dotenv.config()
+async function findUserById(id) {
+	return await userModel.findById(id); 
+}  
 
-mongoose.set("debug", true);
-mongoose   
-	.connect(process.env.MONGODB_URI)   
-	.catch((error) => console.log(error));  
+async function getUserComments(id){
+    user = findUserById(findUserById(id))
+    commentArray = user[0]
+}
+
+async function getUserPosts(id){
+
+}
+
+async function getUserCommunities(id){
+
+}
 
 
+export {
+    findUserById
+}
