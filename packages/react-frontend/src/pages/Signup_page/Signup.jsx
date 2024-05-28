@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, } from 'react';
+import {  Navigate, useNavigate } from 'react-router-dom'; // Import Link component
 import './Signup.css'; // Import CSS for Signup component styling
 import calpolyLogo from '../../assets/calpolylogo.png'; // Import the image
 
 const Signup = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -10,6 +12,7 @@ const Signup = () => {
   const handleSignup = () => {
     // Handle signup logic here, e.g., send user data to server for registration
     console.log('Signing up with:', { username, password, confirmPassword });
+    navigate("/")
   };
 
   return (
@@ -46,7 +49,7 @@ const Signup = () => {
               />
             </div>
             <button
-              type="button"
+              role="button"
               onClick={handleSignup}
               className="signup-button">
               Sign Up

@@ -4,6 +4,16 @@ import { NavLink, redirect, useNavigate } from 'react-router-dom';
 
 function TableBody(props) {
   const nav = useNavigate();
+
+  const [commuity, setCommunityName] = useState({
+    communityName: props.searchData.communityName,
+    post: [],
+  });
+
+  function addnewCommunity() {
+    props.addUserCommunity(commuity);
+  }
+
   const rows = props.postData.map((post, index) => {
     if (post.postimg !== undefined) {
       return (
@@ -34,10 +44,10 @@ function TableBody(props) {
           <NavLink to={'/' + post.community}>C/ {post.community}</NavLink>
           <div className="title">
             <div>
-              <button />
+              <button role="button" className="custom-button" />
             </div>
             <div>
-              <button />
+              <button role="button" className="custom-button" />
             </div>
           </div>
           <NavLink to={post.community + '/' + post.header}>
@@ -51,8 +61,19 @@ function TableBody(props) {
   if (props.searchData.communityName) {
     return (
       <div>
-        <div className="post">
-          Welcome to r/ {props.searchData.communityName}!!!
+        <div className="community">
+          <div className="header">
+            <div>Welcome to r/ {props.searchData.communityName}!!!</div>
+            <div>
+              <button
+                onClick={() => {
+                  addnewCommunity();
+                }}
+                className="custom-button">
+                follow
+              </button>
+            </div>
+          </div>
         </div>
         {rows}
       </div>
@@ -63,7 +84,14 @@ function TableBody(props) {
 }
 
 function Posts(props) {
-  return <TableBody searchData={props.searchData} postData={props.postData} />;
+  return (
+    <TableBody
+      userCommunities={props.userCommunities}
+      searchData={props.searchData}
+      postData={props.postData}
+      addUserCommunity={props.addUserCommunity}
+    />
+  );
 }
 
 export default Posts;
