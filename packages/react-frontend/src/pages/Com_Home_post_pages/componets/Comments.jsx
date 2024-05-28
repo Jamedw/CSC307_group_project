@@ -18,7 +18,6 @@ function TableBody(props) {
   }
 
   function submitComment() {
-    console.log(comment);
     props.submitComment(comment);
     setComment({
       text: '',

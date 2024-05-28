@@ -16,12 +16,6 @@ function Home() {
     { communityName: 'myCommunity2' , posts: ["firstpost","test1"]},
     { communityName: 'myCommunity3' , posts: ["firstpost","test1"]},
     { communityName: 'myCommunity4' , posts: ["test","test1"]},
-    { communityName: 'myCommunity5' },
-    { communityName: 'myCommunity6' },
-    { communityName: 'myCommunity7' },
-    { communityName: 'test1' },
-    { communityName: 'test2' },
-    { communityName: 'test3' },
     ])
 
     function addUserCommunity(community){
@@ -46,8 +40,8 @@ function Home() {
   }
 
   function createCommunity(community) {
-    setUserCommunites([community, ...userCommunities]);
-    setCommunities(... communities , community) 
+    setUserCommunites([{communityName : community.communityName}, ...userCommunities]);
+    setCommunities(community, ...communities) 
   }
 
   const [posts, setPosts] = useState([

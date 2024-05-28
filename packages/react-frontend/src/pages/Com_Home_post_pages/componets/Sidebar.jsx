@@ -5,6 +5,33 @@ import { Link, useNavigate, NavLink } from 'react-router-dom';
 import './Sidebar.css';
 
 function CreateCommunityTabs(props) {
+  const [commuity, setCommunityName] = useState({
+    communityName: '',
+    post: [],
+  });
+
+  const handlecommunityNamechange = event => {
+    setCommunityName({
+      communityName: event.target.value,
+      post: [],
+    });
+  };
+
+  function createNewCommunity() {
+    createCommunity(commuity);
+    setCommunityName({
+      communityName: '',
+      post: [],
+    });
+  }
+
+  function resetCommunity() {
+    setCommunityName({
+      communityName: '',
+      post: [],
+    });
+  }
+
   const userCommunities = props.userCommunities;
   const createCommunity = props.createCommunity;
   const navigate = useNavigate();
@@ -16,38 +43,13 @@ function CreateCommunityTabs(props) {
     </div>
   ));
 
-  return <div style={{ overflow: scroll }}>{rows}</div>;
-}
-
-function Sidebar(props) {
-  const [commuity, setCommunityName] = useState({
-    communityName: '',
-    post: [],
-  });
-  const createCommunity = props.createCommunity;
-
-  const handlecommunityNamechange = event => {
-    setCommunityName({
-      communityName: event.target.value,
-    });
-  };
-
-  function createNewCommunity() {
-    createCommunity(commuity);
-    resetCommunity();
-  }
-
-  function resetCommunity() {
-    setCommunityName({
-      communityName: '',
-    });
-  }
-
   return (
-    <div style={{ textAlign: 'center' }}>
-      <CreateCommunityTabs userCommunities={props.userCommunities} />
+    <div style={{ overflow: scroll }}>
+      {rows}
       <Popup
-        onClose={resetCommunity}
+        onClose={() => {
+          resetCommunity;
+        }}
         contentStyle={{
           opacity: 1,
         }}
@@ -78,10 +80,10 @@ function Sidebar(props) {
             </div>
             <div>
               <button
-                class="custom-button"
+                class="button-2"
                 onClick={() => {
-                  createNewCommunity();
                   close();
+                  createNewCommunity();
                 }}
                 role="button">
                 Create community
@@ -91,6 +93,15 @@ function Sidebar(props) {
         )}
       </Popup>
     </div>
+  );
+}
+
+function Sidebar(props) {
+  return (
+    <CreateCommunityTabs
+      createCommunity={props.createCommunity}
+      userCommunities={props.userCommunities}
+    />
   );
 }
 
