@@ -11,18 +11,23 @@ function Home() {
   let params = useParams();
   console.log(params);
 
-  const [communities, setCommunities] = useState(
-   [ { communityName: 'myCommunity' , posts: ["firstpost","post?"]},
-    { communityName: 'myCommunity2' , posts: ["firstpost","test1"]},
-    { communityName: 'myCommunity3' , posts: ["firstpost","test1"]},
-    { communityName: 'myCommunity4' , posts: ["test","test1"]},
-    ])
+  const [communities, setCommunities] = useState([
+    { communityName: 'myCommunity', posts: ['firstpost', 'post?'] },
+    { communityName: 'myCommunity2', posts: ['firstpost', 'test1'] },
+    { communityName: 'myCommunity3', posts: ['firstpost', 'test1'] },
+    { communityName: 'myCommunity4', posts: ['test', 'test1'] },
+  ]);
 
-    function addUserCommunity(community){
-      setUserCommunites([community, ...userCommunities]);
-    }
+  function addUserCommunity(community) {
+    setUserCommunites([community, ...userCommunities]);
+  }
 
-
+  function unfollowCommunity(index) {
+    const updated = userCommunities.filter(community => {
+      return index.communityName !== community.communityName;
+    });
+    setUserCommunites(updated);
+  }
 
   const [userCommunities, setUserCommunites] = useState([
     { communityName: 'myCommunity' },
@@ -40,8 +45,11 @@ function Home() {
   }
 
   function createCommunity(community) {
-    setUserCommunites([{communityName : community.communityName}, ...userCommunities]);
-    setCommunities(community, ...communities) 
+    setUserCommunites([
+      { communityName: community.communityName },
+      ...userCommunities,
+    ]);
+    setCommunities(community, ...communities);
   }
 
   const [posts, setPosts] = useState([
@@ -125,24 +133,21 @@ function Home() {
   const [login, setLogin] = useState(true);
 
   function search(array, searchValue) {
-
     for (let i = 0; i < array.length; i++) {
-        const value = array[i].communityName
-        if (value === searchValue) {
-           return true
-        }
-     }
-    
+      const value = array[i].communityName;
+      if (value === searchValue) {
+        return true;
+      }
+    }
+
     return false;
- }
+  }
 
-
-//  if(params.communityName){
-//   if(!search(communities, params.communityName)){
-//     useNavigate("*")
-//   }
-//  }
-
+  //  if(params.communityName){
+  //   if(!search(communities, params.communityName)){
+  //     useNavigate("*")
+  //   }
+  //  }
 
   //if the url contains /community/post
   //then the body of home has to load comments which is slightly
@@ -196,6 +201,7 @@ function Home() {
               searchData={params}
               postData={posts}
               addUserCommunity={addUserCommunity}
+              unfollowCommunity={unfollowCommunity}
             />
           </div>
           <div></div>
