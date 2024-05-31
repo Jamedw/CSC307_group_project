@@ -1,5 +1,6 @@
 .home {
   background-color: #42654d;
+  height: 100%;
   width: 100%;
 }
 
@@ -46,7 +47,7 @@
 
 .home .main {
   width: 55%;
-  min-height: 50rem;
+  min-height: 170rem;
   height: auto;
   overflow: hidden;
 }

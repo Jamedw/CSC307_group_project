@@ -5,36 +5,10 @@ import { Link, useNavigate, NavLink } from 'react-router-dom';
 import './Sidebar.css';
 
 function CreateCommunityTabs(props) {
-  const [commuity, setCommunityName] = useState({
-    communityName: '',
-    post: [],
-  });
+  const userCommunities = props.getUserCommunities();
 
-  const handlecommunityNamechange = event => {
-    setCommunityName({
-      communityName: event.target.value,
-      post: [],
-    });
-  };
-
-  function createNewCommunity() {
-    createCommunity(commuity);
-    setCommunityName({
-      communityName: '',
-      post: [],
-    });
-  }
-
-  function resetCommunity() {
-    setCommunityName({
-      communityName: '',
-      post: [],
-    });
-  }
-
-  const userCommunities = props.userCommunities;
-  const createCommunity = props.createCommunity;
   const navigate = useNavigate();
+
   const rows = userCommunities.map((community, index) => (
     <div
       className="communityTab"
@@ -43,12 +17,46 @@ function CreateCommunityTabs(props) {
     </div>
   ));
 
-  return (
-    <div style={{ overflow: scroll }}>
-      {rows}
+  function Addcommunitybutton() {
+    const [commuity, setCommunity] = useState({
+      id: Math.random(),
+      communityName: '',
+      membercount: 1,
+      posts: [],
+    });
+
+    const handlecommunityNamechange = event => {
+      setCommunity({
+        id: commuity.id,
+        communityName: event.target.value,
+        membercount: 1,
+        posts: [],
+      });
+    };
+
+    function createNewCommunity() {
+      props.createCommunity(commuity);
+      setCommunity({
+        id: Math.random(),
+        communityName: '',
+        membercount: 1,
+        posts: [],
+      });
+    }
+
+    function resetCommunity() {
+      setCommunity({
+        id: commuity.id,
+        communityName: '',
+        membercount: 1,
+        posts: [],
+      });
+    }
+
+    return (
       <Popup
         onClose={() => {
-          resetCommunity;
+          resetCommunity();
         }}
         contentStyle={{
           opacity: 1,
@@ -92,6 +100,15 @@ function CreateCommunityTabs(props) {
           </div>
         )}
       </Popup>
+    );
+  }
+
+  return (
+    <div style={{ overflow: scroll }}>
+      {rows}
+      <div style={{ textAlign: 'center' }}>
+        <Addcommunitybutton createCommunity={props.createCommunity} />
+      </div>
     </div>
   );
 }
@@ -100,7 +117,7 @@ function Sidebar(props) {
   return (
     <CreateCommunityTabs
       createCommunity={props.createCommunity}
-      userCommunities={props.userCommunities}
+      getUserCommunities={props.getUserCommunities}
     />
   );
 }

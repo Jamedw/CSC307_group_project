@@ -1,4 +1,5 @@
 .communityTab {
+  overflow-wrap:break-word;
   background-color: #ffd80d;
   border-radius: 50px;
   border-width: 0;
