@@ -2,61 +2,42 @@ import mongoose from "mongoose";
 import userModel from "../models/users.js";
 import dotenv from "dotenv"
 
-dotenv.config()
-
-mongoose.set("debug", true);
-mongoose   
-	.connect(process.env.MONGODB_URI)   
-	.catch((error) => console.log(error));  
-
-async function getUsers(name, job) {
-	let users;
-
-	if (name && job) {
-		users = await findUserByNameAndJob(name, job);   
-    }
-	else if (name && !job) {
-		users = await findUserByName(name);   
-	} else if (job && !name) {
-		users = await findUserByJob(job);   
-	}
-    else {
-        users = await userModel.find();
-    }
-	return users; 
-}  
-
 async function findUserById(id) {
-	return await userModel.findById(id); 
-}  
-
-async function findUserByIdAndDelete(id) {
-	return await userModel.findByIdAndDelete(id);
+	return userModel.findById(id); 
 }
 
 async function addUser(user) {
 	const userToAdd = new userModel(user);	
-	return await userToAdd.save();
+	return userToAdd.save();
 }  
 
-async function findUserByName(name) {
-	return await userModel.find({ name: name }); 
-}  
 
-async function findUserByJob(job) {
-	return await userModel.find({ job: job }); 
-}  
-
-async function findUserByNameAndJob(name, job) {
-	return await userModel.find({ name: name, job: job });
+async function findUserByName(username){
+    return userModel.find({username: username})
 }
+/* async function getUserComments(id){
+    user = await findUserById(findUserById(id))
+    if (!user){
+        return undefined;
+    }
+    else{
+        commentArr = []
 
-export {   
-	addUser,   
-	getUsers,   
-	findUserById,   
-	findUserByName,   
-	findUserByJob,
-    findUserByNameAndJob,
-    findUserByIdAndDelete,
-};
+        commentArray = user.commentId
+    }
+} */
+
+/* async function getUserPosts(id){
+
+} */
+
+/* async function getUserCommunities(id){
+
+} */
+
+
+export {
+    findUserById,
+    findUserByName,
+    addUser
+}
