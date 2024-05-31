@@ -31,8 +31,10 @@ const UserSchema = new mongoose.Schema({
     type: Array,
     required: false,
     default: []
-  },
-});
+  }}/* ,
+  {collection: "user_list"} */
+
+);
 
 const User = mongoose.model("User", UserSchema);
 

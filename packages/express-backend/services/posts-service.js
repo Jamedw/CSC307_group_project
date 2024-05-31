@@ -9,6 +9,9 @@ mongoose
 	.connect(process.env.MONGODB_URI)   
 	.catch((error) => console.log(error));  
 
+
+
+
 /*TODO make a function that returns all fields of a Post document
 except the commentIds. This function will be just to display the post
 i.e when you see a post on the home page*/

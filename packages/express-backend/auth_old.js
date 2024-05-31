@@ -1,41 +1,35 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { 
-  findUserByName,
-  addUser } from "./services/user-service.js";  
+import { findUserById,
+          addUser } from "./services/user-service";  
 
 //we neeed to be change this so its not stored in memory be rather in the database
 //note that the token is not store on the server but only returned to the client 
 const creds = [];
 
-export async function registerUser(req, res) {
-    const {username, password} = req.body;
-    console.log(username, password);
-    if (!(username) || !(password)) {
+export function registerUser(req, res) {
+    const { username, pwd } = req.body; // from form
+  
+    if (!username || !pwd) {
       res.status(400).send("Bad request: Invalid input data.");
+    } else if (creds.find((c) => c.username === username)) {
+      res.status(409).send("Username already taken");
     } else {
-      const found = (await findUserByName(username));
-      if(found.length){
-        res.status(409).send("Username already taken");
-      } 
-      else{
-        bcrypt
+      bcrypt
         .genSalt(10)
-        .then((salt) => bcrypt.hash(password, salt))
+        .then((salt) => bcrypt.hash(pwd, salt))
         .then((hashedPassword) => {
-          generateAccessToken(username).then(async (token) => {
+          generateAccessToken(username).then((token) => {
             console.log("Token:", token);
-            let newUser = await addUser({username: username,
-                              password: hashedPassword});
-            res.status(201).send({user: newUser,
-                                token: token});
+            res.status(201).send({ token: token });
+            creds.push({ username, hashedPassword });
+            //here we will need to 
           });
         });
-      }
-    }  
+    }
   }
 
- function generateAccessToken(username) {
+  function generateAccessToken(username) {
     return new Promise((resolve, reject) => {
       jwt.sign(
         { username: username },
@@ -77,31 +71,30 @@ export async function registerUser(req, res) {
   }
 
 
-  export async function loginUser(req, res) {
-    const{username, password} = req.body; // from form
-    const retrievedUser = await findUserByName(username);
-    if (!(retrievedUser.length)) {
+  export function loginUser(req, res) {
+    const { username, pwd } = req.body; // from form
+    const retrievedUser = creds.find(
+      (c) => c.username === username
+    );
+  
+    if (!retrievedUser) {
       // invalid username
-      res.status(401).send("Unauthorized, invalid username");
+      res.status(401).send("Unauthorized");
     } else {
       bcrypt
-        .compare(password, retrievedUser[0].password)
+        .compare(pwd, retrievedUser.hashedPassword)
         .then((matched) => {
           if (matched) {
             generateAccessToken(username).then((token) => {
-              let userData = retrievedUser[0];
-              res.status(200).send({user: userData,
-                                    token: token});
+              res.status(200).send({ token: token });
             });
           } else {
             // invalid password
-            res.status(401).send("Unauthorized, invalid password");
+            res.status(401).send("Unauthorized");
           }
         })
         .catch(() => {
-          res.status(401).send("Unauthorized, ?");
+          res.status(401).send("Unauthorized");
         });
     }
   }
-
-

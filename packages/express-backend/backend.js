@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { registerUser, authenticateUser, loginUser } from "./auth.js"; // Import the functions from auth.js
+import { addComment } from "./services/comment-service.js";
 import "./services/connect.js"
 import User from "./models/users.js";
 import Posts from "./models/posts.js";
@@ -20,6 +21,16 @@ app.post("/Login", loginUser);
 
 // Endpoint to handle signup
 app.post("/Signup", registerUser);
+
+
+app.post("/comment", authenticateUser, (req, res) => {
+  const commentAdd = req.body;
+  addComment(commentAdd).then((result) =>
+    res.status(201).send(result)
+  );
+});
+
+app.post("/user/comment", authenticateUser)
 
 
 

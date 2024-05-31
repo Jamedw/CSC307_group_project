@@ -1,25 +1,43 @@
 import mongoose from "mongoose";
-import postsModel from "../models/users.js";
+import userModel from "../models/users.js";
 import dotenv from "dotenv"
 
 async function findUserById(id) {
-	return await userModel.findById(id); 
+	return userModel.findById(id); 
+}
+
+async function addUser(user) {
+	const userToAdd = new userModel(user);	
+	return userToAdd.save();
 }  
 
-async function getUserComments(id){
-    user = findUserById(findUserById(id))
-    commentArray = user[0]
+
+async function findUserByName(username){
+    return userModel.find({username: username})
 }
+/* async function getUserComments(id){
+    user = await findUserById(findUserById(id))
+    if (!user){
+        return undefined;
+    }
+    else{
+        commentArr = []
 
-async function getUserPosts(id){
+        commentArray = user.commentId
+    }
+} */
 
-}
+/* async function getUserPosts(id){
 
-async function getUserCommunities(id){
+} */
 
-}
+/* async function getUserCommunities(id){
+
+} */
 
 
 export {
-    findUserById
+    findUserById,
+    findUserByName,
+    addUser
 }
