@@ -18,6 +18,35 @@ import { div } from 'prelude-ls';
 import NotFound from './pages/Com_Home_post_pages/NotFound.jsx';
 
 function App() {
+
+  function loginUser(creds) {
+    const promise = fetch(`${API_PREFIX}/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(creds)
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          response
+            .json()
+            .then((payload) => setToken(payload.token));
+          setMessage(`Login successful; auth token saved`);
+        } else {
+          setMessage(
+            `Login Error ${response.status}: ${response.data}`
+          );
+        }
+      })
+      .catch((error) => {
+        setMessage(`Login Error: ${error}`);
+      });
+  
+    return promise;
+  }
+
+
   const router = createBrowserRouter([
     {
       path: '/',
@@ -39,7 +68,7 @@ function App() {
     },
     {
       path: '/Login',
-      element: <Login />,
+      element: <Login loginUser={loginUser} />,
     },
     {
       path: '*',
