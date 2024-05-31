@@ -31,8 +31,17 @@ const UserSchema = new mongoose.Schema({
     type: Array,
     required: false,
     default: []
-  }}/* ,
-  {collection: "user_list"} */
+  },
+  likedPostIds: {
+    type: Array,
+    required: false,
+    default: []
+  },
+  dislikedPostIds: {
+    type: Array,
+    required: false,
+    default: []
+  }},
 
 );
 
