@@ -15,6 +15,9 @@ app.use(cors());
 app.use(express.json());
 
 
+app.get("/", (req, res) => {
+    res.send("Welcome to the backend server!");
+});
 
 // Endpoint to verify login
 app.post("/Login", loginUser);

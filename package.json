@@ -4,9 +4,11 @@
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-react": "^7.34.1",
+    "gh-pages": "^6.1.1",
     "globals": "^15.1.0",
     "prettier": "^3.2.5"
   },
+  "homepage": "http://redditbutbetter.github.io/CSC307_group_project",
   "name": "csc307_group_project",
   "description": "",
   "version": "1.0.0",
@@ -91,6 +93,9 @@
     "yocto-queue": "^0.1.0"
   },
   "scripts": {
+    "start": "npm run start",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "npx eslint packages/react-frontend/src",
     "lint:fix": "npm run lint -- --fix",
