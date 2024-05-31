@@ -27,6 +27,7 @@ export async function registerUser(req, res) {
             console.log("Token:", token);
             let newUser = await addUser({username: username,
                               password: hashedPassword});
+            console.log(newUser);
             res.status(201).send({user: newUser,
                                 token: token});
           });
@@ -90,6 +91,7 @@ export async function registerUser(req, res) {
           if (matched) {
             generateAccessToken(username).then((token) => {
               let userData = retrievedUser[0];
+              console.log(userData);
               res.status(200).send({user: userData,
                                     token: token});
             });

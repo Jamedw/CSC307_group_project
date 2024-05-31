@@ -10,8 +10,7 @@ const Login = (props) => {
 
   const handleLogin = () => {
     // Handle login logic here, e.g., send credentials to server for authentication
-    console.log('Logging in with:', { username, password });
-    props.loginUser({username : username, password : password})
+    console.log(props.loginUser({username : username, password : password}));
     
   };
 
