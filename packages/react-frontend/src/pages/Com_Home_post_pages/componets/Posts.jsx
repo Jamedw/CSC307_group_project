@@ -1,17 +1,58 @@
 import React, { useEffect, useState } from 'react';
 import './Post.css';
-import { NavLink, redirect, useNavigate } from 'react-router-dom';
+import { NavLink, redirect, useNavigate, useParams } from 'react-router-dom';
 
 function TableBody(props) {
   const nav = useNavigate();
 
-  const [commuity, setCommunityName] = useState({
-    communityName: props.searchData.communityName,
-    post: [],
-  });
+  function followCommunity() {
+    props.addUserCommunity({
+      communityName: props.searchData.communityName,
+    });
+  }
 
-  function addnewCommunity() {
-    props.addUserCommunity(commuity);
+  function isUserCommunity(userCommunities,community)
+{
+    var count=userCommunities.length;
+    for(var i=0;i<count;i++)
+    {
+        if(userCommunities[i].communityName===community.communityName){return true;}
+    }
+    return false;
+}
+
+  function unfollowCommunity() {
+    props.unfollowCommunity({
+      communityName: props.searchData.communityName,
+    });
+  }
+
+  function Followbutton() {
+    if (
+      isUserCommunity(props.userCommunities, {
+        communityName: props.searchData.communityName,
+      })
+    ) {
+      return (
+        <button
+        onClick={() => {
+            unfollowCommunity();
+        }}
+        className="unfollow-button">
+        unfollow
+      </button>
+      )
+    } else {
+      return (
+        <button
+        onClick={() => {
+            followCommunity();
+        }}
+        className="follow-button">
+        follow
+      </button>
+      )
+    }
   }
 
   const rows = props.postData.map((post, index) => {
@@ -65,15 +106,13 @@ function TableBody(props) {
           <div className="header">
             <div>Welcome to r/ {props.searchData.communityName}!!!</div>
             <div>
-              <button
-                onClick={() => {
-                  addnewCommunity();
-                }}
-                className="custom-button">
-                follow
-              </button>
+              <Followbutton />
             </div>
+          </div >
+          <div style={{textAlign : 'center'}}>
+          test
           </div>
+
         </div>
         {rows}
       </div>
@@ -90,6 +129,7 @@ function Posts(props) {
       searchData={props.searchData}
       postData={props.postData}
       addUserCommunity={props.addUserCommunity}
+      unfollowCommunity={props.unfollowCommunity}
     />
   );
 }
