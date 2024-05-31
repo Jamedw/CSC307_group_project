@@ -1,12 +1,11 @@
-
-.signup{
+.signup {
   position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
-  overflow: auto;
-  background-color: #42654D;
+  overflow: hidden;
+  background-color: #42654d;
   height: auto;
   vertical-align: middle;
   text-align: center;
@@ -15,17 +14,14 @@
 }
 
 .signup-container {
-  
-
   width: 300px;
   height: 500px;
+  overflow: hidden;
   text-align: center;
-
-
 }
 
 .logo-image {
-  
+  overflow: hidden;
   height: 6em;
   padding: 1.5em;
   will-change: filter;
@@ -41,6 +37,7 @@
 }
 
 .input-container {
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -48,7 +45,7 @@
 }
 
 .input-field {
-  background-color: #FFE8A3;
+  background-color: #ffe8a3;
   border: none;
   padding: 10px;
   margin: 5px 0;
@@ -57,19 +54,36 @@
 }
 
 .signup-button {
-  background-color: #FFE8A3;
-  border: none;
-  padding: 10px 20px;
-  margin-top: 10px;
-  border-radius: 5px;
+  background-color: #ffe8a3;
+  border-radius: 8px;
+  border-width: 0;
+  color: #000000;
+  cursor: pointer;
+  display: inline-block;
+  font-family: 'Haas Grot Text R Web', 'Helvetica Neue', Helvetica, Arial,
+    sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  list-style: none;
+  margin: 12;
+  padding: 10px 12px;
+  text-align: center;
+  transition: all 200ms;
+  vertical-align: baseline;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
 }
 
 .form-container {
-  background-color: #B3B3B3;
+  overflow: hidden;
+  background-color: #b3b3b3;
   padding: 20px;
   margin-top: 20%;
   display: flex;
-  vertical-align:middle;
+  vertical-align: middle;
   flex-direction: column;
   align-items: center;
   height: auto;

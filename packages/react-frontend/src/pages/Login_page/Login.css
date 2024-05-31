@@ -1,18 +1,17 @@
-.login{
+.login {
   position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
   overflow: auto;
-  background-color: #42654D;
+  background-color: #42654d;
   height: auto;
   vertical-align: middle;
   text-align: center;
   justify-content: center;
   display: grid;
 }
-
 
 .login-container {
   margin-top: 50px;
@@ -21,9 +20,6 @@
   max-height: 500px;
   vertical-align: middle;
   text-align: center;
-
-
-
 }
 
 .input-container {
@@ -34,31 +30,38 @@
 }
 
 /* Style for input fields */
-input[type="text"],
-input[type="password"],
-button {
-  background-color: #FFE8A3; /* Set background color to FFE8A3 */
-  border: none; /* Remove border */
-  padding: 10px; /* Add padding */
-  margin: 5px 0; /* Add margin */
-  border-radius: 5px; /* Add rounded corners */
-  text-align: center; /* Center text horizontally */
-}
+input[type='text'],
+input[type='password'],
+
 
 /* Additional styling for the sign-up button */
 .signup-button {
-  background-color: #FFE8A3; /* Set background color to FFE8A3 */
-  border: none; /* Remove border */
-  padding: 10px 20px; /* Add padding */
-  margin-top: 10px; /* Adjust spacing as needed */
-  border-radius: 5px; /* Add rounded corners */
-  text-decoration: none; /* Remove underline */
-  color: black; /* Set text color to black */
+  background-color: #ffe8a3;
+  border-radius: 8px;
+  border-width: 0;
+  color: #000000;
+  cursor: pointer;
+  display: inline-block;
+  font-family: 'Haas Grot Text R Web', 'Helvetica Neue', Helvetica, Arial,
+    sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  list-style: none;
+  margin: 12;
+  padding: 10px 12px;
+  text-align: center;
+  transition: all 200ms;
+  vertical-align: baseline;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
 }
 
 /* Style for the container around the input fields and buttons */
 .form-container {
-  background-color: #B3B3B3; /* Set background color to B3B3B3 */
+  background-color: #b3b3b3; /* Set background color to B3B3B3 */
   padding: 20px; /* Add padding */
   margin-top: 20px; /* Adjust spacing as needed */
   display: flex;
@@ -74,7 +77,7 @@ button {
   flex-direction: column;
   align-items: center;
   height: 100vh;
-  background-color: #42654D; /* Set background color to 42654D */
+  background-color: #42654d; /* Set background color to 42654D */
 }
 
 .header {
@@ -87,16 +90,18 @@ button {
 }
 
 .login-container {
-  background-color: #B3B3B3; /* Set background color to B3B3B3 */
+  background-color: #b3b3b3; /* Set background color to B3B3B3 */
   padding: 20px 15px; /* Adjust padding to make the grey box smaller in height */
-  height: calc(100vh - 40px); /* Set height to slightly less than 100vh to fit on screen */
+  height: calc(
+    100vh - 40px
+  ); /* Set height to slightly less than 100vh to fit on screen */
   overflow: hidden; /* Prevent scrolling */
   border-radius: 10px; /* Add rounded corners */
 }
 
 .logo {
   height: 6em;
-  padding: 1.5em;
+  padding: 1em;
   will-change: filter;
   transition: filter 300ms;
 }
