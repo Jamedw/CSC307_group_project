@@ -23,7 +23,7 @@ function App() {
   const [message, setMessage] = useState("");
 
   function loginUser(creds) {
-    const promise = fetch(`http://localhost:8000/login`, {
+    const promise = fetch(`http://localhost:8000/Login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -50,7 +50,7 @@ function App() {
   }
 
   function signupUser(creds) {
-    const promise = fetch(`http://localhost:8000/signup`, {
+    const promise = fetch(`http://localhost:8000/Signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
