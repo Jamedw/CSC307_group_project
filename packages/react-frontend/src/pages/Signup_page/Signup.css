@@ -1,0 +1,76 @@
+.signup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: auto;
+  background-color: #42654D;
+  height: auto;
+  vertical-align: middle;
+  text-align: center;
+  justify-content: center;
+  display: grid;
+}
+
+.signup-container {
+  width: 300px;
+  height: 500px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.logo-image {
+  
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+
+.logo-image:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+
+.logo-image.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+.input-container {
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.input-field {
+  background-color: #ffe8a3;
+  border: none;
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.signup-button {
+  background-color: #FFE8A3;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.form-container {
+  background-color: #B3B3B3;
+  padding: 20px;
+  margin-top: 20%;
+  display: flex;
+  vertical-align: middle;
+  flex-direction: column;
+  align-items: center;
+  height: auto;
+  max-height: 80vh;
+  overflow-y: auto;
+  border-radius: 10px; /* Add border-radius for rounded edges */
+}

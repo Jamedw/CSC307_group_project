@@ -1,0 +1,93 @@
+a {
+  color: #000000;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #000000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.post .title {
+  display: table;
+  width: 100%;
+}
+
+.post .title > div {
+  display: table-cell;
+}
+
+.community .header {
+  display: table;
+  width: 100%;
+}
+
+.community .header > div {
+  display: table-cell;
+}
+
+.community .header > div:nth-child(1) {
+  width: 65%;
+  vertical-align: center;
+  text-align: center;
+}
+.community .header > div:nth-child(2) {
+  width: 35;
+  vertical-align: center;
+  text-align: center;
+}
+
+.img {
+  display: grid;
+}
+
+/* The following CSS is for background colors only */
+.img > div:nth-child(1) {
+  background-color: #524d36;
+  vertical-align: middle;
+  object-fit: fill;
+  text-align: center;
+}
+
+.custom-button {
+  background-color: #ffe8a3;
+  border-radius: 8px;
+  border-width: 0;
+  color: #000000;
+  cursor: pointer;
+  display: inline-block;
+  font-family: 'Haas Grot Text R Web', 'Helvetica Neue', Helvetica, Arial,
+    sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  list-style: none;
+  margin: 12;
+  padding: 10px 12px;
+  text-align: center;
+  transition: all 200ms;
+  vertical-align: baseline;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+div > img {
+  display: block;
+  width: 100%;
+}
+
+.post .title > div:nth-child(1) {
+  background-color: #524d36;
+  width: 20%;
+  vertical-align: middle;
+  text-align: center;
+}
+.post .title > div:nth-child(2) {
+  width: 80%;
+  text-align: center;
+  vertical-align: middle;
+  background-color: #918549;
+}

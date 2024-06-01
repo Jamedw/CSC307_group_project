@@ -1,0 +1,110 @@
+.communityTab {
+  overflow-wrap:break-word;
+  background-color: #ffd80d;
+  border-radius: 50px;
+  border-width: 0;
+  color: #181616;
+  cursor: pointer;
+  margin: 10px 10px;
+  padding: 10px;
+  font-family: 'Haas Grot Text R Web', 'Helvetica Neue', Helvetica, Arial,
+    sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  list-style: none;
+  text-align: center;
+  transition: all 200ms;
+  vertical-align: baseline;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.modal {
+  padding: 40px;
+  background-color: #ffd80d;
+  display: table;
+  width: 100%;
+}
+
+.modal > div {
+  border-radius: 40px;
+  display: table-row;
+}
+
+.modal > div:nth-child(3) {
+  border-radius: 40px;
+  background-color: #ffd80d;
+  width: 10%;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.modal .content > div {
+  border-radius: 40px;
+  display: table-row;
+}
+
+.modal .content > div:nth-child(1) {
+  border-radius: 40px;
+
+  background-color: #ffd80d;
+  width: 10%;
+  vertical-align: middle;
+  text-align: center;
+}
+.modal .content > div:nth-child(2) {
+  border-radius: 40px;
+  background-color: #ffd80d;
+  width: 10%;
+  vertical-align: middle;
+  text-align: center;
+}
+
+/* CSS */
+.button-2 {
+  background-color: #42654d;
+  border-radius: 8px;
+  border-width: 0;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: 'Haas Grot Text R Web', 'Helvetica Neue', Helvetica, Arial,
+    sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  list-style: none;
+  margin: 10px 10px;
+  padding: 10px 12px;
+  text-align: center;
+  transition: all 200ms;
+  vertical-align: baseline;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+/* CSS */
+.createCommunityTab {
+  background-color: #ffd80d;
+  border-radius: 50px;
+  border-width: 0;
+  color: #181616;
+  cursor: pointer;
+  margin: 10px 10px;
+  padding: 10px;
+  font-family: 'Haas Grot Text R Web', 'Helvetica Neue', Helvetica, Arial,
+    sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  list-style: none;
+  text-align: center;
+  transition: all 200ms;
+  vertical-align: baseline;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
