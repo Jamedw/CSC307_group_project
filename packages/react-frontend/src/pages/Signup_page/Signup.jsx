@@ -3,17 +3,20 @@ import {  Navigate, useNavigate } from 'react-router-dom'; // Import Link compon
 import './Signup.css'; // Import CSS for Signup component styling
 import calpolyLogo from '../../assets/calpolylogo.png'; // Import the image
 
-const Signup = (props) => {
+function Signup (props) {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handleSignup = () => {
+  const handleSignup = (evnet) => {
     // Handle signup logic here, e.g., send user data to server for registration
+  
     console.log('Signing up with:', { username, password, confirmPassword });
     props.signupUser({username : username , password : password})
-
+    setPassword("")
+    setUsername("")
+    setConfirmPassword("")
   };
 
   return (
@@ -50,7 +53,7 @@ const Signup = (props) => {
               />
             </div>
             <button
-              role="button"
+              type="button"
               onClick={handleSignup}
               className="signup-button">
               Sign Up

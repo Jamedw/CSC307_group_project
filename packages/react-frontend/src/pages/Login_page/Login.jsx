@@ -10,8 +10,9 @@ const Login = (props) => {
 
   const handleLogin = () => {
     // Handle login logic here, e.g., send credentials to server for authentication
-    console.log(props.loginUser({username : username, password : password}));
-    
+    props.loginUser({username : username, password : password})
+    setPassword("")
+    setUsername("")
   };
 
   return (
@@ -47,7 +48,7 @@ const Login = (props) => {
             </div>
 
             <button
-              role="button"
+              type="button"
               onClick={handleLogin}
               className="signup-button">
               Log In
@@ -56,7 +57,7 @@ const Login = (props) => {
           </form>
         </div>
         <button
-          role="button"
+          type="button"
           onClick={() => navigate('/signup')}
           className="signup-button">
           sign up
