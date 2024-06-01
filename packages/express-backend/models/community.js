@@ -20,6 +20,10 @@ const CommunitySchema = new mongoose.Schema({
     type: Array,
     default: []
   },
+  pstTtlArr:{ //this is an array of all the post titles.
+    type: Array,
+    default: []
+  }
 });
 
 const Community = mongoose.model("Community", CommunitySchema);

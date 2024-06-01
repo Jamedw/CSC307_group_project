@@ -10,7 +10,13 @@ mongoose
 	.catch((error) => console.log(error));  
 
 
+async function findCommunityById(id){
+  return communityModel.findById(id);
+}
 
+async function findCommunityByName(name){
+  return userModel.find({name: name});//name
+}
 //todo a fetch funciton that returns {name: ,memberCount: ,postIds: }
 
 /*todo a post function that creates a community this should be
