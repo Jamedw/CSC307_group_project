@@ -3,15 +3,16 @@ import { useNavigate } from 'react-router-dom'; // Import Link component
 import './Login.css'; // Import CSS for Login component styling
 import calpolyLogo from '../../assets/calpolylogo.png'; // Import the image
 
-const Login = () => {
+const Login = (props) => {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
     // Handle login logic here, e.g., send credentials to server for authentication
-    console.log('Logging in with:', { username, password });
-    navigate('/');
+    props.loginUser({username : username, password : password})
+    setPassword("")
+    setUsername("")
   };
 
   return (
@@ -47,7 +48,7 @@ const Login = () => {
             </div>
 
             <button
-              role="button"
+              type="button"
               onClick={handleLogin}
               className="signup-button">
               Log In
@@ -56,7 +57,7 @@ const Login = () => {
           </form>
         </div>
         <button
-          role="button"
+          type="button"
           onClick={() => navigate('/signup')}
           className="signup-button">
           sign up

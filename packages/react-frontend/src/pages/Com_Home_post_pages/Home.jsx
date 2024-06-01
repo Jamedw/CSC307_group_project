@@ -149,6 +149,8 @@ function Home() {
     });
   }
 
+
+
   if (params.communityName && params.postHeader) {
     return (
       <div className="home">
@@ -163,7 +165,9 @@ function Home() {
             />
           </div>
           <div class="main">
-            <Comments />
+            <Comments 
+            
+            />
           </div>
           <div></div>
         </div>

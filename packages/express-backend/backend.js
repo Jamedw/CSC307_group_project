@@ -11,8 +11,16 @@ import Community from "./models/community.js";
 const app = express();
 const port = 8000;
 
-app.use(cors());
 app.use(express.json());
+app.use(cors());
+
+
+
+// Start the server
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`);
+});
+
 
 
 app.get("/", (req, res) => {
@@ -35,9 +43,3 @@ app.post("/comment", authenticateUser, (req, res) => {
 
 app.post("/user/comment", authenticateUser)
 
-
-
-// Start the server
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
-});
