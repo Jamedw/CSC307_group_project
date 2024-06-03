@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import { registerUser, authenticateUser, loginUser } from "./auth.js"; // Import the functions from auth.js
 import { addComment } from "./services/comment-service.js";
+import { findUserById } from "./services/user-service.js";
 import "./services/connect.js"
 import User from "./models/users.js";
 import Posts from "./models/posts.js";
@@ -43,6 +44,18 @@ app.post("/comment", authenticateUser, (req, res) => {
   );
 });
 
+app.get("/user/:id", authenticateUser, async (req, res) => {
+  const id = req.params["id"]; //or req.params.id
+  let result = await findUserById(id);
+  console.log("endpoint called");
+  if (result === undefined) {
+    console.log("got here");
+    res.status(404).send("Resource not found.");
+  } else {
+    res.send(result);
+  }
+});
+
 
 //for when a user creates a post
 /* expected data;
@@ -75,9 +88,9 @@ content: the comment of the user
 the comment will be created and the comment id will be added to the post's
 commentIds array and to the user's commentIds array
 */
-app.post("/user/comment", authenticateUser, (req, res) => {
+/* app.post("/user/comment", authenticateUser, (req, res) => {
   
-})
+}) */
 
 
 //for when a usser creates a community
