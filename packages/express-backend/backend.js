@@ -9,7 +9,7 @@ import Comment from "./models/comment.js";
 import Community from "./models/community.js";
 
 const app = express();
-const port = 8000;
+const port = 10000;
 
 app.use(express.json());
 app.use(cors());
