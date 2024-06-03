@@ -44,6 +44,7 @@ function TableBody(props) {
 
           <div className="interact">
             <div
+            style={{width: "40px"}}
               onClick={() => {
                 nav('/login');
               }}

@@ -13,7 +13,7 @@ function Home(props) {
   var token = props.token;
   let params = useParams();
 
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
 
   const [user, setUser] = useState({
     Username: 'test_username',

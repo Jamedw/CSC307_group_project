@@ -59,6 +59,7 @@ function Commentpopup(props) {
           </div>
           <div>
             <button
+              
               class="button-2"
               onClick={() => {
                 submitComment();
