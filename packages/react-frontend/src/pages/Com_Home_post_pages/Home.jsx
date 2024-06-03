@@ -14,7 +14,6 @@ function Home(props) {
   var userID = props.userID;
   let params = useParams();
 
-  const [loggedIn, setLoggedIn] = useState(false);
 
   const [user, setUser] = useState({
     Username: 'test_username',
@@ -226,9 +225,7 @@ function Home(props) {
     // will be called filling the screen with the new posts
   }
 
-  if (token !== 'INVALID_TOKEN') {
-    setLoggedIn(true);
-  }
+
 
 
   if (params.communityName && params.postHeader) {
@@ -248,14 +245,14 @@ function Home(props) {
           <div class="wrapper">
             <div class="sidebar">
               <Sidebar
-                loggedIn={loggedIn}
+                loggedIn={props.loggedIn}
                 createCommunity={createCommunity}
                 userCommunities={getUserCommunities()}
               />
             </div>
             <div class="main">
               <Comments
-                loggedIn={loggedIn}
+                loggedIn={props.loggedIn}
                 currentPostComments={getPostCommments(currentPost)}
                 currentPost={currentPost}
                 createComment={createComment}
@@ -279,14 +276,14 @@ function Home(props) {
           <div class="wrapper">
             <div class="sidebar">
               <Sidebar
-                loggedIn={loggedIn}
+                loggedIn={props.loggedIn}
                 createCommunity={createCommunity}
                 userCommunities={getUserCommunities()}
               />
             </div>
             <div class="main">
               <CommunityPosts
-                loggedIn={loggedIn}
+                loggedIn={props.loggedIn}
                 createNewPost={createNewPost}
                 isUserCommunity={isUserCommunity}
                 currentCommunity={getCommunityByName(params.communityName)}
@@ -316,7 +313,7 @@ function Home(props) {
         <div class="wrapper">
           <div class="sidebar">
             <Sidebar
-              loggedIn={loggedIn}
+              loggedIn={props.loggedIn}
               createCommunity={createCommunity}
               userCommunities={getUserCommunities()}
             />
