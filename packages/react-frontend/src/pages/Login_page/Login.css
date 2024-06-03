@@ -13,6 +13,14 @@
   display: grid;
 }
 
+.img-container {
+  align-items: center;
+  vertical-align: middle;
+  text-align: center;
+  justify-content: center;
+  display: grid;
+}
+
 .login-container {
   margin-top: 50px;
   width: 300px;
@@ -80,10 +88,6 @@ input[type='password'],
   background-color: #42654d; /* Set background color to 42654D */
 }
 
-.header {
-  margin-bottom: 20px; /* Add margin to separate header from login container */
-}
-
 .header-image {
   width: 200px; /* Adjust width as needed */
   height: auto; /* Maintain aspect ratio */
@@ -100,10 +104,9 @@ input[type='password'],
 }
 
 .logo {
-  height: 6em;
-  padding: 1em;
-  will-change: filter;
-  transition: filter 300ms;
+  cursor: pointer;
+  height: 9em;
+  width: 9em;
 }
 
 .logo:hover {

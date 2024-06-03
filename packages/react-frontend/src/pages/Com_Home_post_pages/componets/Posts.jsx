@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Newpostpopup from './Newpostpopup.jsx';
 import './Post.css';
 import { NavLink, redirect, useNavigate, useParams } from 'react-router-dom';
+import { white } from 'color-name';
 
 function TableBody(props) {
   const nav = useNavigate();
@@ -10,20 +11,16 @@ function TableBody(props) {
     return props.getCommunityByPostid(post.id);
   }
 
-  const rows = props.posts.map((post) => {
+  const rows = props.posts.map(post => {
     var communityname = props.getCommunityByPostid(post).communityName;
+
     return (
       <div className="post">
-        <NavLink to={'/' + { communityname }}>C/ {communityname}</NavLink>
-        <div className="title">
-          <div>
-            <button role="button" className="custom-button" />
-          </div>
-          <div>
-            <button role="button" className="custom-button" />
-          </div>
-        </div>
-        <NavLink to={communityname + '/' + post.postTitle}>
+        <NavLink to={'/' + communityname}>C/ {communityname}</NavLink>
+        <div className="title"></div>
+        <NavLink
+          style={{ color: 'white', fontSize: '20px' }}
+          to={communityname + '/' + post.postTitle}>
           {post.postTitle}
         </NavLink>
       </div>

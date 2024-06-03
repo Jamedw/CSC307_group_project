@@ -5,8 +5,8 @@ import { NavLink, redirect, useNavigate, useParams } from 'react-router-dom';
 
 function TableBody(props) {
   const nav = useNavigate();
-  const communityname = props.communityHeader.communityName
-  const currentcommunity = props.communityHeader
+  var communityname = props.currentCommunity.communityName;
+  var currentCommunity = props.currentCommunity;
 
   function isUserCommunity(userCommunities, community) {
     var count = userCommunities.length;
@@ -19,59 +19,67 @@ function TableBody(props) {
   }
 
   function Followbutton() {
-    if (
-      props.isUserCommunity(currentcommunity)
-    ) {
+    if (props.isUserCommunity(currentCommunity)) {
       return (
-        <button
+        <button style={{width: "100px"}}
           onClick={() => {
-            props.unfollowCommunity(currentcommunity);
+            props.unfollowCommunity(currentCommunity);
           }}
-          className="unfollow-button">
+          className="createCommunityTab">
           unfollow
         </button>
       );
     } else {
       return (
         <button
+          style={{width: "100px"}}
           onClick={() => {
-            props.followCommunity(currentcommunity);
+            props.followCommunity(currentCommunity);
           }}
-          className="follow-button">
+          className="createCommunityTab">
           follow
         </button>
       );
     }
   }
 
+  console.log(props.posts);
+
   const rows = props.posts.map((post, index) => {
     return (
       <div className="post">
-        <NavLink to={'/' + {communityname}}>C/ {communityname}</NavLink>
-        <div className="title">
-          <div>
-            <button role="button" className="custom-button" />
-          </div>
-          <div>
-            <button role="button" className="custom-button" />
-          </div>
+        <div>
+          <NavLink  to={'/' + communityname}>
+            C/ {communityname}
+          </NavLink>
         </div>
-        <NavLink to={communityname + '/' + communityname}>{communityname}</NavLink>
+        <div>
+          <NavLink
+            style={{color: "white", fontSize: "20px"}}
+            to={communityname + '/' + post.postTitle}>
+            {post.postTitle}
+          </NavLink>
+        </div>
       </div>
     );
   });
 
   return (
     <div>
-      <div className="header">
-        <div>Welcome to r/ {props.communityHeader.communityName}!!!</div>
-        <div>
-          <Followbutton 
-          communityHeader={props.communityHeader}
+      <div className="post">
+      <div style={{ color: 'white', fontSize: "25px" }}>Welcome to C/ {communityname}</div>
+        <div className="communityTitle">
+          <div>
+            <Followbutton />
+          </div>
+          <div style={{ textAlign: 'center' }}>
+          <Newpostpopup
+            currentCommunity={props.currentCommunity}
+            createNewPost={props.createNewPost}
           />
         </div>
+        </div>
       </div>
-      <div style={{ textAlign: 'center' }}>test</div>
       {rows}
     </div>
   );
@@ -80,7 +88,8 @@ function TableBody(props) {
 function Posts(props) {
   return (
     <TableBody
-      communityHeader={props.communityHeader}
+      createNewPost={props.createNewPost}
+      currentCommunity={props.currentCommunity}
       isUserCommunity={props.isUserCommunity}
       getCommunity={props.getCommunity}
       userCommunities={props.getUserCommunities}

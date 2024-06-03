@@ -46,7 +46,7 @@ function CreateCommunityTabs(props) {
 
     function resetCommunity() {
       setCommunity({
-        id: commuity.id,
+        id: Math.random(),
         communityName: '',
         membercount: 1,
         posts: [],
@@ -65,37 +65,38 @@ function CreateCommunityTabs(props) {
           backgroundColor: `rgba(0,0,0,.5)`,
         }}
         trigger={
-          <button role="button" className="createCommunityTab">
-            Create Community
+          <button type="button" className="createCommunityTab">
+            Create 
+            Community
           </button>
         }
         modal
         nested>
         {close => (
           <div className="modal">
-            <div>Community Name:</div>
             <div className="content">
               <div>
                 <textarea
                   name="commenttext"
+                  placeholder="Enter Community Name"
                   value={commuity.communityName}
                   onChange={handlecommunityNamechange}
                   id=""
                   cols="40"
-                  rows="10"
+                  rows="1"
                   style={{ margin: 10 }}></textarea>
               </div>
-            </div>
-            <div>
-              <button
-                class="button-2"
-                onClick={() => {
-                  close();
-                  createNewCommunity();
-                }}
-                role="button">
-                Create community
-              </button>
+              <div>
+                <button
+                  class="button-2"
+                  onClick={() => {
+                    close();
+                    createNewCommunity();
+                  }}
+                  role="button">
+                  Create community
+                </button>
+              </div>
             </div>
           </div>
         )}
