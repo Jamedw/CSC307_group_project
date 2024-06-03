@@ -29,6 +29,16 @@ const PostsSchema = new mongoose.Schema({
     required: false,
     default: []
   },
+  likedUserIds: {
+    type: Array,
+    required: false,
+    default: []
+  },
+  dislkUserIds: {
+    type: Array,
+    required: false,
+    default: []
+  }
 });
 
 const Posts = mongoose.model("Posts", PostsSchema);

@@ -32,9 +32,10 @@
 }
 /* The following CSS is for background colors only */
 .top-nav > div:nth-child(1) {
+  width: 30%;
   background-color: #ffd80d;
   vertical-align: middle;
-  text-align: "middle";
+  text-align: 'middle';
 }
 .top-nav > div:nth-child(2) {
   text-align: center;

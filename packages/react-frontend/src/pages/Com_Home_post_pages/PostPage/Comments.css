@@ -3,8 +3,8 @@
   width: 100%;
 }
 
-.comment{
-  word-wrap:break-word;
+.comment {
+  word-wrap: break-word;
 }
 
 .comment .interact {
@@ -17,11 +17,14 @@
 }
 
 .post .interact > div {
-  display: table-cell;
+  display: flex;
+}
+
+.post > div:nth-child(n) {
+  padding: 10px;
 }
 
 .post .interact > div:nth-child(1) {
-  background-color: #524d36;
   width: 10%;
   vertical-align: middle;
   text-align: center;
@@ -30,17 +33,17 @@
   width: 10%;
   text-align: center;
   vertical-align: middle;
-  background-color: #918549;
 }
 .post .interact > div:nth-child(3) {
   width: 10%;
   text-align: center;
   vertical-align: middle;
-  background-color: #918549;
+
 }
 
+
+
 .comment .interact > div:nth-child(1) {
-  background-color: #524d36;
   width: 10%;
   vertical-align: middle;
   text-align: center;
@@ -56,7 +59,7 @@
   width: 10%;
   text-align: center;
   vertical-align: middle;
-  background-color: #918549;
+
 }
 
 .modal .content {
@@ -66,6 +69,7 @@
 }
 
 .modal {
+  border-radius: 40px;
   padding: 40px;
   background-color: #ffd80d;
   display: table;
@@ -90,19 +94,8 @@
   display: table-row;
 }
 
-.modal .content > div:nth-child(1) {
-
-  border-radius: 40px;
-  
+.modal .content > div:nth-child(n) {
   background-color: #ffd80d;
-  width: 10%;
-  vertical-align: middle;
-  text-align: center;
-}
-.modal .content > div:nth-child(2) {
-  border-radius: 40px;
-  background-color: #ffd80d;
-  width: 10%;
   vertical-align: middle;
   text-align: center;
 }

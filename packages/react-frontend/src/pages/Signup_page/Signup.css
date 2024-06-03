@@ -21,9 +21,10 @@
 }
 
 .logo-image {
-  
-  height: 6em;
-  padding: 1.5em;
+  cursor: pointer;
+  height: 9em;
+  width: 9em;
+  padding: 10px;
   will-change: filter;
   transition: filter 300ms;
 }
@@ -64,7 +65,6 @@
 .form-container {
   background-color: #B3B3B3;
   padding: 20px;
-  margin-top: 20%;
   display: flex;
   vertical-align: middle;
   flex-direction: column;

@@ -1,24 +1,32 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import Link component
+import { redirect, useNavigate } from 'react-router-dom'; // Import Link component
 import './Login.css'; // Import CSS for Login component styling
 import calpolyLogo from '../../assets/calpolylogo.png'; // Import the image
+import { resolve } from 'uri-js';
 
-const Login = (props) => {
+const Login = props => {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = () => {
+  function handleLogin() {
     // Handle login logic here, e.g., send credentials to server for authentication
-    props.loginUser({username : username, password : password})
-    setPassword("")
-    setUsername("")
-  };
+    return props.loginUser({ username: username, password: password });
+  }
 
   return (
     <div className="login">
       <div className="login-container">
-        <img src={calpolyLogo} alt="Cal Poly Logo" className="logo" />{' '}
+        <div className="img-container">
+          <img
+            onClick={() => {
+              navigate('/');
+            }}
+            src={calpolyLogo}
+            alt="Cal Poly Logo"
+            className="logo"
+          />{' '}
+        </div>
         {/* Image replacement for login */}
         <div className="form-container">
           {' '}
@@ -49,7 +57,13 @@ const Login = (props) => {
 
             <button
               type="button"
-              onClick={handleLogin}
+              onClick={() => {
+                handleLogin()
+                if(props.token === "INVALD_TOKEN"){
+                }else {
+                  navigate("/");
+                }
+              }}
               className="signup-button">
               Log In
             </button>

@@ -1,8 +1,9 @@
 .communityTab {
-  overflow-wrap:break-word;
+  overflow-wrap: break-word;
+  overflow-x: hidden;
   background-color: #ffd80d;
   border-radius: 50px;
-  border-width: 0;
+
   color: #181616;
   cursor: pointer;
   margin: 10px 10px;
@@ -88,6 +89,7 @@
 }
 /* CSS */
 .createCommunityTab {
+  outline: none;
   background-color: #ffd80d;
   border-radius: 50px;
   border-width: 0;
