@@ -106,6 +106,10 @@ function App() {
       element: <Login loginUser={loginUser} />,
     },
     {
+      path: 'NotFound',
+      element: <NotFound />,
+    },
+    {
       path: '*',
       element: <NotFound />,
     },

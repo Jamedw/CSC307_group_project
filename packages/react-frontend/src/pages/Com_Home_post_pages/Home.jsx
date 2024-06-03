@@ -4,14 +4,11 @@ import Posts from './componets/Posts';
 import Comments from './componets/Comments';
 import Navbar from './componets/Navbar';
 import './Home.css';
-import { useNavigate, useParams } from 'react-router-dom';
-import logo from '../images/stanchevmeme.png';
-import { get } from 'fast-levenshtein';
-import { create } from 'file-entry-cache';
+import { redirect, useNavigate, useParams } from 'react-router-dom';
+import CommunityPosts from './componets/CommunityPosts.jsx';
 
 function Home() {
   let params = useParams();
-  console.log(params);
 
   const [user, setUser] = useState({
     Username: 'test_username',
@@ -100,6 +97,7 @@ function Home() {
       user.communities.includes(community.id),
     );
   }
+
   function getCommunityPosts() {
     return posts.filter(post => communities.post.includes(post.id));
   }
@@ -114,15 +112,26 @@ function Home() {
       password: user.password,
       comments: user.comments,
       posts: user.posts,
-      communities: [community.id , ... user.communities],
+      communities: [community.id, ...user.communities],
     });
-    setCommunities([community , ...  communities]);
+    setCommunities([community, ...communities]);
   }
 
-  function unfollowCommunity(communityid) {
-    const updated = user.communities.filter(community => {
-      return communityid !== community;
+  function followCommunity(community) {
+    setUser({
+      Username: user.Username,
+      password: user.password,
+      comments: user.comments,
+      posts: user.posts,
+      communities: [community.id, ...user.communities],
     });
+  }
+
+  function unfollowCommunity(community) {
+    const updated = user.communities.filter(currentcommunity => 
+      currentcommunity != community.id
+    );
+
     setUser({
       Username: user.Username,
       password: user.password,
@@ -130,6 +139,7 @@ function Home() {
       posts: user.posts,
       communities: updated,
     });
+ 
   }
 
   function createComment(post, comment) {
@@ -141,17 +151,60 @@ function Home() {
     setComments([comments, comment]);
   }
 
-  function getCommunity(post) {
+  function getCommunityByPostid(post) {
+    var flag = false
     communities.forEach(community => {
       if (community.posts.includes(post.id)) {
-        return community
+        flag = community;
       }
     });
+    return flag
   }
 
+  function getCommunityByName(name) {
+    var flag = false
+    communities.forEach((community) => {
+      if (community.communityName === name) {
+        flag = community;
+      }
+    });
+    return flag
+  }
 
+  function isUserCommunity(community) {
+    if (user.communities.includes(community.id)) {
+      return true;
+    }
+    return false;
+  }
 
-  if (params.communityName && params.postHeader) {
+  // if (params.communityName && params.postHeader) {
+  //   return (
+  //     <div className="home">
+  //       <div>
+  //         <Navbar />
+  //       </div>
+  //       <div class="wrapper">
+  //         <div class="sidebar">
+  //           <Sidebar
+  //             createCommunity={createCommunity}
+  //             getUserCommunities={getUserCommunities}
+  //           />
+  //         </div>
+  //         <div class="main">
+  //           <Comments
+
+  //           />
+  //         </div>
+  //         <div></div>
+  //       </div>
+  //       <div className="footer">test</div>
+  //     </div>
+  //   );
+  // } else
+  if (params.communityName) {
+    var communityHeader = getCommunityByName(params.communityName);
+
     return (
       <div className="home">
         <div>
@@ -165,37 +218,13 @@ function Home() {
             />
           </div>
           <div class="main">
-            <Comments 
-            
-            />
-          </div>
-          <div></div>
-        </div>
-        <div className="footer">test</div>
-      </div>
-    );
-  } else if (params.communityName) {
-    //if the url has / or /community loading post is the same the
-    // community page only has a community
-
-    return (
-      <div className="home">
-        <div>
-          <Navbar />
-        </div>
-        <div class="wrapper">
-          <div class="sidebar">
-            <Sidebar
-              createCommunity={createCommunity}
-              getUserCommunities={getUserCommunities}
-            />
-          </div>
-          <div class="main">
-            <Posts
-              getCommunity={getCommunity}
+            <CommunityPosts
+              isUserCommunity={isUserCommunity}
+              communityHeader={communityHeader}
+              getCommunityByPostid={getCommunityByPostid}
               userCommunities={getUserCommunities}
-              createCommunity={createCommunity}
               unfollowCommunity={unfollowCommunity}
+              followCommunity={followCommunity}
               posts={posts}
             />
           </div>
@@ -205,7 +234,26 @@ function Home() {
       </div>
     );
   } else {
-    
+    return (
+      <div className="home">
+        <div>
+          <Navbar />
+        </div>
+        <div class="wrapper">
+          <div class="sidebar">
+            <Sidebar
+              createCommunity={createCommunity}
+              getUserCommunities={getUserCommunities}
+            />
+          </div>
+          <div class="main">
+            <Posts getCommunityByPostid={getCommunityByPostid} posts={posts} />
+          </div>
+          <div></div>
+        </div>
+        <div className="footer">test</div>
+      </div>
+    );
   }
 }
 
