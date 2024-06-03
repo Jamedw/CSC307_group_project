@@ -4,8 +4,8 @@
   left: 0;
   bottom: 0;
   right: 0;
-  overflow: hidden;
-  background-color: #42654d;
+  overflow: auto;
+  background-color: #42654D;
   height: auto;
   vertical-align: middle;
   text-align: center;
@@ -55,32 +55,15 @@
 }
 
 .signup-button {
-  background-color: #ffe8a3;
-  border-radius: 8px;
-  border-width: 0;
-  color: #000000;
-  cursor: pointer;
-  display: inline-block;
-  font-family: 'Haas Grot Text R Web', 'Helvetica Neue', Helvetica, Arial,
-    sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 20px;
-  list-style: none;
-  margin: 12;
-  padding: 10px 12px;
-  text-align: center;
-  transition: all 200ms;
-  vertical-align: baseline;
-  white-space: nowrap;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
+  background-color: #FFE8A3;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 10px;
+  border-radius: 5px;
 }
 
 .form-container {
-  overflow: hidden;
-  background-color: #b3b3b3;
+  background-color: #B3B3B3;
   padding: 20px;
   display: flex;
   vertical-align: middle;
