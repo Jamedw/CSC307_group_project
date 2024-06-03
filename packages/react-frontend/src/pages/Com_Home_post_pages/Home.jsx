@@ -1,13 +1,13 @@
 import Sidebar from './componets/Sidebar';
 import React, { useState } from 'react';
-import Posts from './componets/Posts';
-import Comments from './componets/Comments';
-import Navbar from './componets/Navbar';
+import Posts from './LandingPage/Posts.jsx';
+import Comments from './PostPage/Comments.jsx';
+import Navbar from "./componets/Navbar.jsx"
 import NotFound from './NotFound.jsx';
 import './Home.css';
-import { redirect, useNavigate, useParams } from 'react-router-dom';
-import CommunityPosts from './componets/CommunityPosts.jsx';
-import { create } from 'file-entry-cache';
+import { useParams } from 'react-router-dom';
+import CommunityPosts from './CommunityPage/CommunityPosts.jsx';
+
 
 function Home(props) {
   var token = props.token;
@@ -231,12 +231,14 @@ function Home(props) {
 
 
   if (params.communityName && params.postHeader) {
-    var currentPost = getPostByCommunityPostName(
-      params.communityName,
-      params.postHeader,
-    );
+
 
     try {
+
+      var currentPost = getPostByCommunityPostName(
+        params.communityName,
+        params.postHeader,
+      );
       return (
         <div className="home">
           <div>
@@ -264,7 +266,7 @@ function Home(props) {
         </div>
       );
     } catch (e) {
-      return <NotFound />;
+      return <NotFound postHeader={params.postHeader} communityName={params.communityName}/>;
     }
   } else if (params.communityName) {
     try {
@@ -302,7 +304,7 @@ function Home(props) {
         </div>
       );
     } catch (e) {
-      return <NotFound />;
+      return <NotFound communityName={params.communityName}/>;
     }
   } else {
     return (

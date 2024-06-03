@@ -1,5 +1,3 @@
-import { even, exp } from 'prelude-ls';
-
 import Popup from 'reactjs-popup';
 import React, { useState } from 'react';
 

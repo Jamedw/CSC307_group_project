@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import Newpostpopup from './Newpostpopup.jsx';
-import './Post.css';
+import Newpostpopup from './Newpostpopup';
+import '../LandingPage/Posts';
 import { NavLink, redirect, useNavigate, useParams } from 'react-router-dom';
 
 function TableBody(props) {

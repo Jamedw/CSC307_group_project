@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Popup from 'reactjs-popup';
-import './Post.css';
+import '../LandingPage/Posts';
 import { NavLink, redirect, useNavigate, useParams } from 'react-router-dom';
 
 function Createcommunitypopup(props) {
