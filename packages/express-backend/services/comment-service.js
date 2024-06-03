@@ -19,57 +19,7 @@ FOR NOW*/
 returns {userId: ..., userName: ...., content: ....}*/
 
 
-async function getCommentById(commentId) {
-    try {
-        const comment = await commentModel.findById(commentId);
-        if (!comment) {
-            throw new Error("Comment not found");
-        }
-
-        const user = await userModel.findOne({ username: comment.username });
-
-        return {
-            userId: user._id,
-            userName: comment.username,
-            content: comment.content
-        };
-    } catch (error) {
-        console.error("Error fetching comment by ID:", error);
-        throw error;
-    }
-}
-
-/*async function createComment(req, commentData) {
-
-        const user = req.user; // User should be attached by the middleware
-
-
-        if (!commentData.content) {
-            throw new Error("Content is required");
-        }
-
-        const newComment = new commentModel({
-            username: user.username,
-            content: commentData.content
-        });
-
-
-        const savedComment = await newComment.save();
-
-
-        user.commentIds.push(savedComment._id);
-        await user.save();
-
-        return savedComment;
-
-}*/
-
-/*TODO Make a post to create a comment. Required fields are userName
-and content.
-
 
 export {
-    addComment,
-    getCommentById,
-    createComment
+    addComment
 }
