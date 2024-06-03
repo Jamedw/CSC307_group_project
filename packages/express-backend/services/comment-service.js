@@ -7,14 +7,18 @@ async function addComment(comment){
     return commentToAdd.save();
 }
 
+
+/*NOTE THAT FOR ALL THESE TODO IGNORE THE AUTHENTICATION PART
+BECAUSE THAT IS TAKEN CARE ELSE WHERE AND FOR AN QUERY JUST RETRUN
+THE WHOLE OBJECT FOR NOW. DONT WORRY ABOUT LEAVING ANYTHONG OUT
+FOR NOW*/
+
+
+
 /*TODO Make a fetch request for to fetch a comment by their id and
 returns {userId: ..., userName: ...., content: ....}*/
 
-/*TODO Make a post to create a comment. Required fields are userName
-and content.
 
-AUTHENICATION NEEDED FOR THIS 
-use tokens*/
 
 export {
     addComment

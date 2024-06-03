@@ -10,7 +10,10 @@ mongoose
 	.catch((error) => console.log(error));  
 
 
-
+/*NOTE THAT FOR ALL THESE TODO IGNORE THE AUTHENTICATION PART
+BECAUSE THAT IS TAKEN CARE ELSE WHERE AND FOR AN QUERY JUST RETRUN
+THE WHOLE OBJECT FOR NOW. DONT WORRY ABOUT LEAVING ANYTHONG OUT
+FOR NOW*/
 
 /*TODO make a function that returns all fields of a Post document
 except the commentIds. This function will be just to display the post
