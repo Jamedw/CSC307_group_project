@@ -10,14 +10,14 @@ import Comment from "./models/comment.js";
 import Community from "./models/community.js";
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = 3000;
 
 app.use(express.json());
 app.use(cors());
 
 // Start the server
-app.listen(port, '0.0.0.0', () => {
-  console.log(`Example app listening at http://0.0.0.0${port}`);
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`);
 });
 
 app.get("/", (req, res) => {
