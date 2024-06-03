@@ -24,7 +24,7 @@ function App() {
   const [loggedIn, setloggedIn] = useState(false)
 
 
-  let API_PREFIX = 'http://0.0.0.03000';
+  let API_PREFIX = 'http://localhost:3000';
 
   function loginUser(creds) {
     const promise = fetch(`${API_PREFIX}/login`, {
