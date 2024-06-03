@@ -15,8 +15,14 @@ async function findCommunityById(id){
 }
 
 async function findCommunityByName(name){
-  return userModel.find({name: name});//name
+  return userModel.find({name: name});
 }
+
+/*NOTE THAT FOR ALL THESE TODO IGNORE THE AUTHENTICATION PART
+BECAUSE THAT IS TAKEN CARE ELSE WHERE AND FOR AN QUERY JUST RETRUN
+THE WHOLE OBJECT FOR NOW. DONT WORRY ABOUT LEAVING ANYTHONG OUT
+FOR NOW*/
+
 //todo a fetch funciton that returns {name: ,memberCount: ,postIds: }
 
 /*todo a post function that creates a community this should be

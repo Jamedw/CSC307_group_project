@@ -14,7 +14,6 @@ import Home from './pages/Com_Home_post_pages/Home.jsx';
 import Login from './pages/Login_page/Login.jsx';
 import Signup from './pages/Signup_page/Signup.jsx';
 import './App.css';
-import { div } from 'prelude-ls';
 import NotFound from './pages/Com_Home_post_pages/NotFound.jsx';
 
 function App() {
@@ -22,6 +21,7 @@ function App() {
   const [token, setToken] = useState(INVALID_TOKEN);
   const [userID, setUserID] = useState(false)
   const [message, setMessage] = useState('');
+  const [loggedIn, setloggedIn] = useState(false)
 
 
   let API_PREFIX = 'http://localhost:8000';
@@ -38,7 +38,9 @@ function App() {
         if (response.status === 200) {
           response.json().then(payload => {
             setUserID(payload.user._id)
-            setToken(payload.token)});
+            setToken(payload.token)
+            setloggedIn(true)
+          });
           setMessage(`Login successful; auth token saved`);
         } else {
           setMessage(`Login Error ${response.status}: ${response.data}`);
@@ -79,15 +81,15 @@ function App() {
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <Home token={token} />,
+      element: <Home loggedIn={loggedIn} token={token} />,
       children: [
         {
           path: ':communityName',
-          element: <Home token={token} />,
+          element: <Home loggedIn={loggedIn}  token={token} />,
         },
         {
           path: ':communityName/:postHeader',
-          element: <Home token={token} />,
+          element: <Home loggedIn={loggedIn}  token={token} />,
         },
       ],
     },

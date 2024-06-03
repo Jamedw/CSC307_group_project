@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import { registerUser, authenticateUser, loginUser } from "./auth.js"; // Import the functions from auth.js
 import { addComment } from "./services/comment-service.js";
+import { findUserById } from "./services/user-service.js";
 import "./services/connect.js"
 import User from "./models/users.js";
 import Posts from "./models/posts.js";
@@ -9,19 +10,15 @@ import Comment from "./models/comment.js";
 import Community from "./models/community.js";
 
 const app = express();
-const port = 8000;
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(cors());
 
-
-
 // Start the server
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+app.listen(port, '0.0.0.0', () => {
+  console.log(`Example app listening at http://0.0.0.0${port}`);
 });
-
-
 
 app.get("/", (req, res) => {
     res.send("Welcome to the backend server!");
@@ -41,6 +38,18 @@ app.post("/comment", authenticateUser, (req, res) => {
   addComment(commentAdd).then((result) =>
     res.status(201).send(result)
   );
+});
+
+app.get("/user/:id", authenticateUser, async (req, res) => {
+  const id = req.params["id"]; //or req.params.id
+  let result = await findUserById(id);
+  console.log("endpoint called");
+  if (result === undefined) {
+    console.log("got here");
+    res.status(404).send("Resource not found.");
+  } else {
+    res.send(result);
+  }
 });
 
 
@@ -75,9 +84,9 @@ content: the comment of the user
 the comment will be created and the comment id will be added to the post's
 commentIds array and to the user's commentIds array
 */
-app.post("/user/comment", authenticateUser, (req, res) => {
+/* app.post("/user/comment", authenticateUser, (req, res) => {
   
-})
+}) */
 
 
 //for when a usser creates a community
