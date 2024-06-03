@@ -5,7 +5,11 @@ import React, { useState } from 'react';
 
 function Commentpopup(props) {
   const handleCommentchange = event => {
-    setComment({ id: Math.random(), userName: '', commentContent: event.target.value });
+    setComment({
+      id: Math.random(),
+      userName: '',
+      commentContent: event.target.value,
+    });
   };
 
   const [comment, setComment] = useState({
@@ -16,7 +20,7 @@ function Commentpopup(props) {
 
   function submitComment() {
     props.createComment(props.currentPost, comment);
-    setComment({ id: Math.random(), userName: '', commentContent: ''});
+    setComment({ id: Math.random(), userName: '', commentContent: '' });
   }
 
   function resetComment() {
@@ -46,7 +50,7 @@ function Commentpopup(props) {
             <div>
               <textarea
                 name="commenttext"
-                placeholder='Enter Comment text'
+                placeholder="Enter Comment text"
                 value={comment.commentContent}
                 onChange={handleCommentchange}
                 id=""

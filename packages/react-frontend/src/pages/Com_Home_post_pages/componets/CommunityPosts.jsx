@@ -19,26 +19,40 @@ function TableBody(props) {
   }
 
   function Followbutton() {
-    if (props.isUserCommunity(currentCommunity)) {
-      return (
-        <button style={{width: "100px"}}
-          onClick={() => {
-            props.unfollowCommunity(currentCommunity);
-          }}
-          className="createCommunityTab">
-          unfollow
-        </button>
-      );
+    if (props.loggedIn){
+      if (props.isUserCommunity(currentCommunity)) {
+        return (
+          <button
+            style={{ width: '100px' }}
+            onClick={() => {
+              props.unfollowCommunity(currentCommunity);
+            }}
+            className="createCommunityTab">
+            unfollow
+          </button>
+        );
+      } else {
+        return (
+          <button
+            style={{ width: '100px' }}
+            onClick={() => {
+              props.followCommunity(currentCommunity);
+            }}
+            className="createCommunityTab">
+            follow
+          </button>
+        );
+      }
     } else {
       return (
         <button
-          style={{width: "100px"}}
-          onClick={() => {
-            props.followCommunity(currentCommunity);
-          }}
-          className="createCommunityTab">
-          follow
-        </button>
+        style={{ width: '100px' }}
+        onClick={() => {
+          nav("/login")
+        }}
+        className="createCommunityTab">
+        follow
+      </button>
       );
     }
   }
@@ -49,13 +63,11 @@ function TableBody(props) {
     return (
       <div className="post">
         <div>
-          <NavLink  to={'/' + communityname}>
-            C/ {communityname}
-          </NavLink>
+          <NavLink to={'/' + communityname}>C/ {communityname}</NavLink>
         </div>
         <div>
           <NavLink
-            style={{color: "white", fontSize: "20px"}}
+            style={{ color: 'white', fontSize: '20px' }}
             to={communityname + '/' + post.postTitle}>
             {post.postTitle}
           </NavLink>
@@ -64,30 +76,61 @@ function TableBody(props) {
     );
   });
 
-  return (
-    <div>
-      <div className="post">
-      <div style={{ color: 'white', fontSize: "25px" }}>Welcome to C/ {communityname}</div>
-        <div className="communityTitle">
-          <div>
-            <Followbutton />
+  if(props.loggedIn){
+    return (
+      <div>
+        <div className="post">
+          <div style={{ color: 'white', fontSize: '25px' }}>
+            Welcome to C/ {communityname}
           </div>
-          <div style={{ textAlign: 'center' }}>
-          <Newpostpopup
-            currentCommunity={props.currentCommunity}
-            createNewPost={props.createNewPost}
-          />
+          <div className="communityTitle">
+            <div>
+              <Followbutton />
+            </div>
+            <div style={{ textAlign: 'center' }}>
+              <Newpostpopup
+                currentCommunity={props.currentCommunity}
+                createNewPost={props.createNewPost}
+              />
+            </div>
+          </div>
         </div>
-        </div>
+        {rows}
       </div>
-      {rows}
-    </div>
-  );
+    );
+  } else {
+    return (
+      <div>
+        <div className="post">
+          <div style={{ color: 'white', fontSize: '25px' }}>
+            Welcome to C/ {communityname}
+          </div>
+          <div className="communityTitle">
+            <div>
+              <Followbutton />
+            </div>
+            <div>
+            <button
+   
+        onClick={() => {
+          nav("/login")
+        }}
+        className="createCommunityTab">
+                  Create New Post
+        </button>
+            </div>
+          </div>
+        </div>
+        {rows}
+      </div>
+    );
+  }
 }
 
 function Posts(props) {
   return (
     <TableBody
+      loggedIn={props.loggedIn}
       createNewPost={props.createNewPost}
       currentCommunity={props.currentCommunity}
       isUserCommunity={props.isUserCommunity}

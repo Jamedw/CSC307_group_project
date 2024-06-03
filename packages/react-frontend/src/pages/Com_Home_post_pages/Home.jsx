@@ -9,8 +9,11 @@ import { redirect, useNavigate, useParams } from 'react-router-dom';
 import CommunityPosts from './componets/CommunityPosts.jsx';
 import { create } from 'file-entry-cache';
 
-function Home() {
+function Home(props) {
+  var token = props.token;
   let params = useParams();
+
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const [user, setUser] = useState({
     Username: 'test_username',
@@ -104,7 +107,7 @@ function Home() {
 
   function getUserCommunities() {
     return communities.filter(community =>
-      user.communities.includes(community.id),
+      user.communities.includes(community.id)
     );
   }
 
@@ -154,10 +157,10 @@ function Home() {
   function createComment(post, comment) {
     posts.forEach(element => {
       if (post.id === element.id) {
-        element.comments = [comment.id, ... element.comments];
+        element.comments = [comment.id, ...element.comments];
       }
     });
-    setComments([comment, ... comments]);
+    setComments([comment, ...comments]);
   }
 
   function getCommunityByPostid(post) {
@@ -187,15 +190,14 @@ function Home() {
     return false;
   }
 
- function getPostCommentsByid(currentpostid) {
- }
+  function getPostCommentsByid(currentpostid) {}
 
- function getPostByCommunityPostName(communityname,postTitle){
-  const community = getCommunityByName(communityname)
-  var postids = posts.filter(post => community.posts.includes(post.id));
-  var currentpost = posts.filter(post => post.postTitle === postTitle)
-  return currentpost[0]
- }
+  function getPostByCommunityPostName(communityname, postTitle) {
+    const community = getCommunityByName(communityname);
+    var postids = posts.filter(post => community.posts.includes(post.id));
+    var currentpost = posts.filter(post => post.postTitle === postTitle);
+    return currentpost[0];
+  }
 
   function createNewPost(community, post) {
     const updated = communities.filter(
@@ -217,16 +219,24 @@ function Home() {
     console.log(posts);
   }
 
-  function search(query){
-    // this query will be handles by the backend and will return a 
+  function search(query) {
+    // this query will be handles by the backend and will return a
     // list of post then setPosts(fetch ... )
     // will be called filling the screen with the new posts
   }
 
+  if (token !== 'INVALID_TOKEN') {
+    setLoggedIn(true);
+  }
+
+
   if (params.communityName && params.postHeader) {
-    var currentPost = getPostByCommunityPostName(params.communityName , params.postHeader)
-    console.log(currentPost)
-    try{
+    var currentPost = getPostByCommunityPostName(
+      params.communityName,
+      params.postHeader,
+    );
+
+    try {
       return (
         <div className="home">
           <div>
@@ -235,12 +245,14 @@ function Home() {
           <div class="wrapper">
             <div class="sidebar">
               <Sidebar
+                loggedIn={loggedIn}
                 createCommunity={createCommunity}
-                getUserCommunities={getUserCommunities}
+                userCommunities={getUserCommunities()}
               />
             </div>
             <div class="main">
               <Comments
+                loggedIn={loggedIn}
                 currentPostComments={getPostCommments(currentPost)}
                 currentPost={currentPost}
                 createComment={createComment}
@@ -251,12 +263,10 @@ function Home() {
           <div className="footer">test</div>
         </div>
       );
-    } catch(e){
-      return <NotFound />
+    } catch (e) {
+      return <NotFound />;
     }
-    
-  } else
-  if (params.communityName) {
+  } else if (params.communityName) {
     try {
       return (
         <div className="home">
@@ -266,12 +276,14 @@ function Home() {
           <div class="wrapper">
             <div class="sidebar">
               <Sidebar
+                loggedIn={loggedIn}
                 createCommunity={createCommunity}
-                getUserCommunities={getUserCommunities}
+                userCommunities={getUserCommunities()}
               />
             </div>
             <div class="main">
               <CommunityPosts
+                loggedIn={loggedIn}
                 createNewPost={createNewPost}
                 isUserCommunity={isUserCommunity}
                 currentCommunity={getCommunityByName(params.communityName)}
@@ -289,10 +301,9 @@ function Home() {
           <div className="footer"></div>
         </div>
       );
-    }catch(e){
-      return <NotFound />
+    } catch (e) {
+      return <NotFound />;
     }
-
   } else {
     return (
       <div className="home">
@@ -302,8 +313,9 @@ function Home() {
         <div class="wrapper">
           <div class="sidebar">
             <Sidebar
+              loggedIn={loggedIn}
               createCommunity={createCommunity}
-              getUserCommunities={getUserCommunities}
+              userCommunities={getUserCommunities()}
             />
           </div>
           <div class="main">

@@ -89,6 +89,7 @@
 }
 /* CSS */
 .createCommunityTab {
+  outline: none;
   background-color: #ffd80d;
   border-radius: 50px;
   border-width: 0;

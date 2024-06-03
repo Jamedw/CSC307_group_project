@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'; // Import Link component
 import './Login.css'; // Import CSS for Login component styling
 import calpolyLogo from '../../assets/calpolylogo.png'; // Import the image
 import { ceiling } from 'prelude-ls';
+import naturalCompare from 'natural-compare';
 
 const Login = props => {
   const navigate = useNavigate();
@@ -11,9 +12,11 @@ const Login = props => {
 
   const handleLogin = () => {
     // Handle login logic here, e.g., send credentials to server for authentication
-    props.loginUser({ username: username, password: password });
-    setPassword('');
-    setUsername('');
+    var success = props.loginUser({ username: username, password: password });
+    if (props.token === 'INVALID_TOKEN') {
+    } else {
+      navigate('/');
+    }
   };
 
   return (

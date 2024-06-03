@@ -8,11 +8,10 @@ export default function Navbar(props) {
   const [search , setSearch] = useState("")
 
   function handleKeyPressed(e){
-    if(event.key == 'Enter'){
-      
+    if(e.key == 'Enter'){
       setSearch("")
     }else {
-      setSearch(e.value)
+      setSearch(search + e.key)
     }
   }
 

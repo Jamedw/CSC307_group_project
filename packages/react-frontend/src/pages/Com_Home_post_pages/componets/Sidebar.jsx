@@ -1,15 +1,13 @@
 // Sidebar.jsx
 import React, { useState } from 'react';
-import Popup from 'reactjs-popup';
+import Createcommunitypopup from './Createcommunitypopup';
 import { Link, useNavigate, NavLink } from 'react-router-dom';
 import './Sidebar.css';
 
 function CreateCommunityTabs(props) {
-  const userCommunities = props.getUserCommunities();
-
   const navigate = useNavigate();
 
-  const rows = userCommunities.map((community, index) => (
+  const rows = props.userCommunities.map(community => (
     <div
       className="communityTab"
       onClick={() => navigate(community.communityName)}>
@@ -17,110 +15,34 @@ function CreateCommunityTabs(props) {
     </div>
   ));
 
-  function Addcommunitybutton() {
-    const [commuity, setCommunity] = useState({
-      id: Math.random(),
-      communityName: '',
-      membercount: 1,
-      posts: [],
-    });
-
-    const handlecommunityNamechange = event => {
-      setCommunity({
-        id: commuity.id,
-        communityName: event.target.value,
-        membercount: 1,
-        posts: [],
-      });
-    };
-
-    function createNewCommunity() {
-      props.createCommunity(commuity);
-      setCommunity({
-        id: Math.random(),
-        communityName: '',
-        membercount: 1,
-        posts: [],
-      });
-    }
-
-    function resetCommunity() {
-      setCommunity({
-        id: Math.random(),
-        communityName: '',
-        membercount: 1,
-        posts: [],
-      });
-    }
-
-    return (
-      <Popup
-        onClose={() => {
-          resetCommunity();
-        }}
-        contentStyle={{
-          opacity: 1,
-        }}
-        overlayStyle={{
-          backgroundColor: `rgba(0,0,0,.5)`,
-        }}
-        trigger={
-          <button type="button" className="createCommunityTab">
-            Create 
-            Community
-          </button>
-        }
-        modal
-        nested>
-        {close => (
-          <div className="modal">
-            <div className="content">
-              <div>
-                <textarea
-                  name="commenttext"
-                  placeholder="Enter Community Name"
-                  value={commuity.communityName}
-                  onChange={handlecommunityNamechange}
-                  id=""
-                  cols="40"
-                  rows="1"
-                  style={{ margin: 10 }}></textarea>
-              </div>
-              <div>
-                <button
-                  class="button-2"
-                  onClick={() => {
-                    close();
-                    createNewCommunity();
-                  }}
-                  role="button">
-                  Create community
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-      </Popup>
-    );
-  }
-
   return (
     <div style={{ overflow: scroll }}>
       {rows}
       <div style={{ textAlign: 'center' }}>
-        <Addcommunitybutton createCommunity={props.createCommunity} />
+        <Createcommunitypopup createCommunity={props.createCommunity} />
       </div>
     </div>
   );
 }
 
 function Sidebar(props) {
-  return (
-    <CreateCommunityTabs
-      createCommunity={props.createCommunity}
-      getUserCommunities={props.getUserCommunities}
-    />
-  );
+  if(props.loggedIn){
+    return (
+      <CreateCommunityTabs
+        createCommunity={props.createCommunity}
+        userCommunities={props.userCommunities}
+      />
+    );
+  } else {
+    return (
+      <div
+      className="communityTab"
+      onClick={() => navigate("\login")}>
+      Log in
+      </div>
+    );
+  }
+
 }
 
 export default Sidebar;
