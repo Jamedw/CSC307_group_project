@@ -14,14 +14,10 @@ const port = 10000;
 app.use(express.json());
 app.use(cors());
 
-
-
 // Start the server
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+app.listen(port, '0.0.0', () => {
+  console.log(`Example app listening at http://0.0.0.0:${port}`);
 });
-
-
 
 app.get("/", (req, res) => {
     res.send("Welcome to the backend server!");
