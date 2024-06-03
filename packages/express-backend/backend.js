@@ -52,6 +52,13 @@ app.get("/user/:id", authenticateUser, async (req, res) => {
   }
 });
 
+/* app.get("/post/:name", async (req, res) => {
+  let name = req.params["name"];
+  name = decodeURI("name");
+  console.log(name);
+  
+}) */
+
 
 //for when a user creates a post
 /* expected data;
