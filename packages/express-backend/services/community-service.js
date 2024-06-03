@@ -15,7 +15,7 @@ async function findCommunityById(id){
 }
 
 async function findCommunityByName(name){
-  return userModel.find({name: name});//name
+  return userModel.find({name: name});
 }
 //todo a fetch funciton that returns {name: ,memberCount: ,postIds: }
 
