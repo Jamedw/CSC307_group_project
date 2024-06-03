@@ -20,7 +20,9 @@ import NotFound from './pages/Com_Home_post_pages/NotFound.jsx';
 function App() {
   const INVALID_TOKEN = 'INVALID_TOKEN';
   const [token, setToken] = useState(INVALID_TOKEN);
+  const [userID, setUserID] = useState(false)
   const [message, setMessage] = useState('');
+
 
   let API_PREFIX = 'http://localhost:8000';
 
@@ -34,7 +36,9 @@ function App() {
     })
       .then(response => {
         if (response.status === 200) {
-          response.json().then(payload => setToken(payload.token));
+          response.json().then(payload => {
+            setUserID(payload.user._id)
+            setToken(payload.token)});
           setMessage(`Login successful; auth token saved`);
         } else {
           setMessage(`Login Error ${response.status}: ${response.data}`);

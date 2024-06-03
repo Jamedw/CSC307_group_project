@@ -26,7 +26,8 @@ function CreateCommunityTabs(props) {
 }
 
 function Sidebar(props) {
-  if(props.loggedIn){
+  const navigate = useNavigate();
+  if (props.loggedIn) {
     return (
       <CreateCommunityTabs
         createCommunity={props.createCommunity}
@@ -36,13 +37,14 @@ function Sidebar(props) {
   } else {
     return (
       <div
-      className="communityTab"
-      onClick={() => navigate("\login")}>
-      Log in
+        className="communityTab"
+        onClick={() => {
+          navigate('/login');
+        }}>
+        Log in
       </div>
     );
   }
-
 }
 
 export default Sidebar;

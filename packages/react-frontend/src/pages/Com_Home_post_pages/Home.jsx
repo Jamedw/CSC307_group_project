@@ -11,9 +11,10 @@ import CommunityPosts from './CommunityPage/CommunityPosts.jsx';
 
 function Home(props) {
   var token = props.token;
+  var userID = props.userID;
   let params = useParams();
 
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const [user, setUser] = useState({
     Username: 'test_username',
