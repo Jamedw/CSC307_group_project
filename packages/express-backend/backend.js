@@ -75,9 +75,9 @@ content: the comment of the user
 the comment will be created and the comment id will be added to the post's
 commentIds array and to the user's commentIds array
 */
-/* app.post("/user/comment", authenticateUser, (req, res) => {
-  //
-}) */
+app.post("/user/comment", authenticateUser, (req, res) => {
+  
+})
 
 
 //for when a usser creates a community
@@ -94,3 +94,42 @@ to the user's communityIds.
 /* app.post("/user/community", authenticateUser, (req, res) => {
   //
 }) */
+
+
+
+//for when a user likes a post
+/*expected data
+userId: the id of the user
+postId: the post of the id 
+*/
+/*
+app.post("/post/like", authenticateUser, (req, res) => {
+
+}
+*/
+
+//for when a user dislikes a post
+/*  EXPECTED DATA
+userId: the id of the user
+postId: the post of the id 
+*/
+/*  HOW IT WORKS
+if the user wants to dislike a post we will check if they are in the dislkUser
+array. If they are we don't add to the downVotes and send the appropriate error
+code, else we will add their id tothe dislkUserIds and update teh downVote counter.
+Note that we should also update the upVote count if they have upVoted the post
+*/
+/*  RETURN OBJECT?
+{dwnVtAdd : boolean, upVtChng : boolean} 
+dwnVtAdd=true will signifies that we added to the array (Note will still
+  have to sen and error code).
+upVtChng=true signifies that the user had previously upVoted the post
+and that 
+*/
+/*
+app.post("/post/dislike", authenticateUser, (req, res) => {
+
+}
+*/
+
+
