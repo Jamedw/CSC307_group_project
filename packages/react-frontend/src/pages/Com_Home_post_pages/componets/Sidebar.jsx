@@ -10,7 +10,7 @@ function CreateCommunityTabs(props) {
   const rows = props.userCommunities.map(community => (
     <div
       className="communityTab"
-      onClick={() => navigate(community.communityName)}>
+      onClick={() => navigate(encodeURI(community.communityName))}>
       {community.communityName}
     </div>
   ));

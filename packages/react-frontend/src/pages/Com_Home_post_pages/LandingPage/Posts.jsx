@@ -3,6 +3,7 @@ import './Post.css';
 import { NavLink, redirect, useNavigate, useParams } from 'react-router-dom';
 import { white } from 'color-name';
 
+
 function TableBody(props) {
   const nav = useNavigate();
   function getCommunityName(post) {
@@ -11,14 +12,16 @@ function TableBody(props) {
 
   const rows = props.posts.map(post => {
     var communityname = props.getCommunityByPostid(post).communityName;
-
+    var encodedCommunityName = encodeURI(communityname)
+    var encodedpostTitle = encodeURI(post.postTitle)
+    
     return (
       <div className="post">
-        <NavLink to={'/' + communityname}>C/ {communityname}</NavLink>
+        <NavLink to={'/' + encodedCommunityName}>C/ {communityname}</NavLink>
         <div className="title"></div>
         <NavLink
           style={{ color: 'white', fontSize: '20px' }}
-          to={communityname + '/' + post.postTitle}>
+          to={encodedCommunityName + '/' + encodedpostTitle}>
           {post.postTitle}
         </NavLink>
       </div>

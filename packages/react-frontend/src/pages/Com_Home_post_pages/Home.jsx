@@ -2,18 +2,17 @@ import Sidebar from './componets/Sidebar';
 import React, { useState } from 'react';
 import Posts from './LandingPage/Posts.jsx';
 import Comments from './PostPage/Comments.jsx';
-import Navbar from "./componets/Navbar.jsx"
+import Navbar from './componets/Navbar.jsx';
 import NotFound from './NotFound.jsx';
 import './Home.css';
 import { useParams } from 'react-router-dom';
 import CommunityPosts from './CommunityPage/CommunityPosts.jsx';
 
-
 function Home(props) {
+  let API_PREFIX = 'http://localhost:8000';
   var token = props.token;
   var userID = props.userID;
   let params = useParams();
-
 
   const [user, setUser] = useState({
     Username: 'test_username',
@@ -107,7 +106,7 @@ function Home(props) {
 
   function getUserCommunities() {
     return communities.filter(community =>
-      user.communities.includes(community.id)
+      user.communities.includes(community.id),
     );
   }
 
@@ -225,17 +224,18 @@ function Home(props) {
     // will be called filling the screen with the new posts
   }
 
+  /*The parameters of the url determine what is loaded in the main div 'main'
+  If the communityName and a postHeader is present a search for a post must be done by community name and 
+  post header, the post information is need so that when a new comment is create the comment can be linked to the
+  associated Post, also we need to post information such as the post.Header, post.content, likes and dislikes*/
 
-
-
+  /* An important aspect of the design is that all that changes is what is in the "main" div, the sidebar and navbar can be reused
+  all that changes is what is in the "main" div*/
   if (params.communityName && params.postHeader) {
-
-
     try {
-
       var currentPost = getPostByCommunityPostName(
-        params.communityName,
-        params.postHeader,
+        decodeURI(params.communityName),
+        decodeURI(params.postHeader),
       );
       return (
         <div className="home">
@@ -264,9 +264,16 @@ function Home(props) {
         </div>
       );
     } catch (e) {
-      return <NotFound postHeader={params.postHeader} communityName={params.communityName}/>;
+      return (
+        <NotFound
+          postHeader={params.postHeader}
+          communityName={params.communityName}
+        />
+      );
     }
   } else if (params.communityName) {
+    /* if the community Name is the only param in the url then the CommunityPosts element will be loaded 
+     */
     try {
       return (
         <div className="home">
@@ -302,9 +309,10 @@ function Home(props) {
         </div>
       );
     } catch (e) {
-      return <NotFound communityName={params.communityName}/>;
+      return <NotFound communityName={params.communityName} />;
     }
   } else {
+    /* if no parameters are in the url then a Landing page is loaded with default posts*/ 
     return (
       <div className="home">
         <div>
