@@ -57,18 +57,37 @@ app.get("/user/:id", authenticateUser, async (req, res) => {
 });
 
 
-app.get("/post/:name", async (req, res) => {
-  let name = req.params["name"];
-  name = decodeURI("name");
-  console.log(name);
-  const result = await findPostByTitle(name);
-  if (!(result.length)){
-    res.status(404).send("no post with that title found");
-  } else {
-    res.status(201).send(result);
-  }
+app.get("/community/:commName/:postName", async (req, res) => {
+  const commName = decodeURI(req.params["commName"]);
+  let postName = decodeURI(req.params["postName"]);
+  console.log(`${commName} ${postName}`);
+  
+  send
 })
 
+
+
+app.get("/community/:name", async (req, res) => {
+  let name = req.params["name"];
+  name = decodeURI(name);
+
+  console.log(name);
+  const resCommunity = await findCommunityByName(name);
+  if (!(resCommunity.length)){
+    res.status(404).send(`no coummunity with name \"${name}\" found`);
+  }
+  else{
+    console.log(resCommunity);
+    let postArr = [];
+    const resCommPostIds = resCommunity[0].postIds;
+    console.log(resCommPostIds);
+    for (let i = 0; i < resCommPostIds.length ; i++){
+      postArr.push(await findPostById(resCommPostIds[i]));
+    }
+    res.status(201).send({community : resCommunity[0],
+                          postsArr: postArr})
+  }
+})
 
 //for when a user creates a post
 /* expected data;
@@ -186,12 +205,21 @@ app.post("/user/community", authenticateUser, async (req, res) => {
 /*expected data
 userId: the id of the user
 postId: the post of the id 
-*/
-/* 
+*/ 
 app.post("/post/like", authenticateUser, (req, res) => {
+  const {userId, postId} = req.body;
+  if(!userId || !postId){
+    res.status(400).send("Request body must include a User and community id")
+  }else{
+    const userRes = findUserById(userId);
+    const postRes = findPostById(postId);
+    if(!userRes || !postRes){
+      res.status(404).send("Couldn't find a user/post with givern userId/postId");
+    }else{
 
-}
-*/
+    }
+  }
+})
 
 //for when a user dislikes a post
 /*  EXPECTED DATA
@@ -216,5 +244,7 @@ app.post("/post/dislike", authenticateUser, (req, res) => {
 
 }
 */
+
+
 
 
