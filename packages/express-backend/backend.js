@@ -4,7 +4,7 @@ import { registerUser, authenticateUser, loginUser } from "./auth.js"; // Import
 import { addComment } from "./services/comment-service.js";
 import { findUserById } from "./services/user-service.js";
 import "./services/connect.js"
-import User from "./models/users.js";
+//import User from "./models/users.js";
 import Posts from "./models/posts.js";
 import Comment from "./models/comment.js";
 import Community from "./models/community.js";

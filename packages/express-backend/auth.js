@@ -64,7 +64,7 @@ export async function registerUser(req, res) {
     } else {
       jwt.verify(
         token,
-        process.env.TOKEN_SECRET,
+    //    process.env.TOKEN_SECRET,
         (error, decoded) => {
           if (decoded) {
             next();

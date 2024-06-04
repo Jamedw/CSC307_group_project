@@ -13,16 +13,16 @@
 
 import express from "express";
 import cors from "cors";
-import { registerUser, authenticateUser, loginUser } from "./auth.js"; // Import the functions from auth.js
+import { registerUser, /*authenticateUser,*/ loginUser } from "./auth.js"; // Import the functions from auth.js
 import User from "./models/users.js";
 import {   
-	addUser,   
-	getUsers,   
-//	findUserById,   
-	findUserByName,   
-	findUserByJob,
-  findUserByNameAndJob,
-  findUserByIdAndDelete,
+// 	addUser,   
+// 	getUsers,   
+//  findUserById,   
+// 	findUserByName,   
+// 	findUserByJob,
+//   findUserByNameAndJob,
+//   findUserByIdAndDelete,
 } from "./services/user-service.js"
 
 const app = express();
