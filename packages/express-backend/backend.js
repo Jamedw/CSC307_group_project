@@ -4,7 +4,7 @@ import { registerUser, authenticateUser, loginUser } from "./auth.js"; // Import
 import { addComment } from "./services/comment-service.js";
 import { findUserById } from "./services/user-service.js";
 import "./services/connect.js"
-//import User from "./models/users.js";
+import User from "./models/users.js";
 import Posts from "./models/posts.js";
 import Comment from "./models/comment.js";
 import Community from "./models/community.js";
@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(cors());
 
 // Start the server
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
 

@@ -50,7 +50,7 @@ jobs:
 
               npm install --workspaces=false
 
-              npm run -w express-backend build --if-present
+              npm run express-backend build --if-present
 
               working-directory: packages/express-backend
 
