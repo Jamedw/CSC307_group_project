@@ -85,6 +85,8 @@ new created postId to the community's postIds array and to the users
 postIds array. Furthermore, we will add the postTitle to the community's
 pstTtlArr.
 */
+/*TODO
+make sure the post title isn't within the post's pstTtlArr*/
 app.post("/user/post", authenticateUser, async (req, res) => {
   const {userId, communityId, postTitle, postContent} = req.body;
   if (!userId || !communityId || !postTitle || !postContent){
@@ -141,7 +143,7 @@ app.post("/user/comment", authenticateUser, async (req, res) => {
         {'$push': {commentIds : createdComm._id}},
         { new: true,
           upsert: true});
-      res.status(201).send("finish later");
+      res.status(201).send(createdComment);
     }
   }
 })
@@ -169,16 +171,10 @@ app.post("/user/community", authenticateUser, async (req, res) => {
       res.status(409).send("Community taken already");
     } else{
       const createdComm = await addCommunity({name: name});
-      console.log(createdComm);
-      console.log(userId);
-      console.log("before update");
-      console.log(createdComm._id);
       const result = await User.findByIdAndUpdate(userId,
         {'$push': {communityIds : createdComm._id}},
         { new: true,
           upsert: true});
-      //console.log(result);
-      console.log("after update");
       res.status(201).send(createdComm);
     }
   }
