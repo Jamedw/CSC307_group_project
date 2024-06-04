@@ -55,6 +55,10 @@ jobs:
         name: node-app
         path: .
 
+     - include: additional.yml
+      ignore_errors: yes
+
+
   deploy:
     permissions:
       contents: none
