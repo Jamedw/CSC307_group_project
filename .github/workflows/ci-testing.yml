@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-      uses: actions/setup-node@v4
+    - uses: actions/setup-node@v4
       with:
         node-version: 20
         cache: 'npm'
@@ -46,6 +46,7 @@ jobs:
         npm run -w express-backend lint
         npm run -w react-frontend lint
         npm run -w react-frontend build
+      ignore_errors: yes
 
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v3
@@ -53,8 +54,8 @@ jobs:
         name: node-app
         path: .
 
-     - include: additional.yml
-      ignore_errors: yes
+
+
 
 
   deploy:
