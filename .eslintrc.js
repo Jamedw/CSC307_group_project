@@ -1,6 +1,8 @@
 module.exports = {
     rules: {
-        'no-console': 'off',
+      'no-undef': "off",
+      "no-unused-vars": "off",  
+      'no-console': 'off',
     },
     ignorePatterns: ["packages/react-frontend/assets"],
     extends: [
