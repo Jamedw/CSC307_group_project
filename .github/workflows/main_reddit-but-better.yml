@@ -48,7 +48,7 @@ jobs:
 
         run: |
 
-              npm install --workspaces=false
+              npm install --silent --workspaces=false
 
               npm run express-backend build --if-present
 
