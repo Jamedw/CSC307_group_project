@@ -18,7 +18,7 @@ import User from "./models/users.js";
 import {   
 	addUser,   
 	getUsers,   
-	findUserById,   
+//	findUserById,   
 	findUserByName,   
 	findUserByJob,
   findUserByNameAndJob,
@@ -74,12 +74,12 @@ app.get("/users/:id", async (req, res) => {
 });
 
 // Endpoint to add a new user
-app.post("/users", authenticateUser, (req, res) => {
-  const userToAdd = req.body;
-  Users.addUser(userToAdd).then((result) =>
-    res.status(201).send(result)
-  );
-});
+// app.post("/users", authenticateUser, (req, res) => {
+//   const userToAdd = req.body;
+//   Users.addUser(userToAdd).then((result) =>
+//     res.status(201).send(result)
+//   );
+// });
 
 // Endpoint to delete a user by their ID
 app.delete("/users/:id", async (req, res) => {
