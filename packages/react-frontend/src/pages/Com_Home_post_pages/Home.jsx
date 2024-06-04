@@ -14,6 +14,17 @@ function Home(props) {
   var userID = props.userID;
   let params = useParams();
 
+  function addAuthHeader(otherHeaders = {}) {
+    if (token === INVALID_TOKEN) {
+      return otherHeaders;
+    } else {
+      return {
+        ...otherHeaders,
+        Authorization: `Bearer ${token}`
+      };
+    }
+  }
+
   const [user, setUser] = useState({
     Username: 'test_username',
     password: 'test_password',
