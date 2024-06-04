@@ -10,6 +10,18 @@ mongoose
 	.catch((error) => console.log(error));  
 
 
+async function findPostByTitle(title){
+	return postsModel.find({postTitle : title});
+}
+
+async function findPostById(id){
+	return postsModel.findById(id);
+}
+
+async function addPost(post){
+	const postToAdd = new postsModel(post);
+	return postToAdd.save();
+}
 /*NOTE THAT FOR ALL THESE TODO IGNORE THE AUTHENTICATION PART
 BECAUSE THAT IS TAKEN CARE ELSE WHERE AND FOR AN QUERY JUST RETRUN
 THE WHOLE OBJECT FOR NOW. DONT WORRY ABOUT LEAVING ANYTHONG OUT
@@ -35,3 +47,10 @@ comment id to the commentIds fields
 
 AUTHENICATION NEEDED FOR THIS 
 use tokens*/
+
+
+export {
+	findPostByTitle,
+	findPostById,
+	addPost
+}

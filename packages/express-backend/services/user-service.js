@@ -13,7 +13,7 @@ async function addUser(user) {
 
 
 async function findUserByName(username){
-    return userModel.find({username: username})
+    return userModel.find({username: username}) 
 }
 /* async function getUserComments(id){
     user = await findUserById(findUserById(id))

@@ -15,8 +15,14 @@ async function findCommunityById(id){
 }
 
 async function findCommunityByName(name){
-  return userModel.find({name: name});
+  return communityModel.find({name: name});
 }
+
+async function addCommunity(community){
+  const commToAdd = new communityModel(community);
+  return commToAdd.save();
+}
+
 
 /*NOTE THAT FOR ALL THESE TODO IGNORE THE AUTHENTICATION PART
 BECAUSE THAT IS TAKEN CARE ELSE WHERE AND FOR AN QUERY JUST RETRUN
@@ -43,3 +49,10 @@ when a new post in the community is made
 
 AUTHENICATION NEEDED FOR THIS 
 use tokens*/
+
+
+export {
+  findCommunityById,
+  findCommunityByName,
+  addCommunity
+}
