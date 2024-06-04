@@ -46,7 +46,7 @@ jobs:
         npm run -w express-backend lint
         npm run -w react-frontend lint
         npm run -w react-frontend build
-      ignore_errors: yes
+        ignore_errors: yes
 
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v3
