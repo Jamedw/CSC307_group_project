@@ -36,18 +36,7 @@ app.post("/Signup", registerUser);
 
 
 // examples ---------------------------------------
-/* this is just an example.... don't think this is ever needed*/
-app.get("/user/:id", authenticateUser, async (req, res) => {
-  const id = req.params["id"]; //or req.params.id
-  let result = await findUserById(id);
-  //console.log("endpoint called");
-  if (result === undefined) {
-    //console.log("got here");
-    res.status(404).send("Resource not found.");
-  } else {
-    res.send(result);
-  }
-});
+
 
 /*Not sure if this will actually be used. This is only
 really here to reference for authentication*/
@@ -63,6 +52,24 @@ app.post("/comment", authenticateUser, (req, res) => {
 
 
 //get collection by id ----------------------------------
+
+//function will be used for the community ids
+app.get("/user/:id", authenticateUser, async (req, res) => {
+  const id = req.params["id"]; //or req.params.id
+  let result = await findUserById(id);
+  //console.log("endpoint called");
+  if (result === undefined) {
+    //console.log("got here");
+    res.status(404).send("Resource not found.");
+  } else {
+    let communityArr = [];
+    for(let i = 0; i < result.communityIds.length; i++){
+      communityArr.push(await findCommunityById(result.communityIds[i]));
+    }
+    res.status(201).send({communityArr: communityArr});
+  }
+});
+
 
 /*get a post by id */
 app.get("/post/:id", async (req, res) => {
@@ -137,6 +144,7 @@ app.post("/user/community", authenticateUser, async (req, res) => {
     }
   }
 })
+
 
 
 
@@ -328,10 +336,10 @@ app.post("/community/unfollow", authenticateUser, async (req, res) =>{
 
 // --------------------------------------------------------------------------
 
-
-
+// find something by name -----------------------------------------------------
+//getPostByCommunityPostName
 //send back community id, post detail, and post comments
-app.get("/community/:commName/:postName", async (req, res) => {
+app.get("/communityName/:commName/:postName", async (req, res) => {
   const commName = decodeURI(req.params["commName"]);
   const postName = decodeURI(req.params["postName"]);
   console.log(commName);
@@ -352,12 +360,12 @@ app.get("/community/:commName/:postName", async (req, res) => {
     if(found === false){
       res.status(404).send("The given community/post could not be found");
     }else{
-      const postRes = await findPostById((comm.postId)[i]);
+      const postRes = await findPostById((comm.postIds)[i]);
       let commArr = []
       for (let i = 0; i < postRes.commentIds.length; i++){
         commArr.push(await findCommentById((postRes.commentIds)[i]));
       }
-      res.send(201).status({comments: commArr,
+      res.status(201).send({comments: commArr,
                             post: postRes,
                             communityId: comm._id});
     }
@@ -371,12 +379,14 @@ app.get("/community/:commName/:postName", async (req, res) => {
 //information for each post in the postIds array
 /*format {community : communityObject
           postsArr : [array of post objects]}*/
-app.get("/community/:name", async (req, res) => {
+app.get("/communityName/:name", async (req, res) => {
   let name = req.params["name"];
   name = decodeURI(name);
 
   console.log(name);
   const resCommunity = await findCommunityByName(name);
+  const resComm = await User.findOne({name: name});
+  console.log(resComm);
   if (!(resCommunity.length)){
     res.status(404).send(`no coummunity with name \"${name}\" found`);
   }
@@ -388,13 +398,14 @@ app.get("/community/:name", async (req, res) => {
     for (let i = 0; i < resCommPostIds.length ; i++){
       postArr.push(await findPostById(resCommPostIds[i]));
     }
+    //add the community posts later 
     res.status(201).send({community : resCommunity[0],
                           postsArr: postArr})
   }
 })
 
 
-
+///-----------------------------------------------------------------------------------
 
 
 
