@@ -28,10 +28,15 @@ async function getPostWLimit(limit){
 	return postsModel.find({}, null, {limit: limit});
 }
 
+async function searchPostByTerm(searchTerm, limit){
+	return postsModel.find({postTitle: {$regex: new RegExp(searchTerm, 'i')}},
+	null, {limit: limit});
+  }
 
 export {
 	findPostByTitle,
 	findPostById,
 	addPost,
-	getPostWLimit
+	getPostWLimit,
+	searchPostByTerm
 }

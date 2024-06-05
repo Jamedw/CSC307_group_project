@@ -27,6 +27,11 @@ async function getCommunitiesWLimit(limit){
   return communityModel.find({}, null, {limit: limit});
 }
 
+async function searchCommunityByTerm(searchTerm, limit){
+  return communityModel.find({name: {$regex: new RegExp(searchTerm, 'i')}},
+  null, {limit: limit});
+}
+
 
 /*NOTE THAT FOR ALL THESE TODO IGNORE THE AUTHENTICATION PART
 BECAUSE THAT IS TAKEN CARE ELSE WHERE AND FOR AN QUERY JUST RETRUN
@@ -59,5 +64,6 @@ export {
   findCommunityById,
   findCommunityByName,
   addCommunity,
-  getCommunitiesWLimit
+  getCommunitiesWLimit,
+  searchCommunityByTerm
 }

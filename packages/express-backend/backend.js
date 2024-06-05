@@ -4,9 +4,9 @@ import { registerUser, authenticateUser, loginUser } from "./auth.js"; // Import
 import { addComment, findCommentById} from "./services/comment-service.js";
 import { findUserById } from "./services/user-service.js";
 import { findPostByTitle, findPostById, addPost,
-         getPostWLimit} from "./services/posts-service.js";
+         getPostWLimit, searchPostByTerm} from "./services/posts-service.js";
 import { findCommunityById, findCommunityByName,
-addCommunity, getCommunitiesWLimit } from "./services/community-service.js";
+addCommunity, getCommunitiesWLimit, searchCommunityByTerm } from "./services/community-service.js";
 import "./services/connect.js"
 import User from "./models/users.js";
 import Posts from "./models/posts.js";
@@ -420,9 +420,9 @@ app.get("/search/home", async (req, res) => {
 app.get("/search/home/:searchBy", async (req, res) => {
   const searchTerm = decodeURI(req.params["searchBy"]);
   console.log(searchTerm);
-  const community = await findCommunityByName(searchTerm);
-  const post = await findPostByTitle(searchTerm);
-  let commRes = undefined;
+  const community = await searchCommunityByTerm(searchTerm, 3);
+  const post = await searchPostByTerm(searchTerm, 3);
+/*   let commRes = undefined;
   let postRes = undefined;
   if(community.length){
     commRes = community[0];
@@ -431,12 +431,12 @@ app.get("/search/home/:searchBy", async (req, res) => {
     postRes = post[0];
   }
   console.log(community);
-  console.log(post);
-  res.status(201).send({community: commRes,
-                        post: postRes})
+  console.log(post); */
+  res.status(201).send({community: community,
+                        post: post})
 })
 
-
+// ------------------------------------------------------------------------------------------
 
 
 
