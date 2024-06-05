@@ -12,7 +12,6 @@ import Posts from "./models/posts.js";
 import Comment from "./models/comment.js";
 import Community from "./models/community.js";
 import { Db, ObjectId } from "mongodb";
-//import { find } from "prelude-ls";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -244,19 +243,20 @@ app.post("/user/comment", authenticateUser, async (req, res) => {
 
 
 // follow and unfollow a community ----------------------------------------
+//for these functions just check status code === 201 for success
 
 //check if the approiate fields and their realted collection exist
 //function needs to increment the community member count approriately
 //check if the user is already part of the community
-app.post("community/follow", authenticateUser, async (req, res) => {
+app.post("/community/follow", authenticateUser, async (req, res) => {
   const {userId, communityId} = req.body;
-  if(!userId, communityId){
-    res.status(400).send("follwing a communit requires a userId and a communityId");
+  if(!userId || !communityId){
+    res.status(400).send("follwing a community requires a userId and a communityId");
   }else{
-    const userRes = findUserById(userId);
-    const commRes = findCommunityById(communityId);
+    const userRes = await findUserById(userId);
+    const commRes = await findCommunityById(communityId);
     if(!userRes || !commRes){
-      res.status(404).send("A user or community with the give ids could not be found");
+      res.status(404).send("A user or community with the given ids could not be found");
     }
     let i = 0;
     let notFollowing = true;
@@ -284,15 +284,17 @@ app.post("community/follow", authenticateUser, async (req, res) => {
   }
 })
 
-app.post("community/unfollow", authenticateUser, async (req, res) =>{
+
+
+app.post("/community/unfollow", authenticateUser, async (req, res) =>{
   const {userId, communityId} = req.body;
-  if(!userId, communityId){
+  if(!userId || !communityId){
     res.status(400).send("follwing a communit requires a userId and a communityId");
   }else{
-    const userRes = findUserById(userId);
-    const commRes = findCommunityById(communityId);
+    const userRes = await findUserById(userId);
+    const commRes = await findCommunityById(communityId);
     if(!userRes || !commRes){
-      res.status(404).send("A user or community with the give ids could not be found");
+      res.status(404).send("A user or community with the given ids could not be found");
     }
     let i = 0;
     let Following = false;
@@ -304,12 +306,17 @@ app.post("community/unfollow", authenticateUser, async (req, res) =>{
     }
     if(Following){
       //update user array by popping off community id
-      const userUpdate = User.findByIdAndUpdate(userId,
-        {'$pop' : {communityIds: communityId}},
+      console.log(userRes);
+      console.log(commRes);
+      const userUpdate = await User.updateOne(
+        { _id: userId},
+        { $pull: {communityIds: communityId}}
+      );
+      //decrement community member count
+      const communityUpdate = await Community.findByIdAndUpdate(communityId,
+        {'$inc': {memberCount: -1}},
         { new: true,
           upsert: true});
-      //decrement community member count
-      const communityUpdate = Community.findByIdAndUpdate(communityId,);
       res.status(201).send({update: true});
     }else{
 
