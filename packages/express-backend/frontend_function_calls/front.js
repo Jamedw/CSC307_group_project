@@ -1,4 +1,28 @@
-app.post("/user/community", authenticateUser, async (req, res) => {
+let API_PREFIX = 'http://localhost:3000';
+
+function fetchUserById(id){
+  return fetch(`${API_PREFIX}/${id}`);
+}
+
+function fetchPostById(id){
+  return fetch(`${API_PREFIX}/${id}`);
+}
+
+function fetchCommunityById(id){
+  return fetch(`${API_PREFIX}/${id}`);
+}
+
+function fetchCommentById(id){
+  return fetch(`${API_PREFIX}/${id}`);
+}
+
+
+
+
+
+
+
+/* app.post("/user/community", authenticateUser, async (req, res) => {
     const {userId, name} = req.body;
     if(!userId || !name){
       res.status(404).send("Bad request: Invalid input data");
@@ -46,4 +70,4 @@ app.post("/user/community", authenticateUser, async (req, res) => {
         res.status(201).send(createdComm);
       }
     }
-  })
+  }) */

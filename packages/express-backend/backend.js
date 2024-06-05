@@ -12,6 +12,7 @@ import Posts from "./models/posts.js";
 import Comment from "./models/comment.js";
 import Community from "./models/community.js";
 import { Db, ObjectId } from "mongodb";
+//import { find } from "prelude-ls";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -35,6 +36,20 @@ app.post("/Login", loginUser);
 app.post("/Signup", registerUser);
 
 
+// examples ---------------------------------------
+/* this is just an example.... don't think this is ever needed*/
+app.get("/user/:id", authenticateUser, async (req, res) => {
+  const id = req.params["id"]; //or req.params.id
+  let result = await findUserById(id);
+  //console.log("endpoint called");
+  if (result === undefined) {
+    //console.log("got here");
+    res.status(404).send("Resource not found.");
+  } else {
+    res.send(result);
+  }
+});
+
 /*Not sure if this will actually be used. This is only
 really here to reference for authentication*/
 app.post("/comment", authenticateUser, (req, res) => {
@@ -42,18 +57,22 @@ app.post("/comment", authenticateUser, (req, res) => {
   addComment(commentAdd).then((result) =>
     res.status(201).send(result)
   );
-});
+})
 
-app.get("/user/:id", authenticateUser, async (req, res) => {
-  const id = req.params["id"]; //or req.params.id
-  let result = await findUserById(id);
-  console.log("endpoint called");
-  if (result === undefined) {
-    console.log("got here");
-    res.status(404).send("Resource not found.");
-  } else {
-    res.send(result);
+// examples done --------------------------------------
+
+
+
+//get collection by id ----------------------------------
+
+/*get a post by id */
+app.get("/post/:id", async (req, res) => {
+  const id = req.params["id"];
+  const result = await findPostById(id);
+  if (!result){
+    res.status(404).send("No post with given id found");
   }
+<<<<<<< HEAD
 });
 
 
@@ -63,7 +82,75 @@ app.get("/community/:commName/:postName", async (req, res) => {
   console.log(`${commName} ${postName}`);
   
   send
+=======
+  else{
+    res.status(201).send(result);
+  }
+>>>>>>> b19bc1d (creating post/comment/community w/ authorization done...)
 })
+
+/*get a community by id */
+app.get("/community/:id", async (req, res) => {
+  const id = req.params["id"];
+  const result = await findCommunityById(id);
+  if (!result){
+    res.status(404).send("No community with given id found");
+  }
+  else{
+    res.status(201).send(result);
+  }
+})
+
+/*get a comment by id*/
+app.get("/comment/:id", async (req, res) => {
+  const id = req.params["id"];
+  const result = await findCommunityById(id);
+  if (!result){
+    res.status(404).send("No comment with given id found");
+  }
+  else{
+    res.status(201).send(result);
+  }
+})
+// -------------------------------------------------------------
+
+
+
+// create a post, comment, community -----------------------------------------------
+
+
+
+//for when a usser creates a community
+/*expected data;
+userId: id of user who created the community
+name: name of the created community
+*/
+/*
+If the community name exists no community will be created 
+and it will send the appropriate http code. Otherwise, 
+the community will be created and the community id will be added
+to the user's communityIds.
+*/
+app.post("/user/community", authenticateUser, async (req, res) => {
+  const {userId, name} = req.body;
+  if(!userId || !name){
+    res.status(400).send("Bad request: Invalid input data");
+  }else{
+    const resComm = await findCommunityByName(name);
+    console.log("after comm lookup")
+    if (resComm.length !== 0 || !(await findUserById(userId))){
+      res.status(409).send("Community taken already");
+    } else{
+      const createdComm = await addCommunity({name: name});
+      const result = await User.findByIdAndUpdate(userId,
+        {'$push': {communityIds : createdComm._id}},
+        { new: true,
+          upsert: true});
+      res.status(201).send(createdComm);
+    }
+  }
+})
+
 
 
 
@@ -111,22 +198,36 @@ app.post("/user/post", authenticateUser, async (req, res) => {
   if (!userId || !communityId || !postTitle || !postContent){
     res.status(400).send("Bad Request: Missing data fields");
   } else{
-    const userRes = findUserById(userId);
-    const communityRes = findCommunityById(communityId);
-    if(!userRes || !communityRes){
-      res.status(404).send("Couldn't find a community/user with given ids")
-    }else{
-      const createdPost = await addPost({postTitle: postTitle, postContent, postContent});
-      await User.findByIdAndUpdate(userId,
-        {'$push': {postIds : createdPost._id}},
-        { new: true,
-          upsert: true});
-      await Community.findByIdAndUpdate(communityId,
-        {'$push': {postIds : createdPost._id}},
-        { new: true,
-          upsert: true});
-      res.status(201).send(createdPost);
-    }
+      const userRes = await findUserById(userId);
+      const communityRes = await findCommunityById(communityId);
+      if(!userRes || !communityRes){
+        res.status(404).send("Couldn't find a community/user with given ids")
+      }else{
+        let postTtlExists =  false;
+        for(let i = 0; i < communityRes.pstTtlArr.length; i++){
+          if(postTitle === (communityRes.pstTtlArr)[i]){
+            postTtlExists = true;
+          }
+        }
+        if(postTtlExists){
+          res.status(409).send("Post with this title already exists in the community");
+        }else{
+          const createdPost = await addPost({postTitle: postTitle, postContent, postContent});
+          await User.findByIdAndUpdate(userId,
+            {'$push': {postIds : createdPost._id}},
+            { new: true,
+              upsert: true});
+          await Community.findByIdAndUpdate(communityId,
+            {'$push': {postIds : createdPost._id}},
+            { new: true,
+              upsert: true});
+          await Community.findByIdAndUpdate(communityId,
+            {'$push': {pstTtlArr : postTitle}},
+            { new: true,
+              upsert: true});
+          res.status(201).send(createdPost);
+        }
+      }
   }
 })
 
@@ -148,56 +249,176 @@ app.post("/user/comment", authenticateUser, async (req, res) => {
     res.status(400).send("Bad request: Invalid input data");
   }
   else{
-    const userRes = findUserById(userId);
-    const postRes = findPostById(postId);
-    if(!userRes || ! postRes){
-      res.status(400).send("Bad request: Invalid postId or userID");
-    } else{
-      const createdComment = addComment({username: username, content: content});
-      await Posts.findByIdAndUpdate(userId,
-        {'$push': {commentIds : createdComm._id}},
-        { new: true,
-          upsert: true});
-      await User.findByIdAndUpdate(userId,
-        {'$push': {commentIds : createdComm._id}},
-        { new: true,
-          upsert: true});
-      res.status(201).send(createdComment);
+    try{
+      const userRes = await findUserById(userId);
+      const postRes = await findPostById(postId);
+      if(!userRes || ! postRes){
+        res.status(400).send("Bad request: Invalid postId or userID");
+      } else{
+        const createdComment = await addComment({username: username, content: content});
+        await Posts.findByIdAndUpdate(postId,
+          {'$push': {commentIds : createdComment._id}},
+          { new: true,
+            upsert: true});
+        await User.findByIdAndUpdate(userId,
+          {'$push': {commentIds : createdComment._id}},
+          { new: true,
+            upsert: true});
+        res.status(201).send(createdComment);
+      }
+    }catch (error){
+      res.status(401).send("bad user id or post id");
     }
+    
   }
 })
 
 
-//for when a usser creates a community
-/*expected data;
-userId: id of user who created the community
-name: name of the created community
-*/
-/*
-If the community name exists no community will be created 
-and it will send the appropriate http code. Otherwise, 
-the community will be created and the community id will be added
-to the user's communityIds.
-*/
-app.post("/user/community", authenticateUser, async (req, res) => {
-  const {userId, name} = req.body;
-  if(!userId || !name){
-    res.status(404).send("Bad request: Invalid input data");
+
+// ----------------------------------------------------------------------
+
+
+// follow and unfollow a community ----------------------------------------
+
+//check if the approiate fields and their realted collection exist
+//function needs to increment the community member count approriately
+//check if the user is already part of the community
+app.post("community/follow", authenticateUser, async (req, res) => {
+  const {userId, communityId} = req.body;
+  if(!userId, communityId){
+    res.status(400).send("follwing a communit requires a userId and a communityId");
   }else{
-    const resComm = await findCommunityByName(name);
-    console.log("after comm lookup")
-    if (resComm.length !== 0 || !(await findUserById(userId))){
-      res.status(409).send("Community taken already");
-    } else{
-      const createdComm = await addCommunity({name: name});
-      const result = await User.findByIdAndUpdate(userId,
-        {'$push': {communityIds : createdComm._id}},
+    const userRes = findUserById(userId);
+    const commRes = findCommunityById(communityId);
+    if(!userRes || !commRes){
+      res.status(404).send("A user or community with the give ids could not be found");
+    }
+    let i = 0;
+    let notFollowing = true;
+    for(; i < userRes.communityIds.length ; i++){
+      if((userRes.communityIds)[i] === communityId){
+        notFollowing = false;
+        break;
+      }
+    }
+    if(notFollowing){
+      //update user array
+      const userUpdate = await User.findByIdAndUpdate(userId,
+        {'$push': {communityIds : communityId}},
         { new: true,
           upsert: true});
-      res.status(201).send(createdComm);
+      //increment community member count
+      const communityUpdate = await Community.findByIdAndUpdate(communityId,
+        {'$inc': {memberCount: 1}},
+        { new: true,
+          upsert: true});
+      res.status(201).send({update: true});
+    }else{
+      res.status(409).send("The user already follows the community");
     }
   }
 })
+
+app.post("community/unfollow", authenticateUser, async (req, res) =>{
+  const {userId, communityId} = req.body;
+  if(!userId, communityId){
+    res.status(400).send("follwing a communit requires a userId and a communityId");
+  }else{
+    const userRes = findUserById(userId);
+    const commRes = findCommunityById(communityId);
+    if(!userRes || !commRes){
+      res.status(404).send("A user or community with the give ids could not be found");
+    }
+    let i = 0;
+    let Following = false;
+    for(; i < userRes.communityIds.length ; i++){
+      if((userRes.communityIds)[i] === communityId){
+        Following = true;
+        break;
+      }
+    }
+    if(Following){
+      //update user array by popping off community id
+      const userUpdate = User.findByIdAndUpdate(userId,
+        {'$pop' : {communityIds: communityId}},
+        { new: true,
+          upsert: true});
+      //decrement community member count
+      const communityUpdate = Community.findByIdAndUpdate(communityId,);
+      res.status(201).send({update: true});
+    }else{
+
+      res.status(409).send("The user does not follow the community");
+    }
+
+  }
+})
+
+// --------------------------------------------------------------------------
+
+
+
+//send back community id, post detail
+app.get("/community/:commName/:postName", async (req, res) => {
+  const commName = decodeURI(req.params["commName"]);
+  const postName = decodeURI(req.params["postName"]);
+  console.log(commName);
+  console.log(postName);
+  const communityRes = await findCommunityByName(commName);
+  if(communityRes.length === 0){
+    res.status(404).send("The given community/post could not be found");
+  }else{
+    const comm = communityRes[0];
+    let i = 0;
+    let found = false;
+    for (; i < comm.pstTtlArr.length; i++){
+      if((comm.pstTtlArr)[i] === postName){
+        found = true;
+        break;
+    }}
+
+    if(found === false){
+      res.status(404).send("The given community/post could not be found");
+    }else{
+      const postRes = await findPostById((comm.postId)[i]);
+      res.send(201).status({post: postRes,
+                            communityId: comm._id})
+    }
+  }
+})
+
+
+//done ... frontend function: 
+//this function is to retrieve a community by name
+//it will return the community information and all the post
+//information for each post in the postIds array
+/*format {community : communityObject
+          postsArr : [array of post objects]}*/
+app.get("/community/:name", async (req, res) => {
+  let name = req.params["name"];
+  name = decodeURI(name);
+
+  console.log(name);
+  const resCommunity = await findCommunityByName(name);
+  if (!(resCommunity.length)){
+    res.status(404).send(`no coummunity with name \"${name}\" found`);
+  }
+  else{
+    //console.log(resCommunity);
+    let postArr = [];
+    const resCommPostIds = resCommunity[0].postIds;
+    //console.log(resCommPostIds);
+    for (let i = 0; i < resCommPostIds.length ; i++){
+      postArr.push(await findPostById(resCommPostIds[i]));
+    }
+    res.status(201).send({community : resCommunity[0],
+                          postsArr: postArr})
+  }
+})
+
+
+
+
 
 
 
