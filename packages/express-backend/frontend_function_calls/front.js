@@ -68,7 +68,32 @@ function postCommunity(package){
   return promise;
 }
 
+//userid and communityid
+function followCommunity(package){
+  const promise = fetch(`${API_PREFIX}/community/follow`, {
+    method: "POST",
+    headers: addAuthHeader({
+      "Content-Type": "application/json"
+    }),
+    body: JSON.stringify(package)
+  });
 
+  return promise;
+}
+
+
+//userId and communityId
+function followCommunity(package){
+  const promise = fetch(`${API_PREFIX}/community/unfollow`, {
+    method: "POST",
+    headers: addAuthHeader({
+      "Content-Type": "application/json"
+    }),
+    body: JSON.stringify(package)
+  });
+
+  return promise;
+}
 
 
 /* app.post("/user/community", authenticateUser, async (req, res) => {
