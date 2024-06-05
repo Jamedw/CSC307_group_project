@@ -30,7 +30,7 @@ function addAuthHeader(otherHeaders = {}) {
 }
 
 //needs a userId, postId, username, content
-function postComment(pacakge){
+function postComment(package){
   const promise = fetch(`${API_PREFIX}/user/comment`, {
     method: "POST",
     headers: addAuthHeader({
@@ -43,7 +43,7 @@ function postComment(pacakge){
 }
 
 //needs a userId, communityid, postTitle, postContent
-function postPost(pacakge){
+function postPost(package){
   const promise = fetch(`${API_PREFIX}/user/post`, {
     method: "POST",
     headers: addAuthHeader({
@@ -56,7 +56,7 @@ function postPost(pacakge){
 }
 
 //userid and name
-function postCommunity(pacakge){
+function postCommunity(package){
   const promise = fetch(`${API_PREFIX}/user/community`, {
     method: "POST",
     headers: addAuthHeader({
