@@ -116,6 +116,16 @@ function unfollowCommunity(package){
 }
 
 
+function getPostbyCommunityPostId(communityName, postName){
+  return fetch(`${API_PREFIX}/communityName/${communityName}/${postName}`);
+}
+
+function getPostbyCommunityPostId(communityName){
+  return fetch(`${API_PREFIX}/communityName/${communityName}`);
+}
+
+
+
 /* app.post("/user/community", authenticateUser, async (req, res) => {
     const {userId, name} = req.body;
     if(!userId || !name){
