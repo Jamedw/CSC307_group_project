@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { registerUser, authenticateUser, loginUser } from "./auth.js"; // Import the functions from auth.js
-import { addComment } from "./services/comment-service.js";
+import { addComment, findCommentById} from "./services/comment-service.js";
 import { findUserById } from "./services/user-service.js";
 import { findPostByTitle, findPostById, addPost } from "./services/posts-service.js";
 import { findCommunityById, findCommunityByName,
@@ -330,7 +330,7 @@ app.post("/community/unfollow", authenticateUser, async (req, res) =>{
 
 
 
-//send back community id, post detail
+//send back community id, post detail, and post comments
 app.get("/community/:commName/:postName", async (req, res) => {
   const commName = decodeURI(req.params["commName"]);
   const postName = decodeURI(req.params["postName"]);
@@ -353,8 +353,13 @@ app.get("/community/:commName/:postName", async (req, res) => {
       res.status(404).send("The given community/post could not be found");
     }else{
       const postRes = await findPostById((comm.postId)[i]);
-      res.send(201).status({post: postRes,
-                            communityId: comm._id})
+      let commArr = []
+      for (let i = 0; i < postRes.commentIds.length; i++){
+        commArr.push(await findCommentById((postRes.commentIds)[i]));
+      }
+      res.send(201).status({comments: commArr,
+                            post: postRes,
+                            communityId: comm._id});
     }
   }
 })

@@ -24,5 +24,6 @@ returns {userId: ..., userName: ...., content: ....}*/
 
 
 export {
-    addComment
+    addComment,
+    findCommentById
 }

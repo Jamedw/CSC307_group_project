@@ -18,6 +18,55 @@ function fetchCommentById(id){
 
 
 
+function addAuthHeader(otherHeaders = {}) {
+  if (token === INVALID_TOKEN) {
+    return otherHeaders;
+  } else {
+    return {
+      ...otherHeaders,
+      Authorization: `Bearer ${token}`
+    };
+  }
+}
+
+//needs a userId, postId, username, content
+function postComment(pacakge){
+  const promise = fetch(`${API_PREFIX}/user/comment`, {
+    method: "POST",
+    headers: addAuthHeader({
+      "Content-Type": "application/json"
+    }),
+    body: JSON.stringify(package)
+  });
+
+  return promise;
+}
+
+//needs a userId, communityid, postTitle, postContent
+function postPost(pacakge){
+  const promise = fetch(`${API_PREFIX}/user/post`, {
+    method: "POST",
+    headers: addAuthHeader({
+      "Content-Type": "application/json"
+    }),
+    body: JSON.stringify(package)
+  });
+
+  return promise;
+}
+
+//userid and name
+function postCommunity(pacakge){
+  const promise = fetch(`${API_PREFIX}/user/community`, {
+    method: "POST",
+    headers: addAuthHeader({
+      "Content-Type": "application/json"
+    }),
+    body: JSON.stringify(package)
+  });
+
+  return promise;
+}
 
 
 
