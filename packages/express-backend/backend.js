@@ -72,21 +72,9 @@ app.get("/post/:id", async (req, res) => {
   if (!result){
     res.status(404).send("No post with given id found");
   }
-<<<<<<< HEAD
-});
-
-
-app.get("/community/:commName/:postName", async (req, res) => {
-  const commName = decodeURI(req.params["commName"]);
-  let postName = decodeURI(req.params["postName"]);
-  console.log(`${commName} ${postName}`);
-  
-  send
-=======
   else{
     res.status(201).send(result);
   }
->>>>>>> b19bc1d (creating post/comment/community w/ authorization done...)
 })
 
 /*get a community by id */
@@ -152,29 +140,6 @@ app.post("/user/community", authenticateUser, async (req, res) => {
 })
 
 
-
-
-app.get("/community/:name", async (req, res) => {
-  let name = req.params["name"];
-  name = decodeURI(name);
-
-  console.log(name);
-  const resCommunity = await findCommunityByName(name);
-  if (!(resCommunity.length)){
-    res.status(404).send(`no coummunity with name \"${name}\" found`);
-  }
-  else{
-    console.log(resCommunity);
-    let postArr = [];
-    const resCommPostIds = resCommunity[0].postIds;
-    console.log(resCommPostIds);
-    for (let i = 0; i < resCommPostIds.length ; i++){
-      postArr.push(await findPostById(resCommPostIds[i]));
-    }
-    res.status(201).send({community : resCommunity[0],
-                          postsArr: postArr})
-  }
-})
 
 //for when a user creates a post
 /* expected data;
