@@ -23,6 +23,10 @@ async function addCommunity(community){
   return commToAdd.save();
 }
 
+async function getCommunitiesWLimit(limit){
+  return communityModel.find({}, null, {limit: limit});
+}
+
 
 /*NOTE THAT FOR ALL THESE TODO IGNORE THE AUTHENTICATION PART
 BECAUSE THAT IS TAKEN CARE ELSE WHERE AND FOR AN QUERY JUST RETRUN
@@ -54,5 +58,6 @@ use tokens*/
 export {
   findCommunityById,
   findCommunityByName,
-  addCommunity
+  addCommunity,
+  getCommunitiesWLimit
 }

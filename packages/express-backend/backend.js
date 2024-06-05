@@ -3,9 +3,10 @@ import cors from "cors";
 import { registerUser, authenticateUser, loginUser } from "./auth.js"; // Import the functions from auth.js
 import { addComment, findCommentById} from "./services/comment-service.js";
 import { findUserById } from "./services/user-service.js";
-import { findPostByTitle, findPostById, addPost } from "./services/posts-service.js";
+import { findPostByTitle, findPostById, addPost,
+         getPostWLimit} from "./services/posts-service.js";
 import { findCommunityById, findCommunityByName,
-addCommunity } from "./services/community-service.js";
+addCommunity, getCommunitiesWLimit } from "./services/community-service.js";
 import "./services/connect.js"
 import User from "./models/users.js";
 import Posts from "./models/posts.js";
@@ -405,9 +406,40 @@ app.get("/communityName/:name", async (req, res) => {
 })
 
 
-///-----------------------------------------------------------------------------------
+//searching for the home and post page -------------------------------------------------------
+//this is for the home page
+app.get("/search/home", async (req, res) => {
+  const posts =  await getPostWLimit(3);
+  const communities = await getCommunitiesWLimit(3);
 
 
+  res.status(201).send({posts: posts,
+                        communities: communities});
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//These functions will not be used because the like/dislikeing has been scrapped
 
 
 //for when a user likes a post
@@ -429,6 +461,8 @@ app.post("/post/like", authenticateUser, (req, res) => {
     }
   }
 })
+
+
 
 //for when a user dislikes a post
 /*  EXPECTED DATA

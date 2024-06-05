@@ -126,6 +126,12 @@ function getPostbyCommunityPostId(communityName){
 
 
 
+function landingPage(communityName){
+  return fetch(`${API_PREFIX}/search/home`);
+}
+
+
+
 /* app.post("/user/community", authenticateUser, async (req, res) => {
     const {userId, name} = req.body;
     if(!userId || !name){
