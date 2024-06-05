@@ -9,100 +9,56 @@ import { useParams } from 'react-router-dom';
 import CommunityPosts from './CommunityPage/CommunityPosts.jsx';
 
 function Home(props) {
-  let API_PREFIX = 'http://localhost:8000';
+
   var token = props.token;
-  var userID = props.userID;
   let params = useParams();
+  let API_PREFIX = 'http://localhost:3000';
 
-  const [user, setUser] = useState({
-    Username: 'test_username',
-    password: 'test_password',
-    comments: [],
-    posts: [],
-    communities: [1, 2, 4],
+function fetchUserById(id){
+  return fetch(`${API_PREFIX}/${id}`);
+}
+
+function fetchPostById(id){
+  return fetch(`${API_PREFIX}/${id}`);
+}
+
+function fetchCommunityById(id){
+  return fetch(`${API_PREFIX}/${id}`);
+}
+
+function fetchCommentById(id){
+  return fetch(`${API_PREFIX}/${id}`);
+}
+
+function addAuthHeader(otherHeaders = {}) {
+  if (token === INVALID_TOKEN) {
+    return otherHeaders;
+  } else {
+    return {
+      ...otherHeaders,
+      Authorization: `Bearer ${token}`
+    };
+  }
+}
+
+
+//userid and name
+function postCommunity(input){
+  const promise = fetch(`${API_PREFIX}/user/community`, {
+    method: "POST",
+    headers: addAuthHeader({
+      "Content-Type": "application/json"
+    }),
+    body: JSON.stringify(input)
   });
+  return promise;
+}
 
-  const [communities, setCommunities] = useState([
-    {
-      id: 0,
-      communityName: 'testCommunity0',
-      memberCount: 0,
-      posts: [1, 2, 3, 4],
-    },
-    { id: 1, communityName: 'testCommunity1', memberCount: 0, posts: [5] },
-    { id: 2, communityName: 'testCommunity2', memberCount: 0, posts: [6] },
-    { id: 3, communityName: 'testCommunity3', memberCount: 0, posts: [7, 8] },
-    {
-      id: 4,
-      communityName: 'testCommunity4',
-      memberCount: 0,
-      posts: [9, 10, 11],
-    },
-  ]);
+  const [communities, setCommunities] = useState([]);
 
-  const [posts, setPosts] = useState([
-    {
-      id: 1,
-      upVotes: 0,
-      downVotes: 0,
-      postTitle: 'this is my 1st new post',
-      postContent: 'yup this is my first post',
-      comments: [1, 2, 3, 4],
-    },
-    {
-      id: 2,
-      upVotes: 0,
-      downVotes: 0,
-      postTitle: 'this is my 1st new post',
-      postContent: 'yup this is my first post',
-      comments: [4, 5],
-    },
-    {
-      id: 3,
-      upVotes: 0,
-      downVotes: 0,
-      postTitle: 'this is my 1st new post',
-      postContent: 'yup this is my first post',
-      comments: [6],
-    },
-    {
-      id: 4,
-      upVotes: 0,
-      downVotes: 0,
-      postTitle: 'this is my 1st new post',
-      postContent: 'yup this is my first post',
-      comments: [7],
-    },
-    {
-      id: 5,
-      upVotes: 0,
-      downVotes: 0,
-      postTitle: 'this is my post on community 1',
-      postContent: 'this is my post on community 1',
-      comments: [8, 9],
-    },
-    {
-      id: 6,
-      upVotes: 0,
-      downVotes: 0,
-      postTitle: 'this is my 1st new post on community 2',
-      postContent: 'yup this is my first post on community 2',
-      comments: [8, 9],
-    },
-  ]);
+  const [posts, setPosts] = useState([]);
 
-  const [comments, setComments] = useState([
-    { id: 1, userName: 'test_username', commentContent: 'comment 1' },
-    { id: 2, userName: 'test_username', commentContent: 'this is id 1' },
-    { id: 3, userName: 'test_username', commentContent: 'this is id 1' },
-    { id: 4, userName: 'test_username', commentContent: 'this is id 1' },
-    { id: 5, userName: 'test_username', commentContent: 'this is id 1' },
-    { id: 6, userName: 'test_username', commentContent: 'this is id 1' },
-    { id: 7, userName: 'test_username', commentContent: 'this is id 1' },
-    { id: 8, userName: 'test_username', commentContent: 'comment id 8' },
-    { id: 9, userName: 'test_username', commentContent: 'comment id 9' },
-    { id: 10, userName: 'test_username', commentContent: 'this is id 1' },
-  ]);
+  const [comments, setComments] = useState([]);
 
   function getUserCommunities() {
     return communities.filter(community =>
@@ -153,14 +109,29 @@ function Home(props) {
     });
   }
 
+
+  //needs a userId, postId, username, content
+function postComment(input){
+  const promise = fetch(`${API_PREFIX}/user/comment`, {
+    method: "POST",
+    headers: addAuthHeader({
+      "Content-Type": "application/json"
+    }),
+    body: JSON.stringify(input)
+  });
+
+  return promise;
+}
+
   function createComment(post, comment) {
-    posts.forEach(element => {
-      if (post.id === element.id) {
-        element.comments = [comment.id, ...element.comments];
-      }
-    });
+    postComment({
+      userid : props.userID,
+      postId : post.postid
+    })
     setComments([comment, ...comments]);
   }
+
+
 
   function getCommunityByPostid(post) {
     var flag = false;
@@ -198,25 +169,32 @@ function Home(props) {
     return currentpost[0];
   }
 
+    //needs a userId, communityid, postTitle, postContent
+function postPost(input){
+  const promise = fetch(`${API_PREFIX}/user/post`, {
+    method: "POST",
+    headers: addAuthHeader({
+      "Content-Type": "application/json"
+    }),
+    body: JSON.stringify(input)
+  });
+
+  return promise;
+}
+
   function createNewPost(community, post) {
-    const updated = communities.filter(
-      currentcommunity => currentcommunity.id !== community.id,
-    );
-    setCommunities([
-      {
-        id: community.id,
-        communityName: community.communityName,
-        memberCount: community.memberCount,
-        posts: [post.id, ...community.posts],
-      },
-      ...updated,
-    ]);
+
+    postPost({
+      userid : props.userID,
+      communityid : community.id,
+      postTitle : post.postTitle,
+      postContent : post.postContent
+    })
 
     setPosts([post, ...posts]);
-
-    console.log(communities);
-    console.log(posts);
   }
+
+
 
   function search(query) {
     // this query will be handles by the backend and will return a
