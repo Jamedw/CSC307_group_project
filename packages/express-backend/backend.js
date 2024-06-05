@@ -417,6 +417,25 @@ app.get("/search/home", async (req, res) => {
                         communities: communities});
 })
 
+app.get("/search/home/:searchBy", async (req, res) => {
+  const searchTerm = decodeURI(req.params["searchBy"]);
+  console.log(searchTerm);
+  const community = await findCommunityByName(searchTerm);
+  const post = await findPostByTitle(searchTerm);
+  let commRes = undefined;
+  let postRes = undefined;
+  if(community.length){
+    commRes = community[0];
+  }
+  if(post.length){
+    postRes = post[0];
+  }
+  console.log(community);
+  console.log(post);
+  res.status(201).send({community: commRes,
+                        post: postRes})
+})
+
 
 
 
