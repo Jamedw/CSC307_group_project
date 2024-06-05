@@ -1,5 +1,5 @@
 import Sidebar from './componets/Sidebar';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Posts from './LandingPage/Posts.jsx';
 import Comments from './PostPage/Comments.jsx';
 import Navbar from './componets/Navbar.jsx';
@@ -9,26 +9,28 @@ import { useParams } from 'react-router-dom';
 import CommunityPosts from './CommunityPage/CommunityPosts.jsx';
 
 function Home(props) {
+  const  INVALID_TOKEN = "INVALID_TOKEN"
+  const token = props.token;
+  const [user, setUser] = useState("")
+  const [userCommunities, setUserCommunities] = useState("")
 
-  var token = props.token;
+
+  if(user !== props.user && user === ""){
+    setUser(props.user)
+  }
+  if(userCommunities !== props.userCommunities && userCommunities === ""){
+    setUserCommunities(props.userCommunities)
+  }
+
+
   let params = useParams();
   let API_PREFIX = 'http://localhost:3000';
 
-function fetchUserById(id){
-  return fetch(`${API_PREFIX}/${id}`);
-}
+  console.log(user)
+  console.log(userCommunities)
 
-function fetchPostById(id){
-  return fetch(`${API_PREFIX}/${id}`);
-}
 
-function fetchCommunityById(id){
-  return fetch(`${API_PREFIX}/${id}`);
-}
 
-function fetchCommentById(id){
-  return fetch(`${API_PREFIX}/${id}`);
-}
 
 function addAuthHeader(otherHeaders = {}) {
   if (token === INVALID_TOKEN) {
@@ -42,22 +44,11 @@ function addAuthHeader(otherHeaders = {}) {
 }
 
 
-//userid and name
-function postCommunity(input){
-  const promise = fetch(`${API_PREFIX}/user/community`, {
-    method: "POST",
-    headers: addAuthHeader({
-      "Content-Type": "application/json"
-    }),
-    body: JSON.stringify(input)
-  });
-  return promise;
-}
 
   const [communities, setCommunities] = useState([]);
-
+  const [community, setCommunity] = useState()
   const [posts, setPosts] = useState([]);
-
+  const [post, setPost] = useState([])
   const [comments, setComments] = useState([]);
 
   function getUserCommunities() {
@@ -74,15 +65,35 @@ function postCommunity(input){
     return comments.filter(comment => post.comments.includes(comment.id));
   }
 
+
+  //userId and name
+//returns 
+  function postCommunity(input){
+    const promise = fetch(`${API_PREFIX}/user/community`, {
+      method: "POST",
+      headers: addAuthHeader({
+        "Content-Type": "application/json"
+      }),
+      body: JSON.stringify(input)
+    });
+  
+    return promise;
+  }
+
   function createCommunity(community) {
+    postCommunity({
+      userId: user._id,
+      name:community.name
+    })
     setUser({
       Username: user.Username,
       password: user.password,
       comments: user.comments,
       posts: user.posts,
-      communities: [community.id, ...user.communities],
+      communityIds: [community.id, ...user.communityIds],
     });
-    setCommunities([community, ...communities]);
+
+    setUserCommunities([community, ...userCommunities]);
   }
 
   function followCommunity(community) {
@@ -109,19 +120,6 @@ function postCommunity(input){
     });
   }
 
-
-  //needs a userId, postId, username, content
-function postComment(input){
-  const promise = fetch(`${API_PREFIX}/user/comment`, {
-    method: "POST",
-    headers: addAuthHeader({
-      "Content-Type": "application/json"
-    }),
-    body: JSON.stringify(input)
-  });
-
-  return promise;
-}
 
   function createComment(post, comment) {
     postComment({
@@ -160,13 +158,12 @@ function postComment(input){
     return false;
   }
 
-  function getPostCommentsByid(currentpostid) {}
-
-  function getPostByCommunityPostName(communityname, postTitle) {
-    const community = getCommunityByName(communityname);
-    var postids = posts.filter(post => community.posts.includes(post.id));
-    var currentpost = posts.filter(post => post.postTitle === postTitle);
-    return currentpost[0];
+  function loggedIn(){
+    if (token === INVALID_TOKEN){
+      return false
+    } else {
+      return true
+    }
   }
 
     //needs a userId, communityid, postTitle, postContent
@@ -183,15 +180,29 @@ function postPost(input){
 }
 
   function createNewPost(community, post) {
-
     postPost({
       userid : props.userID,
       communityid : community.id,
       postTitle : post.postTitle,
       postContent : post.postContent
     })
-
     setPosts([post, ...posts]);
+  }
+
+  function fetchUserById(id){
+
+    const promise = fetch(`${API_PREFIX}/user/${id}`, {
+      method: "GET",
+      headers: addAuthHeader({
+        "Content-Type": "application/json"
+      }),
+    }).then((res) =>
+    {
+      setUser(res)
+    });
+  
+    return promise;
+
   }
 
 
@@ -218,19 +229,19 @@ function postPost(input){
       return (
         <div className="home">
           <div>
-            <Navbar />
+            <Navbar logout={props.logout} loggedIn={loggedIn()}/>
           </div>
           <div class="wrapper">
             <div class="sidebar">
               <Sidebar
-                loggedIn={props.loggedIn}
+                loggedIn={loggedIn()}
                 createCommunity={createCommunity}
-                userCommunities={getUserCommunities()}
+                userCommunities={userCommunities}
               />
             </div>
             <div class="main">
               <Comments
-                loggedIn={props.loggedIn}
+                loggedIn={loggedIn()}
                 currentPostComments={getPostCommments(currentPost)}
                 currentPost={currentPost}
                 createComment={createComment}
@@ -256,29 +267,26 @@ function postPost(input){
       return (
         <div className="home">
           <div>
-            <Navbar />
+            <Navbar logout={props.logout} loggedIn={loggedIn()}/>
           </div>
           <div class="wrapper">
             <div class="sidebar">
               <Sidebar
-                loggedIn={props.loggedIn}
+                loggedIn={loggedIn()}
                 createCommunity={createCommunity}
-                userCommunities={getUserCommunities()}
+                userCommunities={userCommunities}
               />
             </div>
             <div class="main">
               <CommunityPosts
-                loggedIn={props.loggedIn}
+                loggedIn={loggedIn()}
                 createNewPost={createNewPost}
                 isUserCommunity={isUserCommunity}
-                currentCommunity={getCommunityByName(params.communityName)}
-                getCommunityByPostid={getCommunityByPostid}
-                userCommunities={getUserCommunities}
+                currentCommunity={community}
+                userCommunities={user}
                 unfollowCommunity={unfollowCommunity}
                 followCommunity={followCommunity}
-                posts={getCommunityPosts(
-                  getCommunityByName(params.communityName),
-                )}
+                posts={posts}
               />
             </div>
             <div></div>
@@ -294,14 +302,14 @@ function postPost(input){
     return (
       <div className="home">
         <div>
-          <Navbar />
+          <Navbar logout={props.logout} loggedIn={loggedIn()}/>
         </div>
         <div class="wrapper">
           <div class="sidebar">
             <Sidebar
-              loggedIn={props.loggedIn}
+              loggedIn={loggedIn()}
               createCommunity={createCommunity}
-              userCommunities={getUserCommunities()}
+              userCommunities={userCommunities}
             />
           </div>
           <div class="main">

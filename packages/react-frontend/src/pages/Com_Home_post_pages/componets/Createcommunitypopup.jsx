@@ -15,7 +15,7 @@ function Createcommunitypopup(props) {
     } else {
       setCommunity({
         id: commuity.id,
-        communityName: e.target.value,
+        name: e.target.value,
         membercount: 1,
         posts: [],
       });
@@ -26,7 +26,7 @@ function Createcommunitypopup(props) {
 
   const [commuity, setCommunity] = useState({
     id: Math.random(),
-    communityName: '',
+    name: '',
     membercount: 1,
     posts: [],
   });
@@ -35,7 +35,7 @@ function Createcommunitypopup(props) {
     props.createCommunity(commuity);
     setCommunity({
       id: Math.random(),
-      communityName: '',
+      name: '',
       membercount: 1,
       posts: [],
     });
@@ -44,7 +44,7 @@ function Createcommunitypopup(props) {
   function resetCommunity() {
     setCommunity({
       id: Math.random(),
-      communityName: '',
+      name: '',
       membercount: 1,
       posts: [],
     });

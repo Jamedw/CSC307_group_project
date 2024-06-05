@@ -15,6 +15,30 @@ export default function Navbar(props) {
     }
   }
 
+  function Log_in_out() {
+    if (props.loggedIn){
+      return(
+        <button
+        onClick={() => {
+          props.logout()
+          navigate('/')}}
+        className="custom-button"
+        style={{ margin: 10, paddingRight: 20, paddingLeft: 20 }}>
+        log Out
+      </button>
+      )
+    } else {
+      return (
+        <button
+        onClick={() => navigate('/login')}
+        className="custom-button"
+        style={{ margin: 10, paddingRight: 20, paddingLeft: 20 }}>
+        Log In
+      </button>
+      )
+    }
+  }
+
   return (
     <div className="top-nav">
       <div>
@@ -46,12 +70,7 @@ export default function Navbar(props) {
         />
       </div>
       <div>
-        <button
-          onClick={() => navigate('/login')}
-          className="custom-button"
-          style={{ margin: 10, paddingRight: 20, paddingLeft: 20 }}>
-          Log in
-        </button>
+        <Log_in_out />
       </div>
     </div>
   );
