@@ -125,12 +125,28 @@ function getPostbyCommunityPostId(communityName){
 }
 
 
-
-function landingPage(communityName){
+//returns posts & communities when arriving at the landing page
+function landingPage(){
   return fetch(`${API_PREFIX}/search/home`);
 }
 
+//for searching by a term in the landing page. Make sure to url encode,
+// the community name
+function landingPageSearch(searchTerm){
+  return fetch(`${API_PREFIX}/search/home/${searchTerm}`);
+}
 
+
+//returns the first three post in a commmunity
+function communityPage(communityName){
+  return fetch(`${API_PREFIX}/search/post/${communityName}`);
+}
+
+//search a community's post by a searchterm. make sure to url encode the 
+//community name and the search term
+function communityPage(communityName, searchTerm){
+  return fetch(`${API_PREFIX}/search/home/${communityName}/${searchTerm}`)
+}
 
 /* app.post("/user/community", authenticateUser, async (req, res) => {
     const {userId, name} = req.body;

@@ -436,6 +436,15 @@ app.get("/search/home/:searchBy", async (req, res) => {
                         post: post})
 })
 
+//for when you just open up a community page
+app.get("/search/post/:communityName", async (req, res) =>{
+  res.send("implement returning posts when opeing a community")
+})
+
+
+app.get("/search/post/:communityName/:searchTerm", async (req, res) =>{
+  res.send("implement searching a communities post")
+})
 // ------------------------------------------------------------------------------------------
 
 
