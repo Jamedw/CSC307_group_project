@@ -3,6 +3,9 @@ import jwt from "jsonwebtoken";
 import { 
   findUserByName,
   addUser } from "./services/user-service.js";  
+import User from "./models/users.js";
+import Community from "./models/community.js";
+import { findCommunityById } from "./services/community-service.js";
 
 //we neeed to be change this so its not stored in memory be rather in the database
 //note that the token is not store on the server but only returned to the client 
@@ -29,6 +32,7 @@ export async function registerUser(req, res) {
                               password: hashedPassword});
             console.log(newUser);
             res.status(201).send({user: newUser,
+                                  communities: [],
                                 token: token});
           });
         });
@@ -89,10 +93,15 @@ export async function registerUser(req, res) {
         .compare(password, retrievedUser[0].password)
         .then((matched) => {
           if (matched) {
-            generateAccessToken(username).then((token) => {
+            generateAccessToken(username).then(async (token) => {
               let userData = retrievedUser[0];
               console.log(userData);
+              let commArr = [];
+              for(let i = 0; i < userData.communityIds.length; i++){
+                commArr.push(await findCommunityById(userData.communityIds[i]));
+              }
               res.status(200).send({user: userData,
+                                    communities: commArr,
                                     token: token});
             });
           } else {

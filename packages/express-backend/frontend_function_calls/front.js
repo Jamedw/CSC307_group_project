@@ -1,19 +1,35 @@
+/*
+copy past these into the frontend. don't call them from here.
+They are just here to prevent merge conflicts in frontend development 
+folder*/
+
+
 let API_PREFIX = 'http://localhost:3000';
 
+
+//require a userid
+//will return a 
 function fetchUserById(id){
-  return fetch(`${API_PREFIX}/${id}`);
+  return fetch(`${API_PREFIX}/user/${id}`);
 }
 
+
+//not needed?
 function fetchPostById(id){
-  return fetch(`${API_PREFIX}/${id}`);
+  return fetch(`${API_PREFIX}/post/${id}`);
 }
 
+
+//not needed?
 function fetchCommunityById(id){
-  return fetch(`${API_PREFIX}/${id}`);
+  return fetch(`${API_PREFIX}/community/${id}`);
 }
 
+
+
+//not needed?
 function fetchCommentById(id){
-  return fetch(`${API_PREFIX}/${id}`);
+  return fetch(`${API_PREFIX}/comment/${id}`);
 }
 
 
@@ -55,7 +71,8 @@ function postPost(package){
   return promise;
 }
 
-//userid and name
+//userId and name
+//returns 
 function postCommunity(package){
   const promise = fetch(`${API_PREFIX}/user/community`, {
     method: "POST",
@@ -68,7 +85,9 @@ function postCommunity(package){
   return promise;
 }
 
-//userid and communityid
+//fields needed: userId and communityId
+//returns:
+//{update: true}
 function followCommunity(package){
   const promise = fetch(`${API_PREFIX}/community/follow`, {
     method: "POST",
@@ -82,8 +101,9 @@ function followCommunity(package){
 }
 
 
-//userId and communityId
-function followCommunity(package){
+//fields needed: userId and communityId
+//returns: {update: true} 
+function unfollowCommunity(package){
   const promise = fetch(`${API_PREFIX}/community/unfollow`, {
     method: "POST",
     headers: addAuthHeader({
