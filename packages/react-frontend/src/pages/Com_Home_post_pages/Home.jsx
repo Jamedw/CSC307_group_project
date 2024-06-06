@@ -13,6 +13,8 @@ function Home(props) {
   const token = props.token;
   const [user, setUser] = useState("")
   const [userCommunities, setUserCommunities] = useState("")
+  let params = useParams();
+  let API_PREFIX = 'http://localhost:3000';
 
 
   if(user !== props.user && user === ""){
@@ -21,10 +23,6 @@ function Home(props) {
   if(userCommunities !== props.userCommunities && userCommunities === ""){
     setUserCommunities(props.userCommunities)
   }
-
-
-  let params = useParams();
-  let API_PREFIX = 'http://localhost:3000';
 
   console.log(user)
   console.log(userCommunities)

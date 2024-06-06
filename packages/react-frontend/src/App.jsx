@@ -20,7 +20,7 @@ function App() {
   const INVALID_TOKEN = 'INVALID_TOKEN';
   const [token, setToken] = useState(INVALID_TOKEN);
   const [user, setUser] = useState("")
-  const [userCommunities, setUserCommunities] = useState()
+  const [userCommunities, setUserCommunities] = useState("")
   const [message, setMessage] = useState('');
 
   function Logout(){
