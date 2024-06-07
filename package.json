@@ -93,7 +93,7 @@
     "yocto-queue": "^0.1.0"
   },
   "scripts": {
-    "start": "cd packages/express-backend && npm run dev",
+    "start": "cd packages/express-backend && npm run dev ",
     "predeploy": "cd packages/react-frontend && npm run build",
     "deploy": "gh-pages -d packages/react-frontend/dist",
     "test": "echo \"Error: no test specified\" && exit 1",
