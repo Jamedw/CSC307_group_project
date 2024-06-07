@@ -328,7 +328,6 @@ app.post("/community/unfollow", authenticateUser, async (req, res) =>{
           upsert: true});
       res.status(201).send({update: true});
     }else{
-
       res.status(409).send("The user does not follow the community");
     }
 

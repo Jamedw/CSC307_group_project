@@ -83,18 +83,19 @@ function App() {
     return promise;
   }
 
+
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <Home logout={Logout} user={user} userCommunities={userCommunities} token={token} />,
+      element: <Home params={useParams()} logout={Logout} user={user} userCommunities={userCommunities} token={token} />,
       children: [
         {
           path: ':communityName',
-          element: <Home logout={Logout} user={user} userCommunities={userCommunities} token={token} />,
+          element: <Home params={useParams()} logout={Logout} user={user} userCommunities={userCommunities} token={token} />,
         },
         {
           path: ':communityName/:postHeader',
-          element: <Home logout={Logout}  user={user} userCommunities={userCommunities} token={token} />,
+          element: <Home params={useParams()}  logout={Logout}  user={user} userCommunities={userCommunities} token={token} />,
         },
       ],
     },
