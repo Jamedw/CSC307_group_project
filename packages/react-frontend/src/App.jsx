@@ -29,7 +29,7 @@ function App() {
     setUserCommunities("")
   }
 
-  let API_PREFIX = '';
+  let API_PREFIX = 'api/';
 
   function loginUser(creds) {
     const promise = fetch(`${API_PREFIX}login`, {
