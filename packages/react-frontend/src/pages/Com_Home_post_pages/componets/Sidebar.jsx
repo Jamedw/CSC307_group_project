@@ -7,11 +7,12 @@ import './Sidebar.css';
 function CreateCommunityTabs(props) {
   const navigate = useNavigate();
 
+
   const rows = props.userCommunities.map(community => (
     <div
       className="communityTab"
-      onClick={() => navigate(community.communityName)}>
-      {community.communityName}
+      onClick={() => navigate(encodeURI(community.name))}>
+      {community.name}
     </div>
   ));
 

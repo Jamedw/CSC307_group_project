@@ -7,6 +7,9 @@ async function addComment(comment){
     return commentToAdd.save();
 }
 
+async function findCommentById(id){
+    return commentModel.findById(id);
+}
 
 /*NOTE THAT FOR ALL THESE TODO IGNORE THE AUTHENTICATION PART
 BECAUSE THAT IS TAKEN CARE ELSE WHERE AND FOR AN QUERY JUST RETRUN
@@ -21,5 +24,6 @@ returns {userId: ..., userName: ...., content: ....}*/
 
 
 export {
-    addComment
+    addComment,
+    findCommentById
 }

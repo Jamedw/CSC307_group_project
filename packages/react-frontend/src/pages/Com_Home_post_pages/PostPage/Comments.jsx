@@ -8,7 +8,7 @@ function TableBody(props) {
   const rows = props.currentPostComments.map(comment => {
     return (
       <div className="comment">
-        <div>{comment.commentContent}</div>
+        <div>{comment.content}</div>
         <div className="interact"></div>
       </div>
     );

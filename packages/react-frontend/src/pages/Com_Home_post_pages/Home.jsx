@@ -1,133 +1,93 @@
 import Sidebar from './componets/Sidebar';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Posts from './LandingPage/Posts.jsx';
 import Comments from './PostPage/Comments.jsx';
-import Navbar from "./componets/Navbar.jsx"
+import Navbar from './componets/Navbar.jsx';
 import NotFound from './NotFound.jsx';
 import './Home.css';
 import { useParams } from 'react-router-dom';
 import CommunityPosts from './CommunityPage/CommunityPosts.jsx';
-
+import { cos } from 'prelude-ls';
 
 function Home(props) {
-  var token = props.token;
-  var userID = props.userID;
+  const INVALID_TOKEN = 'INVALID_TOKEN';
+  const token = props.token;
+  const [user, setUser] = useState('');
+  const [userCommunities, setUserCommunities] = useState('');
   let params = useParams();
+  let API_PREFIX = 'http://localhost:3000';
 
-
-  const [user, setUser] = useState({
-    Username: 'test_username',
-    password: 'test_password',
-    comments: [],
-    posts: [],
-    communities: [1, 2, 4],
-  });
-
-  const [communities, setCommunities] = useState([
-    {
-      id: 0,
-      communityName: 'testCommunity0',
-      memberCount: 0,
-      posts: [1, 2, 3, 4],
-    },
-    { id: 1, communityName: 'testCommunity1', memberCount: 0, posts: [5] },
-    { id: 2, communityName: 'testCommunity2', memberCount: 0, posts: [6] },
-    { id: 3, communityName: 'testCommunity3', memberCount: 0, posts: [7, 8] },
-    {
-      id: 4,
-      communityName: 'testCommunity4',
-      memberCount: 0,
-      posts: [9, 10, 11],
-    },
-  ]);
-
-  const [posts, setPosts] = useState([
-    {
-      id: 1,
-      upVotes: 0,
-      downVotes: 0,
-      postTitle: 'this is my 1st new post',
-      postContent: 'yup this is my first post',
-      comments: [1, 2, 3, 4],
-    },
-    {
-      id: 2,
-      upVotes: 0,
-      downVotes: 0,
-      postTitle: 'this is my 1st new post',
-      postContent: 'yup this is my first post',
-      comments: [4, 5],
-    },
-    {
-      id: 3,
-      upVotes: 0,
-      downVotes: 0,
-      postTitle: 'this is my 1st new post',
-      postContent: 'yup this is my first post',
-      comments: [6],
-    },
-    {
-      id: 4,
-      upVotes: 0,
-      downVotes: 0,
-      postTitle: 'this is my 1st new post',
-      postContent: 'yup this is my first post',
-      comments: [7],
-    },
-    {
-      id: 5,
-      upVotes: 0,
-      downVotes: 0,
-      postTitle: 'this is my post on community 1',
-      postContent: 'this is my post on community 1',
-      comments: [8, 9],
-    },
-    {
-      id: 6,
-      upVotes: 0,
-      downVotes: 0,
-      postTitle: 'this is my 1st new post on community 2',
-      postContent: 'yup this is my first post on community 2',
-      comments: [8, 9],
-    },
-  ]);
-
-  const [comments, setComments] = useState([
-    { id: 1, userName: 'test_username', commentContent: 'comment 1' },
-    { id: 2, userName: 'test_username', commentContent: 'this is id 1' },
-    { id: 3, userName: 'test_username', commentContent: 'this is id 1' },
-    { id: 4, userName: 'test_username', commentContent: 'this is id 1' },
-    { id: 5, userName: 'test_username', commentContent: 'this is id 1' },
-    { id: 6, userName: 'test_username', commentContent: 'this is id 1' },
-    { id: 7, userName: 'test_username', commentContent: 'this is id 1' },
-    { id: 8, userName: 'test_username', commentContent: 'comment id 8' },
-    { id: 9, userName: 'test_username', commentContent: 'comment id 9' },
-    { id: 10, userName: 'test_username', commentContent: 'this is id 1' },
-  ]);
-
-  function getUserCommunities() {
-    return communities.filter(community =>
-      user.communities.includes(community.id)
-    );
+  function loggedIn() {
+    if (token === INVALID_TOKEN) {
+      return false;
+    } else {
+      return true;
+    }
   }
+
+  if (user !== props.user && user === '') {
+    setUser(props.user);
+  }
+  if (userCommunities !== props.userCommunities && userCommunities === '') {
+    setUserCommunities(props.userCommunities);
+  }
+
+  function addAuthHeader(otherHeaders = {}) {
+    if (token === INVALID_TOKEN) {
+      return otherHeaders;
+    } else {
+      return {
+        ...otherHeaders,
+        Authorization: `Bearer ${token}`,
+      };
+    }
+  }
+
+  function landingPage() {
+    const promise = fetch(`${API_PREFIX}/search/home`).then(res => {
+      console.log(res);
+    });
+    return promise;
+  }
+
+  const [communities, setCommunities] = useState([]);
+  const [community, setCommunity] = useState([]);
+  const [posts, setPosts] = useState([]);
+  const [post, setPost] = useState([]);
+  const [comments, setComments] = useState([]);
 
   function getCommunityPosts(community) {
     return posts.filter(post => community.posts.includes(post.id));
   }
 
-  function getPostCommments(post) {
-    return comments.filter(comment => post.comments.includes(comment.id));
+  //userId and name
+  //returns
+  function postCommunity(input) {
+    const promise = fetch(`${API_PREFIX}/user/community`, {
+      method: 'POST',
+      headers: addAuthHeader({
+        'Content-Type': 'application/json',
+      }),
+      body: JSON.stringify(input),
+    });
+
+    return promise;
   }
 
   function createCommunity(community) {
+    postCommunity({
+      userId: user._id,
+      name: community.name,
+    });
     setUser({
       Username: user.Username,
       password: user.password,
       comments: user.comments,
       posts: user.posts,
-      communities: [community.id, ...user.communities],
+      communityIds: [community.id, ...user.communityIds],
     });
-    setCommunities([community, ...communities]);
+
+    setUserCommunities([community, ...userCommunities]);
   }
 
   function followCommunity(community) {
@@ -154,11 +114,28 @@ function Home(props) {
     });
   }
 
-  function createComment(post, comment) {
-    posts.forEach(element => {
-      if (post.id === element.id) {
-        element.comments = [comment.id, ...element.comments];
-      }
+  function postComment(input){
+    const promise = fetch(`${API_PREFIX}/user/comment`, {
+      method: "POST",
+      headers: addAuthHeader({
+        "Content-Type": "application/json"
+      }),
+      body: JSON.stringify(input)
+    });
+  
+    return promise;
+  }
+
+  function createComment(comment) {
+    console.log(     user._id,
+       post._id,
+      user.username,
+      comment.content)
+    postComment({
+      userId: user._id,
+      postId: post._id,
+      username : user.username,
+      content : comment.content
     });
     setComments([comment, ...comments]);
   }
@@ -173,50 +150,85 @@ function Home(props) {
     return flag;
   }
 
-  function getCommunityByName(name) {
-    var flag = false;
-    communities.forEach(community => {
-      if (community.communityName === name) {
-        flag = community;
-      }
-    });
-    return flag;
+  function initCommunity(name) {
+    getCommunityByname(encodeURI(name));
+  }
+
+  function getCommunityByname(communityName) {
+    const promise = fetch(`${API_PREFIX}/communityName/${communityName}`)
+      .then(response => {
+        if (response.status === 304) {
+          response.json().then(payload => {
+            setCommunity(payload.community);
+            setPosts(payload.postsArr);
+          });
+        } else {
+          response.json().then(payload => {
+            setCommunity(payload.community);
+            setPosts(payload.postsArr);
+          });
+        }
+      })
+      .catch(error => {});
+    return promise;
   }
 
   function isUserCommunity(community) {
-    if (user.communities.includes(community.id)) {
+    console.log(community);
+    if (user.communityIds.includes(community._id)) {
       return true;
     }
     return false;
   }
 
-  function getPostCommentsByid(currentpostid) {}
+  function initPost(communityName, postName) {
+    getPostbyCommunityPostId(communityName, postName);
+  }
 
-  function getPostByCommunityPostName(communityname, postTitle) {
-    const community = getCommunityByName(communityname);
-    var postids = posts.filter(post => community.posts.includes(post.id));
-    var currentpost = posts.filter(post => post.postTitle === postTitle);
-    return currentpost[0];
+  function getPostbyCommunityPostId(communityName, postName) {
+    const promise = fetch(`${API_PREFIX}/communityName/${communityName}/${postName}`)
+      .then(response => {
+        if (response.status === 304) {
+          response.json().then(payload => {
+            setPost(payload.post)
+            setComments(payload.comments)
+          });
+        } else {
+          response.json().then(payload => {
+            setPost(payload.post)
+            setComments(payload.comments)
+          });
+        }
+      })
+      .catch(error => {});
+      return promise
+  }
+
+  function getPostCommments(post) {
+    return comments.filter(comment => post.comments.includes(comment.id));
+  }
+
+  //needs a userId, communityid, postTitle, postContent
+  function postPost(input) {
+    const promise = fetch(`${API_PREFIX}/user/post`, {
+      method: 'POST',
+      headers: addAuthHeader({
+        'Content-Type': 'application/json',
+      }),
+      body: JSON.stringify(input),
+    });
+
+    return promise;
   }
 
   function createNewPost(community, post) {
-    const updated = communities.filter(
-      currentcommunity => currentcommunity.id !== community.id,
-    );
-    setCommunities([
-      {
-        id: community.id,
-        communityName: community.communityName,
-        memberCount: community.memberCount,
-        posts: [post.id, ...community.posts],
-      },
-      ...updated,
-    ]);
-
+    postPost({
+      userId: user._id,
+      communityId: community._id,
+      postTitle: post.postTitle,
+      postContent: post.postContent,
+    });
     setPosts([post, ...posts]);
-
-    console.log(communities);
-    console.log(posts);
   }
 
   function search(query) {
@@ -225,36 +237,36 @@ function Home(props) {
     // will be called filling the screen with the new posts
   }
 
+  /*The parameters of the url determine what is loaded in the main div 'main'
+  If the communityName and a postHeader is present a search for a post must be done by community name and 
+  post header, the post information is need so that when a new comment is create the comment can be linked to the
+  associated Post, also we need to post information such as the post.Header, post.content, likes and dislikes*/
 
-
-
+  /* An important aspect of the design is that all that changes is what is in the "main" div, the sidebar and navbar can be reused
+  all that changes is what is in the "main" div*/
   if (params.communityName && params.postHeader) {
-
-
+    if (post === undefined || post.postTitle !== decodeURI(params.postHeader)){
+          initPost(params.communityName, params.postHeader);
+    }
     try {
-
-      var currentPost = getPostByCommunityPostName(
-        params.communityName,
-        params.postHeader,
-      );
       return (
         <div className="home">
           <div>
-            <Navbar />
+            <Navbar logout={props.logout} loggedIn={loggedIn()} />
           </div>
           <div class="wrapper">
             <div class="sidebar">
               <Sidebar
-                loggedIn={props.loggedIn}
+                loggedIn={loggedIn()}
                 createCommunity={createCommunity}
-                userCommunities={getUserCommunities()}
+                userCommunities={userCommunities}
               />
             </div>
             <div class="main">
               <Comments
-                loggedIn={props.loggedIn}
-                currentPostComments={getPostCommments(currentPost)}
-                currentPost={currentPost}
+                loggedIn={loggedIn()}
+                currentPostComments={comments}
+                currentPost={post}
                 createComment={createComment}
               />
             </div>
@@ -264,36 +276,49 @@ function Home(props) {
         </div>
       );
     } catch (e) {
-      return <NotFound postHeader={params.postHeader} communityName={params.communityName}/>;
+      return (
+        <NotFound
+          postHeader={params.postHeader}
+          communityName={params.communityName}
+        />
+      );
     }
   } else if (params.communityName) {
+    /* if the community Name is the only param in the url then the CommunityPosts element will be loaded
+     */
+    if (
+      community === undefined ||
+      decodeURI(params.communityName) !== community.name
+    ) {
+      initCommunity(params.communityName);
+    }
+    console.log(community);
+    console.log(posts);
+
     try {
       return (
         <div className="home">
           <div>
-            <Navbar />
+            <Navbar logout={props.logout} loggedIn={loggedIn()} />
           </div>
           <div class="wrapper">
             <div class="sidebar">
               <Sidebar
-                loggedIn={props.loggedIn}
+                loggedIn={loggedIn()}
                 createCommunity={createCommunity}
-                userCommunities={getUserCommunities()}
+                userCommunities={userCommunities}
               />
             </div>
             <div class="main">
               <CommunityPosts
-                loggedIn={props.loggedIn}
+                loggedIn={loggedIn()}
                 createNewPost={createNewPost}
                 isUserCommunity={isUserCommunity}
-                currentCommunity={getCommunityByName(params.communityName)}
-                getCommunityByPostid={getCommunityByPostid}
-                userCommunities={getUserCommunities}
+                currentCommunity={community}
+                userCommunities={user}
                 unfollowCommunity={unfollowCommunity}
                 followCommunity={followCommunity}
-                posts={getCommunityPosts(
-                  getCommunityByName(params.communityName),
-                )}
+                posts={posts}
               />
             </div>
             <div></div>
@@ -302,20 +327,24 @@ function Home(props) {
         </div>
       );
     } catch (e) {
-      return <NotFound communityName={params.communityName}/>;
+      return <NotFound communityName={params.communityName} />;
     }
   } else {
+    /* if no parameters are in the url then a Landing page is loaded with default posts*/
+
+      landingPage()
+
     return (
       <div className="home">
         <div>
-          <Navbar />
+          <Navbar logout={props.logout} loggedIn={loggedIn()} />
         </div>
         <div class="wrapper">
           <div class="sidebar">
             <Sidebar
-              loggedIn={props.loggedIn}
+              loggedIn={loggedIn()}
               createCommunity={createCommunity}
-              userCommunities={getUserCommunities()}
+              userCommunities={userCommunities}
             />
           </div>
           <div class="main">

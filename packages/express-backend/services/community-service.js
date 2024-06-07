@@ -15,8 +15,23 @@ async function findCommunityById(id){
 }
 
 async function findCommunityByName(name){
-  return userModel.find({name: name});
+  return communityModel.find({name: name});
 }
+
+async function addCommunity(community){
+  const commToAdd = new communityModel(community);
+  return commToAdd.save();
+}
+
+async function getCommunitiesWLimit(limit){
+  return communityModel.find({}, null, {limit: limit});
+}
+
+async function searchCommunityByTerm(searchTerm, limit){
+  return communityModel.find({name: {$regex: new RegExp(searchTerm, 'i')}},
+  null, {limit: limit});
+}
+
 
 /*NOTE THAT FOR ALL THESE TODO IGNORE THE AUTHENTICATION PART
 BECAUSE THAT IS TAKEN CARE ELSE WHERE AND FOR AN QUERY JUST RETRUN
@@ -43,3 +58,12 @@ when a new post in the community is made
 
 AUTHENICATION NEEDED FOR THIS 
 use tokens*/
+
+
+export {
+  findCommunityById,
+  findCommunityByName,
+  addCommunity,
+  getCommunitiesWLimit,
+  searchCommunityByTerm
+}
