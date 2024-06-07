@@ -55,7 +55,7 @@ function Home(props) {
   }
 
   function landingPage() {
-    const promise = fetch(`search/home`)
+    const promise = fetch(`${PREFIX}/search/home`)
       .then(response => {
         if (response.status === 304) {
           response.json().then(payload => {
