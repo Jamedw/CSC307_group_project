@@ -53,11 +53,11 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: node-app
-          working-directory: packages/express-backend
+          
 
       - name: Unzip artifact for deployment
         run: unzip release.zip
-        working-directory: packages/express-backend
+        
       
       - name: Login to Azure
         uses: azure/login@v1
