@@ -40,16 +40,16 @@ app.get('/', (req, res) => {
 });
 
 // Endpoint to verify login
-app.post('/api/Login', loginUser);
+app.post('/Login', loginUser);
 
 // Endpoint to handle signup
-app.post('/api/Signup', registerUser);
+app.post('/Signup', registerUser);
 
 // examples --------------------------------------
 
 /*Not sure if this will actually be used. This is only
 really here to reference for authentication*/
-app.post('/api/comment', authenticateUser, (req, res) => {
+app.post('/comment', authenticateUser, (req, res) => {
   const commentAdd = req.body;
   addComment(commentAdd).then(result => res.status(201).send(result));
 });
@@ -59,7 +59,7 @@ app.post('/api/comment', authenticateUser, (req, res) => {
 //get collection by id ----------------------------------
 
 //function will be used for the community ids
-app.get('/api/user/:id', authenticateUser, async (req, res) => {
+app.get('/user/:id', authenticateUser, async (req, res) => {
   const id = req.params['id']; //or req.params.id
   let result = await findUserById(id);
   //console.log("endpoint called");
@@ -76,7 +76,7 @@ app.get('/api/user/:id', authenticateUser, async (req, res) => {
 });
 
 /*get a post by id */
-app.get('/api/post/:id', async (req, res) => {
+app.get('/post/:id', async (req, res) => {
   const id = req.params['id'];
   const result = await findPostById(id);
   if (!result) {
@@ -87,7 +87,7 @@ app.get('/api/post/:id', async (req, res) => {
 });
 
 /*get a community by id */
-app.get('/api/community/:id', async (req, res) => {
+app.get('/community/:id', async (req, res) => {
   const id = req.params['id'];
   const result = await findCommunityById(id);
   if (!result) {
@@ -98,7 +98,7 @@ app.get('/api/community/:id', async (req, res) => {
 });
 
 /*get a comment by id*/
-app.get('/api/comment/:id', async (req, res) => {
+app.get('/comment/:id', async (req, res) => {
   const id = req.params['id'];
   const result = await findCommunityById(id);
   if (!result) {
@@ -122,7 +122,7 @@ and it will send the appropriate http code. Otherwise,
 the community will be created and the community id will be added
 to the user's communityIds.
 */
-app.post('/api/user/community', authenticateUser, async (req, res) => {
+app.post('/user/community', authenticateUser, async (req, res) => {
   const { userId, name } = req.body;
   if (!userId || !name) {
     res.status(400).send('Bad request: Invalid input data');
@@ -160,7 +160,7 @@ pstTtlArr.
 */
 /*TODO
 make sure the post title isn't within the post's pstTtlArr*/
-app.post('/api/user/post', authenticateUser, async (req, res) => {
+app.post('/user/post', authenticateUser, async (req, res) => {
   const { userId, communityId, postTitle, postContent } = req.body;
   if (!userId || !communityId || !postTitle || !postContent) {
     res.status(400).send('Bad Request: Missing data fields');
@@ -218,7 +218,7 @@ content: the comment of the user
 the comment will be created and the comment id will be added to the post's
 commentIds array and to the user's commentIds array
 */
-app.post('/api/user/comment', authenticateUser, async (req, res) => {
+app.post('/user/comment', authenticateUser, async (req, res) => {
   const { userId, postId, username, content } = req.body;
   if (!userId || !postId || !username || !content) {
     res.status(400).send('Bad request: Invalid input data');
@@ -259,7 +259,7 @@ app.post('/api/user/comment', authenticateUser, async (req, res) => {
 //check if the approiate fields and their realted collection exist
 //function needs to increment the community member count approriately
 //check if the user is already part of the community
-app.post('/api/community/follow', authenticateUser, async (req, res) => {
+app.post('/community/follow', authenticateUser, async (req, res) => {
   const { userId, communityId } = req.body;
   if (!userId || !communityId) {
     res
@@ -300,7 +300,7 @@ app.post('/api/community/follow', authenticateUser, async (req, res) => {
   }
 });
 
-app.post('/api/community/unfollow', authenticateUser, async (req, res) => {
+app.post('/community/unfollow', authenticateUser, async (req, res) => {
   const { userId, communityId } = req.body;
   if (!userId || !communityId) {
     res
@@ -347,7 +347,7 @@ app.post('/api/community/unfollow', authenticateUser, async (req, res) => {
 // find something by name -----------------------------------------------------
 //getPostByCommunityPostName
 //send back community id, post detail, and post comments
-app.get('/api/communityName/:commName/:postName', async (req, res) => {
+app.get('/communityName/:commName/:postName', async (req, res) => {
   const commName = decodeURI(req.params['commName']);
   const postName = decodeURI(req.params['postName']);
   console.log(commName);
@@ -387,7 +387,7 @@ app.get('/api/communityName/:commName/:postName', async (req, res) => {
 //information for each post in the postIds array
 /*format {community : communityObject
           postsArr : [array of post objects]}*/
-app.get('/api/communityName/:name', async (req, res) => {
+app.get('/communityName/:name', async (req, res) => {
   let name = req.params['name'];
   name = decodeURI(name);
 
@@ -412,13 +412,13 @@ app.get('/api/communityName/:name', async (req, res) => {
 
 //searching for the home and post page -------------------------------------------------------
 //this is for the home page
-app.get('/api/search/home', async (req, res) => {
+app.get('/search/home', async (req, res) => {
   const posts = await getPostWLimit(3);
   const communities = await getCommunitiesWLimit(3);
   res.status(201).send({ posts: posts, communities: communities });
 });
 
-app.get('/api/search/home/:searchBy', async (req, res) => {
+app.get('/search/home/:searchBy', async (req, res) => {
   const searchTerm = decodeURI(req.params['searchBy']);
   console.log(searchTerm);
   const community = await searchCommunityByTerm(searchTerm, 3);
@@ -436,7 +436,7 @@ app.get('/api/search/home/:searchBy', async (req, res) => {
   res.status(201).send({ community: community, post: post });
 });
 
-app.get("/api/search/post/:communityName", async (req, res) =>{
+app.get("/search/post/:communityName", async (req, res) =>{
   const communityName = decodeURI(req.params["communityName"]);
   const resCommunity = await findCommunityByName(communityName);
   if(resCommunity.length == 0){
@@ -451,7 +451,7 @@ app.get("/api/search/post/:communityName", async (req, res) =>{
   }
 })
 
-app.get("/api/search/post/:communityName/:searchTerm", async (req, res) =>{
+app.get("/search/post/:communityName/:searchTerm", async (req, res) =>{
   const communityName = decodeURI(req.params["communityName"]);
   const searchTerm = decodeURI(req.params["searchTerm"]);
 
@@ -479,7 +479,7 @@ app.get("/api/search/post/:communityName/:searchTerm", async (req, res) =>{
 userId: the id of the user
 postId: the post of the id 
 */
-app.post('/api/post/like', authenticateUser, (req, res) => {
+app.post('/post/like', authenticateUser, (req, res) => {
   const { userId, postId } = req.body;
   if (!userId || !postId) {
     res.status(400).send('Request body must include a User and community id');
