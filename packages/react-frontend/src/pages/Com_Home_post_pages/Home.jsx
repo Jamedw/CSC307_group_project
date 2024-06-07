@@ -21,8 +21,8 @@ function Home(props) {
   const [posts, setPosts] = useState('');
   const [post, setPost] = useState([]);
   const [comments, setComments] = useState([]);
-  const [params, setParams] = useState("")
-  if (params !== useParams()){
+  const [params, setParams] = useState('');
+  if (params !== useParams()) {
     setParams(useParams());
   }
 
@@ -34,11 +34,10 @@ function Home(props) {
     }
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     setUser(props.user);
-  },[props.user])
+  }, [props.user]);
 
-  
   if (userCommunities !== props.userCommunities && userCommunities === '') {
     setUserCommunities(props.userCommunities);
   }
@@ -74,7 +73,7 @@ function Home(props) {
     landingPage();
   }
 
-  function landingPageSearch(input){
+  function landingPageSearch(input) {
     const promise = fetch(`${PREFIX}/search/home/${encodeURI(input)}`)
       .then(response => {
         if (response.status === 304) {
@@ -89,45 +88,43 @@ function Home(props) {
       })
       .catch(error => {});
     return promise;
-  };
-
-  function communitySearch(input){
-    const promise = fetch(`${PREFIX}/search/post/${encodeURI(community.name)}/${encodeURI(input)}`)
-    .then(response => {
-      if (response.status === 304) {
-        response.json().then(payload => {
-
-          setCommunityPosts(payload.posts);
-        });
-      } else {
-        response.json().then(payload => {
-          setCommunityPosts(payload.posts);
-        });
-      }
-    })
-    .catch(error => {});
-  return promise;
   }
 
-  function search(searchterm){
-    if (params.communityName === undefined){
-      if(searchterm === "" || searchterm === undefined){
-        initlanding()
-      } else{
-        landingPageSearch(searchterm)
-      }
+  function communitySearch(input) {
+    const promise = fetch(
+      `${PREFIX}/search/post/${encodeURI(community.name)}/${encodeURI(input)}`,
+    )
+      .then(response => {
+        if (response.status === 304) {
+          response.json().then(payload => {
+            setCommunityPosts(payload.posts);
+          });
+        } else {
+          response.json().then(payload => {
+            setCommunityPosts(payload.posts);
+          });
+        }
+      })
+      .catch(error => {});
+    return promise;
+  }
 
-    } else if (params.communityName && !params.postHeader){
-      if(searchterm === "" || searchterm === undefined){
-        initCommunity(community.name)
-      } else{
-        communitySearch(searchterm)
+  function search(searchterm) {
+    if (params.communityName === undefined) {
+      if (searchterm === '' || searchterm === undefined) {
+        initlanding();
+      } else {
+        landingPageSearch(searchterm);
       }
-    } else{
-
+    } else if (params.communityName && !params.postHeader) {
+      if (searchterm === '' || searchterm === undefined) {
+        initCommunity(community.name);
+      } else {
+        communitySearch(searchterm);
+      }
+    } else {
     }
-    
-  };
+  }
 
   //userId and name
   //returns
@@ -138,18 +135,19 @@ function Home(props) {
         'Content-Type': 'application/json',
       }),
       body: JSON.stringify(input),
-    }).then(response => {
-      if (response.status === 304) {
-        response.json().then(payload => {
-          setUserCommunities([payload, ...userCommunities]);
-        });
-      } else {
-        response.json().then(payload => {
-          setUserCommunities([payload, ...userCommunities]);
-        });
-      }
     })
-    .catch(error => {});
+      .then(response => {
+        if (response.status === 304) {
+          response.json().then(payload => {
+            setUserCommunities([payload, ...userCommunities]);
+          });
+        } else {
+          response.json().then(payload => {
+            setUserCommunities([payload, ...userCommunities]);
+          });
+        }
+      })
+      .catch(error => {});
 
     return promise;
   }
@@ -226,7 +224,6 @@ function Home(props) {
     setComments([comment, ...comments]);
   }
 
-
   function initCommunity(name) {
     getCommunityByname(encodeURI(name));
   }
@@ -251,13 +248,13 @@ function Home(props) {
   }
 
   function isUserCommunity(community) {
-    var flag = false
+    var flag = false;
     userCommunities.forEach(element => {
-      if(element._id === community._id){
-        flag = true
+      if (element._id === community._id) {
+        flag = true;
       }
     });
-    return flag
+    return flag;
   }
 
   function initPost(communityName, postName) {
@@ -312,8 +309,6 @@ function Home(props) {
     setCommunityPosts([post, ...communityPosts]);
   }
 
- 
-
   /*The parameters of the url determine what is loaded in the main div 'main'
   If the communityName and a postHeader is present a search for a post must be done by community name and 
   post header, the post information is need so that when a new comment is create the comment can be linked to the
@@ -329,7 +324,11 @@ function Home(props) {
       return (
         <div className="home">
           <div>
-            <Navbar search={search} logout={props.logout} loggedIn={loggedIn()} />
+            <Navbar
+              search={search}
+              logout={props.logout}
+              loggedIn={loggedIn()}
+            />
           </div>
           <div class="wrapper">
             <div class="sidebar">
@@ -371,7 +370,11 @@ function Home(props) {
       return (
         <div className="home">
           <div>
-            <Navbar search={search} logout={props.logout} loggedIn={loggedIn()} />
+            <Navbar
+              search={search}
+              logout={props.logout}
+              loggedIn={loggedIn()}
+            />
           </div>
           <div class="wrapper">
             <div class="sidebar">
@@ -407,11 +410,15 @@ function Home(props) {
       useEffect(() => {
         initlanding();
       }, [params]);
-  
+
       return (
         <div className="home">
           <div>
-            <Navbar search={search} logout={props.logout} loggedIn={loggedIn()} />
+            <Navbar
+              search={search}
+              logout={props.logout}
+              loggedIn={loggedIn()}
+            />
           </div>
           <div class="wrapper">
             <div class="sidebar">
