@@ -148,6 +148,17 @@ function communityPage(communityName, searchTerm){
   return fetch(`${API_PREFIX}/search/home/${communityName}/${searchTerm}`)
 }
 
+
+
+function postPage(communityName){
+  return fetch(`${API_PREFIX}/search/post/${communityName}`);
+}
+
+function postPageSearch(communityName, searchTerm){
+  return fetch(`${API_PREFIX}/search/post/${communityName}/${searchTerm}`);
+}
+
+
 /* app.post("/user/community", authenticateUser, async (req, res) => {
     const {userId, name} = req.body;
     if(!userId || !name){

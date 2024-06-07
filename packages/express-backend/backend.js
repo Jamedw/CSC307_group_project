@@ -436,12 +436,39 @@ app.get("/search/home/:searchBy", async (req, res) => {
 
 //for when you just open up a community page
 app.get("/search/post/:communityName", async (req, res) =>{
-  res.send("implement returning posts when opeing a community")
+  const communityName = req.params["communityName"];
+  const resCommunity = await findCommunityByName(communityName);
+  if(resCommunity.length == 0){
+    res.status(404).send("No community with given name");
+  } else {
+    const community = resCommunity[0]
+    let postArr = [];
+    for (let i = 0; i < community.pstTtlArr.length && i < 3; i++){
+      postArr.push(await findPostById(community.postIds[i]));
+    }
+    res.status(201).send({posts : postArr});
+  }
 })
 
 
 app.get("/search/post/:communityName/:searchTerm", async (req, res) =>{
-  res.send("implement searching a communities post")
+  const communityName = decodeURI(req.params["communityName"]);
+  const searchTerm = decodeURI(req.params["searchTerm"]);
+
+  const resCommunity = await findCommunityByName(communityName);
+
+  if(resCommunity.length == 0){
+    res.status(404).send("No community with given name");
+  } else {
+    const community = resCommunity[0]
+    let postArr = [];
+    for (let i = 0; i < community.pstTtlArr.length && postArr.length < 3; i++){
+      if(community.pstTtlArr[i].toUpperCase().includes(searchTerm.toUpperCase())){
+        postArr.push(await findPostById(community.postIds[i]));
+      } 
+    }
+    res.status(201).send({posts : postArr});
+  }
 })
 // ------------------------------------------------------------------------------------------
 
