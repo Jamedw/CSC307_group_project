@@ -10,7 +10,7 @@ import CommunityPosts from './CommunityPage/CommunityPosts.jsx';
 import { cos } from 'prelude-ls';
 
 function Home(props) {
-  let PREFIX = '';
+  let PREFIX = 'api';
   const INVALID_TOKEN = 'INVALID_TOKEN';
   const token = props.token;
   const [user, setUser] = useState('');
