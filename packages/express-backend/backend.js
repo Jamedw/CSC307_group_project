@@ -45,7 +45,7 @@ app.post('/Login', loginUser);
 // Endpoint to handle signup
 app.post('/Signup', registerUser);
 
-// examples ---------------------------------------
+// examples --------------------------------------
 
 /*Not sure if this will actually be used. This is only
 really here to reference for authentication*/
