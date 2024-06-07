@@ -8,6 +8,16 @@ function TableBody(props) {
   var communityname = props.currentCommunity.name;
   var currentCommunity = props.currentCommunity;
 
+  function isUserCommunity(userCommunities, community) {
+    var count = userCommunities.length;
+    for (var i = 0; i < count; i++) {
+      if (userCommunities[i].communityName === community.communityName) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   function Followbutton() {
     if (props.loggedIn){
       if (props.isUserCommunity(currentCommunity)) {
@@ -124,6 +134,7 @@ function Posts(props) {
       createNewPost={props.createNewPost}
       currentCommunity={props.currentCommunity}
       isUserCommunity={props.isUserCommunity}
+      userCommunities={props.getUserCommunities}
       followCommunity={props.followCommunity}
       unfollowCommunity={props.unfollowCommunity}
       posts={props.posts}

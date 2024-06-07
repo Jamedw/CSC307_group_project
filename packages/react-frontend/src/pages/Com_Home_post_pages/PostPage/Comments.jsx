@@ -36,7 +36,7 @@ function TableBody(props) {
   } else {
     return (
       <div>
-        <div className="post">
+        <div className="post" >
           <div style={{ fontSize: '30px', color: 'white' }}>
             {props.currentPost.postTitle}
           </div>
@@ -51,8 +51,6 @@ function TableBody(props) {
               className="communityTab">
               Log In
             </div>
-            <div></div>
-            <div></div>
           </div>
         </div>
         {rows}
