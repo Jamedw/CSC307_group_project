@@ -7,7 +7,7 @@ import './Sidebar.css';
 function CreateCommunityTabs(props) {
   const navigate = useNavigate();
 
-  if(props.userCommunities === undefined){
+  if(props.userCommunities === undefined || props.userCommunities === ""){
 
   
     return (
