@@ -29,7 +29,7 @@ function App() {
     setUserCommunities("")
   }
 
-  let API_PREFIX = '/rbb-web-app-api.azurewebsites.net';
+  let API_PREFIX = 'api/rbb-web-app-api.azurewebsites.net';
 
   function loginUser(creds) {
     const promise = fetch(`${API_PREFIX}/login`, {
