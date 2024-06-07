@@ -8,6 +8,7 @@
     "lint": "npx eslint . && npx prettier --check .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "npx nodemon backend.js",
+    "build": "vite build",
     "start": "node backend.js"
   },
   "author": "",
