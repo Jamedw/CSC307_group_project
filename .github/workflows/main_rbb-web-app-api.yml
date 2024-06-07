@@ -39,7 +39,7 @@ jobs:
         with:
           name: node-app
           path: release.zip
-          working-directory: packages/express-backend
+
 
 
   deploy:
