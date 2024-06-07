@@ -15,7 +15,7 @@
   "main": ".eslintrc.js",
   "scripts": {
     "start": "cd packages/express-backend && npm run start ",
-    "build": "npm vite build"
+    "build": "cd packages/react-frontend && npm run build"
     "predeploy": "cd packages/react-frontend && npm run build",
     "deploy": "gh-pages -d packages/react-frontend/dist",
     "lint": "npx eslint ",
