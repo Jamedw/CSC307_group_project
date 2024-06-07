@@ -51,13 +51,13 @@ jobs:
               npm install --silent --workspaces=false
 
               npm run express-backend build --if-present
-
+        working-directory: packages/express-backend
 
 
 
       - name: Zip artifact for deployment
         run: zip release.zip ./* -r
-
+        working-directory: packages/express-backend
 
 
 
