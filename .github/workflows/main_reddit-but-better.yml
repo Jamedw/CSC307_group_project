@@ -67,7 +67,7 @@ jobs:
 
         with:
 
-          name: node-app
+          name: backend
 
           path: release.zip
 
@@ -99,7 +99,7 @@ jobs:
 
         with:
 
-          name: node-app
+          name: backend
 
 
 
