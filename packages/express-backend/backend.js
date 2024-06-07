@@ -350,20 +350,15 @@ app.post('/community/unfollow', authenticateUser, async (req, res) => {
 app.get('/communityName/:commName/:postName', async (req, res) => {
   const commName = decodeURI(req.params['commName']);
   const postName = decodeURI(req.params['postName']);
-  console.log(commName);
-  console.log(postName);
   const communityRes = await findCommunityByName(commName);
   if (communityRes.length === 0) {
     res.status(404).send('The given community/post could not be found');
   } else {
     const comm = communityRes[0];
-    let i = 0;
-    let found = false;
-    for (; i < comm.pstTtlArr.length; i++) {
-      if (comm.pstTtlArr[i] === postName) {
-        found = true;
-        break;
-      }
+
+    found = false;
+    if (comm.pstTtlArr.includes(postName)) {
+      found = true;
     }
 
     if (found === false) {
@@ -436,40 +431,42 @@ app.get('/search/home/:searchBy', async (req, res) => {
   res.status(201).send({ community: community, post: post });
 });
 
-app.get("/search/post/:communityName", async (req, res) =>{
-  const communityName = decodeURI(req.params["communityName"]);
+app.get('/search/post/:communityName', async (req, res) => {
+  const communityName = decodeURI(req.params['communityName']);
   const resCommunity = await findCommunityByName(communityName);
-  if(resCommunity.length == 0){
-    res.status(404).send("No community with given name");
+  if (resCommunity.length == 0) {
+    res.status(404).send('No community with given name');
   } else {
-    const community = resCommunity[0]
+    const community = resCommunity[0];
     let postArr = [];
-    for (let i = 0; i < community.pstTtlArr.length && i < 3; i++){
+    for (let i = 0; i < community.pstTtlArr.length && i < 3; i++) {
       postArr.push(await findPostById(community.postIds[i]));
     }
-    res.status(201).send({posts : postArr});
+    res.status(201).send({ posts: postArr });
   }
-})
+});
 
-app.get("/search/post/:communityName/:searchTerm", async (req, res) =>{
-  const communityName = decodeURI(req.params["communityName"]);
-  const searchTerm = decodeURI(req.params["searchTerm"]);
+app.get('/search/post/:communityName/:searchTerm', async (req, res) => {
+  const communityName = decodeURI(req.params['communityName']);
+  const searchTerm = decodeURI(req.params['searchTerm']);
 
   const resCommunity = await findCommunityByName(communityName);
 
-  if(resCommunity.length == 0){
-    res.status(404).send("No community with given name");
+  if (resCommunity.length == 0) {
+    res.status(404).send('No community with given name');
   } else {
-    const community = resCommunity[0]
+    const community = resCommunity[0];
     let postArr = [];
-    for (let i = 0; i < community.pstTtlArr.length && postArr.length < 3; i++){
-      if(community.pstTtlArr[i].toUpperCase().includes(searchTerm.toUpperCase())){
+    for (let i = 0; i < community.pstTtlArr.length && postArr.length < 3; i++) {
+      if (
+        community.pstTtlArr[i].toUpperCase().includes(searchTerm.toUpperCase())
+      ) {
         postArr.push(await findPostById(community.postIds[i]));
-      } 
+      }
     }
-    res.status(201).send({posts : postArr});
+    res.status(201).send({ posts: postArr });
   }
-})
+});
 // ------------------------------------------------------------------------------------------
 
 //These functions will not be used because the like/dislikeing has been scrapped
