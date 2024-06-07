@@ -29,7 +29,7 @@ function App() {
     setUserCommunities("")
   }
 
-  let API_PREFIX = 'http://localhost:3000';
+  let API_PREFIX = 'reddit-but-better.azurewebsites.net';
 
   function loginUser(creds) {
     const promise = fetch(`${API_PREFIX}/login`, {

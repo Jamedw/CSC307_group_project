@@ -10,7 +10,7 @@ import CommunityPosts from './CommunityPage/CommunityPosts.jsx';
 import { cos } from 'prelude-ls';
 
 function Home(props) {
-  let API_PREFIX = 'http://localhost:3000';
+  let API_PREFIX = 'reddit-but-better.azurewebsites.net';
   const INVALID_TOKEN = 'INVALID_TOKEN';
   const token = props.token;
   const [user, setUser] = useState('');
