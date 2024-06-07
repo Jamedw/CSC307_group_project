@@ -437,8 +437,7 @@ app.get('/search/home/:searchBy', async (req, res) => {
 });
 
 app.get("/search/post/:communityName", async (req, res) =>{
-  res.send("implement returning posts when opeing a community")
-  const communityName = req.params["communityName"];
+  const communityName = decodeURI(req.params["communityName"]);
   const resCommunity = await findCommunityByName(communityName);
   if(resCommunity.length == 0){
     res.status(404).send("No community with given name");
