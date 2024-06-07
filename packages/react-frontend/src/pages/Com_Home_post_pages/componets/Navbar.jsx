@@ -9,8 +9,12 @@ export default function Navbar(props) {
 
   function handleKeyPressed(e){
     if(e.key == 'Enter'){
+      props.search(search)
       setSearch("")
-    }else {
+    }else if (e.key == 'Backspace') {
+      setSearch(search.substring(0 ,search.length -1))
+    }
+    else {
       setSearch(search + e.key)
     }
   }

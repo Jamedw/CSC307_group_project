@@ -16,14 +16,15 @@ function Home(props) {
   const [user, setUser] = useState('');
   const [userCommunities, setUserCommunities] = useState('');
   const [communities, setCommunities] = useState([]);
-  const [community, setCommunity] = useState("");
-  const [communityPosts , setCommunityPosts] = useState([])
-  const [posts, setPosts] = useState("");
+  const [community, setCommunity] = useState('');
+  const [communityPosts, setCommunityPosts] = useState([]);
+  const [posts, setPosts] = useState('');
   const [post, setPost] = useState([]);
   const [comments, setComments] = useState([]);
-  let params = useParams();
-
-
+  const [params, setParams] = useState("")
+  if (params !== useParams()){
+    setParams(useParams());
+  }
 
   function loggedIn() {
     if (token === INVALID_TOKEN) {
@@ -55,11 +56,11 @@ function Home(props) {
     const promise = fetch(`${API_PREFIX}/search/home`)
       .then(response => {
         if (response.status === 304) {
-          response.json().then((payload) => {
+          response.json().then(payload => {
             setPosts(payload.communities);
           });
         } else {
-          response.json().then((payload) => {
+          response.json().then(payload => {
             setPosts(payload.communities);
           });
         }
@@ -70,6 +71,52 @@ function Home(props) {
   function initlanding() {
     landingPage();
   }
+
+  function landingPageSearch(input){
+    const promise = fetch(`${API_PREFIX}/search/home/${encodeURI(input)}`)
+      .then(response => {
+        if (response.status === 304) {
+          response.json().then(payload => {
+            setPosts(payload.community);
+          });
+        } else {
+          response.json().then(payload => {
+            setPosts(payload.community);
+          });
+        }
+      })
+      .catch(error => {});
+    return promise;
+  };
+
+  function communitySearch(input){
+    const promise = fetch(`${API_PREFIX}/search/post/${encodeURI(community.name)}/${encodeURI(input)}`)
+    .then(response => {
+      if (response.status === 304) {
+        response.json().then(payload => {
+
+          setCommunityPosts(payload.posts);
+        });
+      } else {
+        response.json().then(payload => {
+          setCommunityPosts(payload.posts);
+        });
+      }
+    })
+    .catch(error => {});
+  return promise;
+  }
+
+  function search(searchterm){
+    if (params.communityName === undefined){
+      landingPageSearch(searchterm)
+    } else if (params.communityName && !params.postHeader){
+      communitySearch(searchterm)
+    } else{
+
+    }
+    
+  };
 
   //userId and name
   //returns
@@ -102,57 +149,45 @@ function Home(props) {
   }
 
   //fields needed: userId and communityId
-//returns:
-//{update: true}
-function follow(input){
-  const promise = fetch(`${API_PREFIX}/community/follow`, {
-    method: "POST",
-    headers: addAuthHeader({
-      "Content-Type": "application/json"
-    }),
-    body: JSON.stringify(input)
-  });
+  //returns:
+  //{update: true}
+  function follow(input) {
+    const promise = fetch(`${API_PREFIX}/community/follow`, {
+      method: 'POST',
+      headers: addAuthHeader({
+        'Content-Type': 'application/json',
+      }),
+      body: JSON.stringify(input),
+    });
 
-  return promise;
-}
+    return promise;
+  }
 
+  //fields needed: userId and communityId
+  //returns: {update: true}
+  function unfollow(input) {
+    const promise = fetch(`${API_PREFIX}/community/unfollow`, {
+      method: 'POST',
+      headers: addAuthHeader({
+        'Content-Type': 'application/json',
+      }),
+      body: JSON.stringify(input),
+    });
 
-//fields needed: userId and communityId
-//returns: {update: true} 
-function unfollow(input){
-  const promise = fetch(`${API_PREFIX}/community/unfollow`, {
-    method: "POST",
-    headers: addAuthHeader({
-      "Content-Type": "application/json"
-    }),
-    body: JSON.stringify(input)
-  });
-
-  return promise;
-}
+    return promise;
+  }
 
   function followCommunity(community) {
-    follow(
-      {userId : user._id,
-      communityId : community._id}
-    )
-    setUserCommunities(
-      [community.id, ... userCommunities]
-    );
-   
+    follow({ userId: user._id, communityId: community._id });
+    setUserCommunities([community, ...userCommunities]);
   }
 
   function unfollowCommunity(community) {
-    unfollow(
-      {communityId : community._id, userId : user._id})
-
+    unfollow({ communityId: community._id, userId: user._id });
     const updated = userCommunities.filter(
-      currentcommunity => currentcommunity != community.id,
+      currentcommunity => currentcommunity._id != community._id,
     );
-
-    setUserCommunities(
-      updated
-    );
+    setUserCommunities(updated);
   }
 
   function postComment(input) {
@@ -178,15 +213,6 @@ function unfollow(input){
     setComments([comment, ...comments]);
   }
 
-  function getCommunityByPostid(post) {
-    var flag = false;
-    communities.forEach(community => {
-      if (community.posts.includes(post.id)) {
-        flag = community;
-      }
-    });
-    return flag;
-  }
 
   function initCommunity(name) {
     getCommunityByname(encodeURI(name));
@@ -212,11 +238,13 @@ function unfollow(input){
   }
 
   function isUserCommunity(community) {
-    console.log(community);
-    if (user.communityIds.includes(community._id)) {
-      return true;
-    }
-    return false;
+    var flag = false
+    userCommunities.forEach(element => {
+      if(element._id === community._id){
+        flag = true
+      }
+    });
+    return flag
   }
 
   function initPost(communityName, postName) {
@@ -268,14 +296,10 @@ function unfollow(input){
       postTitle: post.postTitle,
       postContent: post.postContent,
     });
-    setPosts([post, ...posts]);
+    setCommunityPosts([post, ...communityPosts]);
   }
 
-  function search(query) {
-    // this query will be handles by the backend and will return a
-    // list of post then setPosts(fetch ... )
-    // will be called filling the screen with the new posts
-  }
+ 
 
   /*The parameters of the url determine what is loaded in the main div 'main'
   If the communityName and a postHeader is present a search for a post must be done by community name and 
@@ -287,12 +311,12 @@ function unfollow(input){
   if (params.communityName && params.postHeader) {
     useEffect(() => {
       initPost(params.communityName, params.postHeader);
-    },[params])
+    }, [params]);
     try {
       return (
         <div className="home">
           <div>
-            <Navbar logout={props.logout} loggedIn={loggedIn()} />
+            <Navbar search={search} logout={props.logout} loggedIn={loggedIn()} />
           </div>
           <div class="wrapper">
             <div class="sidebar">
@@ -328,14 +352,13 @@ function unfollow(input){
      */
     useEffect(() => {
       initCommunity(params.communityName);
-    },[params])
-
+    }, [params]);
 
     try {
       return (
         <div className="home">
           <div>
-            <Navbar logout={props.logout} loggedIn={loggedIn()} />
+            <Navbar search={search} logout={props.logout} loggedIn={loggedIn()} />
           </div>
           <div class="wrapper">
             <div class="sidebar">
@@ -370,11 +393,12 @@ function unfollow(input){
     try {
       useEffect(() => {
         initlanding();
-      },[])
+      }, [params]);
+  
       return (
         <div className="home">
           <div>
-            <Navbar logout={props.logout} loggedIn={loggedIn()} />
+            <Navbar search={search} logout={props.logout} loggedIn={loggedIn()} />
           </div>
           <div class="wrapper">
             <div class="sidebar">
@@ -392,7 +416,7 @@ function unfollow(input){
           <div className="footer"></div>
         </div>
       );
-    } catch(e){
+    } catch (e) {
       return <NotFound />;
     }
   }
