@@ -44,14 +44,14 @@ app.get("/", (req, res) => {
 });
 
 // Endpoint to verify login
-app.post("/Login", loginUser);
+app.post("api/Login", loginUser);
 
 // Endpoint to handle signup
-app.post("/Signup", registerUser);
+app.post("api/Signup", registerUser);
 
 
 // Endpoint to retrieve all users
-app.get("/users", async (req, res) => {
+app.get("api/users", async (req, res) => {
   try {
     const users = await User.find();
     res.send(users);
@@ -61,7 +61,7 @@ app.get("/users", async (req, res) => {
 });
 
 // Endpoint to retrieve a user by their ID
-app.get("/users/:id", async (req, res) => {
+app.get("api/users/:id", async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     if (!user) {
@@ -74,7 +74,7 @@ app.get("/users/:id", async (req, res) => {
 });
 
 // Endpoint to add a new user
-app.post("/users", authenticateUser, (req, res) => {
+app.post("/apiusers", authenticateUser, (req, res) => {
   const userToAdd = req.body;
   Users.addUser(userToAdd).then((result) =>
     res.status(201).send(result)
@@ -82,7 +82,7 @@ app.post("/users", authenticateUser, (req, res) => {
 });
 
 // Endpoint to delete a user by their ID
-app.delete("/users/:id", async (req, res) => {
+app.delete("api/users/:id", async (req, res) => {
   try {
     const deletedUser = await User.findByIdAndDelete(req.params.id);
     if (!deletedUser) {

@@ -10,7 +10,7 @@ import CommunityPosts from './CommunityPage/CommunityPosts.jsx';
 import { cos } from 'prelude-ls';
 
 function Home(props) {
-  let API_PREFIX = 'api/rbb-web-app-api.azurewebsites.net';
+  let API_PREFIX = '';
   const INVALID_TOKEN = 'INVALID_TOKEN';
   const token = props.token;
   const [user, setUser] = useState('');
@@ -55,7 +55,7 @@ function Home(props) {
   }
 
   function landingPage() {
-    const promise = fetch(`${API_PREFIX}/search/home`)
+    const promise = fetch(`search/home`)
       .then(response => {
         if (response.status === 304) {
           response.json().then(payload => {
