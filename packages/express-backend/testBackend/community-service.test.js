@@ -5,7 +5,7 @@ const {
     addCommunity, 
     getCommunitiesWLimit, 
     searchCommunityByTerm 
-} = require('../services/community-service');
+} = require('./community-service');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const communityModel = require('../models/community');

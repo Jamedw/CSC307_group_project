@@ -3,7 +3,7 @@ const {
     findUserById, 
     findUserByName, 
     addUser 
-} = require('../services/user-service');
+} = require('./user-service');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const userModel = require('../models/users');

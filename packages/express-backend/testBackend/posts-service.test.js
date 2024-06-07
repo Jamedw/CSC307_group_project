@@ -5,7 +5,7 @@ const {
     addPost, 
     getPostWLimit, 
     searchPostByTerm 
-} = require('../services/posts-service');
+} = require('./posts-service');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const postsModel = require('../models/posts');

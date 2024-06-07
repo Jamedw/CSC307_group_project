@@ -1,5 +1,5 @@
 // Import necessary modules and services
-const { addComment, findCommentById } = require('../services/comment-service');
+const { addComment, findCommentById } = require('./comment-service');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const commentModel = require('../models/comment.js');
