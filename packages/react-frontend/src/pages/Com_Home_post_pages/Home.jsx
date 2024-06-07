@@ -263,7 +263,7 @@ function Home(props) {
 
   function getPostbyCommunityPostId(communityName, postName) {
     const promise = fetch(
-      `${PREFIX}/communityName/${encodeURI(communityName)}/${encodeURI(postName)}`,)
+      `${PREFIX}/communityName/${encodeURI(communityName)}/${encodeURI(postName)}`)
       .then(response => {
         if (response.status === 304) {
           response.json().then(payload => {
