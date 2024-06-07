@@ -32,7 +32,7 @@ app.use(cors());
 
 // Start the server
 app.listen(process.env.PORT || port, () => {
-  console.log(`Example app listening at http://localhost:${process.env.PORT}`);
+  console.log(`backend app is listening`);
 });
 
 app.get('/', (req, res) => {
