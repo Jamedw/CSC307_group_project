@@ -4,25 +4,21 @@ import React, { useState } from 'react';
 function Commentpopup(props) {
   const handleCommentchange = event => {
     setComment({
-      id: Math.random(),
-      userName: '',
-      commentContent: event.target.value,
+      content: event.target.value,
     });
   };
 
   const [comment, setComment] = useState({
-    id: Math.random(),
-    userName: '',
-    commentContent: '',
+    content: '',
   });
 
   function submitComment() {
-    props.createComment(props.currentPost, comment);
-    setComment({ id: Math.random(), userName: '', commentContent: '' });
+    props.createComment(comment);
+    setComment({content: '' });
   }
 
   function resetComment() {
-    setComment({ id: Math.random(), userName: '', commentContent: '' });
+    setComment({ content: '' });
   }
 
   return (

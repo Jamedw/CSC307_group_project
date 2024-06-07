@@ -7,82 +7,78 @@ import NotFound from './NotFound.jsx';
 import './Home.css';
 import { useParams } from 'react-router-dom';
 import CommunityPosts from './CommunityPage/CommunityPosts.jsx';
+import { cos } from 'prelude-ls';
 
 function Home(props) {
-  const  INVALID_TOKEN = "INVALID_TOKEN"
+  const INVALID_TOKEN = 'INVALID_TOKEN';
   const token = props.token;
-  const [user, setUser] = useState("")
-  const [userCommunities, setUserCommunities] = useState("")
+  const [user, setUser] = useState('');
+  const [userCommunities, setUserCommunities] = useState('');
   let params = useParams();
   let API_PREFIX = 'http://localhost:3000';
 
-
-  if(user !== props.user && user === ""){
-    setUser(props.user)
+  function loggedIn() {
+    if (token === INVALID_TOKEN) {
+      return false;
+    } else {
+      return true;
+    }
   }
-  if(userCommunities !== props.userCommunities && userCommunities === ""){
-    setUserCommunities(props.userCommunities)
+
+  if (user !== props.user && user === '') {
+    setUser(props.user);
+  }
+  if (userCommunities !== props.userCommunities && userCommunities === '') {
+    setUserCommunities(props.userCommunities);
   }
 
-  console.log(user)
-  console.log(userCommunities)
-
-
-
-
-function addAuthHeader(otherHeaders = {}) {
-  if (token === INVALID_TOKEN) {
-    return otherHeaders;
-  } else {
-    return {
-      ...otherHeaders,
-      Authorization: `Bearer ${token}`
-    };
+  function addAuthHeader(otherHeaders = {}) {
+    if (token === INVALID_TOKEN) {
+      return otherHeaders;
+    } else {
+      return {
+        ...otherHeaders,
+        Authorization: `Bearer ${token}`,
+      };
+    }
   }
-}
 
-
+  function landingPage() {
+    const promise = fetch(`${API_PREFIX}/search/home`).then(res => {
+      console.log(res);
+    });
+    return promise;
+  }
 
   const [communities, setCommunities] = useState([]);
-  const [community, setCommunity] = useState()
+  const [community, setCommunity] = useState([]);
   const [posts, setPosts] = useState([]);
-  const [post, setPost] = useState([])
+  const [post, setPost] = useState([]);
   const [comments, setComments] = useState([]);
-
-  function getUserCommunities() {
-    return communities.filter(community =>
-      user.communities.includes(community.id),
-    );
-  }
 
   function getCommunityPosts(community) {
     return posts.filter(post => community.posts.includes(post.id));
   }
 
-  function getPostCommments(post) {
-    return comments.filter(comment => post.comments.includes(comment.id));
-  }
-
-
   //userId and name
-//returns 
-  function postCommunity(input){
+  //returns
+  function postCommunity(input) {
     const promise = fetch(`${API_PREFIX}/user/community`, {
-      method: "POST",
+      method: 'POST',
       headers: addAuthHeader({
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json',
       }),
-      body: JSON.stringify(input)
+      body: JSON.stringify(input),
     });
-  
+
     return promise;
   }
 
   function createCommunity(community) {
     postCommunity({
       userId: user._id,
-      name:community.name
-    })
+      name: community.name,
+    });
     setUser({
       Username: user.Username,
       password: user.password,
@@ -118,16 +114,31 @@ function addAuthHeader(otherHeaders = {}) {
     });
   }
 
-
-  function createComment(post, comment) {
-    postComment({
-      userid : props.userID,
-      postId : post.postid
-    })
-    setComments([comment, ...comments]);
+  function postComment(input){
+    const promise = fetch(`${API_PREFIX}/user/comment`, {
+      method: "POST",
+      headers: addAuthHeader({
+        "Content-Type": "application/json"
+      }),
+      body: JSON.stringify(input)
+    });
+  
+    return promise;
   }
 
-
+  function createComment(comment) {
+    console.log(     user._id,
+       post._id,
+      user.username,
+      comment.content)
+    postComment({
+      userId: user._id,
+      postId: post._id,
+      username : user.username,
+      content : comment.content
+    });
+    setComments([comment, ...comments]);
+  }
 
   function getCommunityByPostid(post) {
     var flag = false;
@@ -139,71 +150,86 @@ function addAuthHeader(otherHeaders = {}) {
     return flag;
   }
 
-  function getCommunityByName(name) {
-    var flag = false;
-    communities.forEach(community => {
-      if (community.communityName === name) {
-        flag = community;
-      }
-    });
-    return flag;
+  function initCommunity(name) {
+    getCommunityByname(encodeURI(name));
+  }
+
+  function getCommunityByname(communityName) {
+    const promise = fetch(`${API_PREFIX}/communityName/${communityName}`)
+      .then(response => {
+        if (response.status === 304) {
+          response.json().then(payload => {
+            setCommunity(payload.community);
+            setPosts(payload.postsArr);
+          });
+        } else {
+          response.json().then(payload => {
+            setCommunity(payload.community);
+            setPosts(payload.postsArr);
+          });
+        }
+      })
+      .catch(error => {});
+    return promise;
   }
 
   function isUserCommunity(community) {
-    if (user.communities.includes(community.id)) {
+    console.log(community);
+    if (user.communityIds.includes(community._id)) {
       return true;
     }
     return false;
   }
 
-  function loggedIn(){
-    if (token === INVALID_TOKEN){
-      return false
-    } else {
-      return true
-    }
+  function initPost(communityName, postName) {
+    getPostbyCommunityPostId(communityName, postName);
   }
 
-    //needs a userId, communityid, postTitle, postContent
-function postPost(input){
-  const promise = fetch(`${API_PREFIX}/user/post`, {
-    method: "POST",
-    headers: addAuthHeader({
-      "Content-Type": "application/json"
-    }),
-    body: JSON.stringify(input)
-  });
+  function getPostbyCommunityPostId(communityName, postName) {
+    const promise = fetch(`${API_PREFIX}/communityName/${communityName}/${postName}`)
+      .then(response => {
+        if (response.status === 304) {
+          response.json().then(payload => {
+            setPost(payload.post)
+            setComments(payload.comments)
+          });
+        } else {
+          response.json().then(payload => {
+            setPost(payload.post)
+            setComments(payload.comments)
+          });
+        }
+      })
+      .catch(error => {});
+      return promise
+  }
 
-  return promise;
-}
+  function getPostCommments(post) {
+    return comments.filter(comment => post.comments.includes(comment.id));
+  }
+
+  //needs a userId, communityid, postTitle, postContent
+  function postPost(input) {
+    const promise = fetch(`${API_PREFIX}/user/post`, {
+      method: 'POST',
+      headers: addAuthHeader({
+        'Content-Type': 'application/json',
+      }),
+      body: JSON.stringify(input),
+    });
+
+    return promise;
+  }
 
   function createNewPost(community, post) {
     postPost({
-      userid : props.userID,
-      communityid : community.id,
-      postTitle : post.postTitle,
-      postContent : post.postContent
-    })
+      userId: user._id,
+      communityId: community._id,
+      postTitle: post.postTitle,
+      postContent: post.postContent,
+    });
     setPosts([post, ...posts]);
   }
-
-  function fetchUserById(id){
-
-    const promise = fetch(`${API_PREFIX}/user/${id}`, {
-      method: "GET",
-      headers: addAuthHeader({
-        "Content-Type": "application/json"
-      }),
-    }).then((res) =>
-    {
-      setUser(res)
-    });
-  
-    return promise;
-
-  }
-
-
 
   function search(query) {
     // this query will be handles by the backend and will return a
@@ -219,15 +245,14 @@ function postPost(input){
   /* An important aspect of the design is that all that changes is what is in the "main" div, the sidebar and navbar can be reused
   all that changes is what is in the "main" div*/
   if (params.communityName && params.postHeader) {
+    if (post === undefined || post.postTitle !== decodeURI(params.postHeader)){
+          initPost(params.communityName, params.postHeader);
+    }
     try {
-      var currentPost = getPostByCommunityPostName(
-        decodeURI(params.communityName),
-        decodeURI(params.postHeader),
-      );
       return (
         <div className="home">
           <div>
-            <Navbar logout={props.logout} loggedIn={loggedIn()}/>
+            <Navbar logout={props.logout} loggedIn={loggedIn()} />
           </div>
           <div class="wrapper">
             <div class="sidebar">
@@ -240,8 +265,8 @@ function postPost(input){
             <div class="main">
               <Comments
                 loggedIn={loggedIn()}
-                currentPostComments={getPostCommments(currentPost)}
-                currentPost={currentPost}
+                currentPostComments={comments}
+                currentPost={post}
                 createComment={createComment}
               />
             </div>
@@ -259,13 +284,22 @@ function postPost(input){
       );
     }
   } else if (params.communityName) {
-    /* if the community Name is the only param in the url then the CommunityPosts element will be loaded 
+    /* if the community Name is the only param in the url then the CommunityPosts element will be loaded
      */
+    if (
+      community === undefined ||
+      decodeURI(params.communityName) !== community.name
+    ) {
+      initCommunity(params.communityName);
+    }
+    console.log(community);
+    console.log(posts);
+
     try {
       return (
         <div className="home">
           <div>
-            <Navbar logout={props.logout} loggedIn={loggedIn()}/>
+            <Navbar logout={props.logout} loggedIn={loggedIn()} />
           </div>
           <div class="wrapper">
             <div class="sidebar">
@@ -296,11 +330,14 @@ function postPost(input){
       return <NotFound communityName={params.communityName} />;
     }
   } else {
-    /* if no parameters are in the url then a Landing page is loaded with default posts*/ 
+    /* if no parameters are in the url then a Landing page is loaded with default posts*/
+
+      landingPage()
+
     return (
       <div className="home">
         <div>
-          <Navbar logout={props.logout} loggedIn={loggedIn()}/>
+          <Navbar logout={props.logout} loggedIn={loggedIn()} />
         </div>
         <div class="wrapper">
           <div class="sidebar">

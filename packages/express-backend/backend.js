@@ -411,8 +411,6 @@ app.get("/communityName/:name", async (req, res) => {
 app.get("/search/home", async (req, res) => {
   const posts =  await getPostWLimit(3);
   const communities = await getCommunitiesWLimit(3);
-
-
   res.status(201).send({posts: posts,
                         communities: communities});
 })

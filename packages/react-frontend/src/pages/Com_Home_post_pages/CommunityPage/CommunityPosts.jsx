@@ -5,18 +5,8 @@ import { NavLink, redirect, useNavigate, useParams } from 'react-router-dom';
 
 function TableBody(props) {
   const nav = useNavigate();
-  var communityname = props.currentCommunity.communityName;
+  var communityname = props.currentCommunity.name;
   var currentCommunity = props.currentCommunity;
-
-  function isUserCommunity(userCommunities, community) {
-    var count = userCommunities.length;
-    for (var i = 0; i < count; i++) {
-      if (userCommunities[i].communityName === community.communityName) {
-        return true;
-      }
-    }
-    return false;
-  }
 
   function Followbutton() {
     if (props.loggedIn){
@@ -134,8 +124,6 @@ function Posts(props) {
       createNewPost={props.createNewPost}
       currentCommunity={props.currentCommunity}
       isUserCommunity={props.isUserCommunity}
-      getCommunity={props.getCommunity}
-      userCommunities={props.getUserCommunities}
       followCommunity={props.followCommunity}
       unfollowCommunity={props.unfollowCommunity}
       posts={props.posts}
