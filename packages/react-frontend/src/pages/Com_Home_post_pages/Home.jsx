@@ -55,7 +55,7 @@ function Home(props) {
   }
 
   function landingPage() {
-    const promise = fetch(`${API_PREFIX}/search/home`)
+    const promise = fetch(`test/search/home`)
       .then(response => {
         if (response.status === 304) {
           response.json().then(payload => {
@@ -75,7 +75,7 @@ function Home(props) {
   }
 
   function landingPageSearch(input){
-    const promise = fetch(`${API_PREFIX}/search/home/${encodeURI(input)}`)
+    const promise = fetch(`${PREFIX}/search/home/${encodeURI(input)}`)
       .then(response => {
         if (response.status === 304) {
           response.json().then(payload => {
@@ -92,7 +92,7 @@ function Home(props) {
   };
 
   function communitySearch(input){
-    const promise = fetch(`${API_PREFIX}/search/post/${encodeURI(community.name)}/${encodeURI(input)}`)
+    const promise = fetch(`${PREFIX}/search/post/${encodeURI(community.name)}/${encodeURI(input)}`)
     .then(response => {
       if (response.status === 304) {
         response.json().then(payload => {
@@ -132,7 +132,7 @@ function Home(props) {
   //userId and name
   //returns
   function postCommunity(input) {
-    const promise = fetch(`${API_PREFIX}/user/community`, {
+    const promise = fetch(`${PREFIX}/user/community`, {
       method: 'POST',
       headers: addAuthHeader({
         'Content-Type': 'application/json',
@@ -165,7 +165,7 @@ function Home(props) {
   //returns:
   //{update: true}
   function follow(input) {
-    const promise = fetch(`${API_PREFIX}/community/follow`, {
+    const promise = fetch(`${PREFIX}/community/follow`, {
       method: 'POST',
       headers: addAuthHeader({
         'Content-Type': 'application/json',
@@ -179,7 +179,7 @@ function Home(props) {
   //fields needed: userId and communityId
   //returns: {update: true}
   function unfollow(input) {
-    const promise = fetch(`${API_PREFIX}/community/unfollow`, {
+    const promise = fetch(`${PREFIX}/community/unfollow`, {
       method: 'POST',
       headers: addAuthHeader({
         'Content-Type': 'application/json',
@@ -204,7 +204,7 @@ function Home(props) {
   }
 
   function postComment(input) {
-    const promise = fetch(`${API_PREFIX}/user/comment`, {
+    const promise = fetch(`${PREFIX}/user/comment`, {
       method: 'POST',
       headers: addAuthHeader({
         'Content-Type': 'application/json',
@@ -232,7 +232,7 @@ function Home(props) {
   }
 
   function getCommunityByname(communityName) {
-    const promise = fetch(`${API_PREFIX}/communityName/${communityName}`)
+    const promise = fetch(`${PREFIX}/communityName/${communityName}`)
       .then(response => {
         if (response.status === 304) {
           response.json().then(payload => {
@@ -266,7 +266,7 @@ function Home(props) {
 
   function getPostbyCommunityPostId(communityName, postName) {
     const promise = fetch(
-      `${API_PREFIX}/communityName/${communityName}/${postName}`,
+      `${PREFIX}/communityName/${communityName}/${postName}`,
     )
       .then(response => {
         if (response.status === 304) {
@@ -291,7 +291,7 @@ function Home(props) {
 
   //needs a userId, communityid, postTitle, postContent
   function postPost(input) {
-    const promise = fetch(`${API_PREFIX}/user/post`, {
+    const promise = fetch(`${PREFIX}/user/post`, {
       method: 'POST',
       headers: addAuthHeader({
         'Content-Type': 'application/json',
