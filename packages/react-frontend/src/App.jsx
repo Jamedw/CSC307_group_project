@@ -29,10 +29,10 @@ function App() {
     setUserCommunities("")
   }
 
-  let API_PREFIX = 'api/';
+  let API_PREFIX = 'api';
 
   function loginUser(creds) {
-    const promise = fetch(`${API_PREFIX}login`, {
+    const promise = fetch(`${API_PREFIX}/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ function App() {
   }
 
   function signupUser(creds) {
-    const promise = fetch(`${API_PREFIX}signup`, {
+    const promise = fetch(`${API_PREFIX}/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
