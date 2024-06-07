@@ -28,16 +28,6 @@ const PostsSchema = new mongoose.Schema({
     type: Array,
     required: false,
     default: []
-  },
-  likedUserIds: {
-    type: Array,
-    required: false,
-    default: []
-  },
-  dislkUserIds: {
-    type: Array,
-    required: false,
-    default: []
   }
 });
 

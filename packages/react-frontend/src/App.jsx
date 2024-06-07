@@ -19,12 +19,17 @@ import NotFound from './pages/Com_Home_post_pages/NotFound.jsx';
 function App() {
   const INVALID_TOKEN = 'INVALID_TOKEN';
   const [token, setToken] = useState(INVALID_TOKEN);
-  const [userID, setUserID] = useState(false)
+  const [user, setUser] = useState("")
+  const [userCommunities, setUserCommunities] = useState("")
   const [message, setMessage] = useState('');
-  const [loggedIn, setloggedIn] = useState(false)
 
+  function Logout(){
+    setToken(INVALID_TOKEN)
+    setUser("")
+    setUserCommunities("")
+  }
 
-  let API_PREFIX = 'http://localhost:8000';
+  let API_PREFIX = 'http://localhost:3000';
 
   function loginUser(creds) {
     const promise = fetch(`${API_PREFIX}/login`, {
@@ -37,9 +42,9 @@ function App() {
       .then(response => {
         if (response.status === 200) {
           response.json().then(payload => {
-            setUserID(payload.user._id)
-            setToken(payload.token)
-            setloggedIn(true)
+            setUser(payload.user);
+            setUserCommunities(payload.communities)
+            setToken(payload.token);
           });
           setMessage(`Login successful; auth token saved`);
         } else {
@@ -78,18 +83,19 @@ function App() {
     return promise;
   }
 
+
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <Home loggedIn={loggedIn} token={token} />,
+      element: <Home params={useParams()} logout={Logout} user={user} userCommunities={userCommunities} token={token} />,
       children: [
         {
           path: ':communityName',
-          element: <Home loggedIn={loggedIn}  token={token} />,
+          element: <Home params={useParams()} logout={Logout} user={user} userCommunities={userCommunities} token={token} />,
         },
         {
           path: ':communityName/:postHeader',
-          element: <Home loggedIn={loggedIn}  token={token} />,
+          element: <Home params={useParams()}  logout={Logout}  user={user} userCommunities={userCommunities} token={token} />,
         },
       ],
     },

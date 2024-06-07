@@ -27,7 +27,7 @@ const UserSchema = new mongoose.Schema({
     required: false,
     default: []
   },
-  communitiyIds: {
+  communityIds: {
     type: Array,
     required: false,
     default: []

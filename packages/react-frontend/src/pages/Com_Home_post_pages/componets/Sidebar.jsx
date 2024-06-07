@@ -7,22 +7,34 @@ import './Sidebar.css';
 function CreateCommunityTabs(props) {
   const navigate = useNavigate();
 
-  const rows = props.userCommunities.map(community => (
-    <div
-      className="communityTab"
-      onClick={() => navigate(community.communityName)}>
-      {community.communityName}
-    </div>
-  ));
+  if(props.userCommunities === undefined){
 
-  return (
-    <div style={{ overflow: scroll }}>
-      {rows}
-      <div style={{ textAlign: 'center' }}>
-        <Createcommunitypopup createCommunity={props.createCommunity} />
+  
+    return (
+      <div style={{ overflow: scroll }}>
+        <div style={{ textAlign: 'center' }}>
+          <Createcommunitypopup createCommunity={props.createCommunity} />
+        </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    const rows = props.userCommunities.map(community => (
+      <div
+        className="communityTab"
+        onClick={() => navigate(encodeURI(community.name))}>
+        {community.name}
+      </div>
+    ));
+  
+    return (
+      <div style={{ overflow: scroll }}>
+        {rows}
+        <div style={{ textAlign: 'center' }}>
+          <Createcommunitypopup createCommunity={props.createCommunity} />
+        </div>
+      </div>
+    );
+  }
 }
 
 function Sidebar(props) {
