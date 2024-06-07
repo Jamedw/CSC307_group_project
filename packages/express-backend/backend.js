@@ -283,7 +283,7 @@ app.post('/community/follow', authenticateUser, async (req, res) => {
     if (notFollowing) {
       //update user array
       const userUpdate = await User.findByIdAndUpdate(
-        userId,
+        userRes._id,
         { $push: { communityIds: commRes._id } },
         { new: true, upsert: true },
       );
@@ -326,7 +326,7 @@ app.post('/community/unfollow', authenticateUser, async (req, res) => {
       console.log(userRes);
       console.log(commRes);
       const userUpdate = await User.updateOne(
-        { _id: userId },
+        { _id: userRes._id },
         { $pull: { communityIds: commRes._id } },
       );
       //decrement community member count

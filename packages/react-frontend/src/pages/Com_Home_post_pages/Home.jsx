@@ -34,9 +34,11 @@ function Home(props) {
     }
   }
 
-  if (user !== props.user && user === '') {
+  useEffect(()=>{
     setUser(props.user);
-  }
+  },[props.user])
+
+  
   if (userCommunities !== props.userCommunities && userCommunities === '') {
     setUserCommunities(props.userCommunities);
   }
@@ -109,9 +111,18 @@ function Home(props) {
 
   function search(searchterm){
     if (params.communityName === undefined){
-      landingPageSearch(searchterm)
+      if(searchterm === "" || searchterm === undefined){
+        initlanding()
+      } else{
+        landingPageSearch(searchterm)
+      }
+
     } else if (params.communityName && !params.postHeader){
-      communitySearch(searchterm)
+      if(searchterm === "" || searchterm === undefined){
+        initCommunity(community.name)
+      } else{
+        communitySearch(searchterm)
+      }
     } else{
 
     }
@@ -127,7 +138,18 @@ function Home(props) {
         'Content-Type': 'application/json',
       }),
       body: JSON.stringify(input),
-    });
+    }).then(response => {
+      if (response.status === 304) {
+        response.json().then(payload => {
+          setUserCommunities([payload, ...userCommunities]);
+        });
+      } else {
+        response.json().then(payload => {
+          setUserCommunities([payload, ...userCommunities]);
+        });
+      }
+    })
+    .catch(error => {});
 
     return promise;
   }
@@ -137,15 +159,6 @@ function Home(props) {
       userId: user._id,
       name: community.name,
     });
-    setUser({
-      Username: user.Username,
-      password: user.password,
-      comments: user.comments,
-      posts: user.posts,
-      communityIds: [community.id, ...user.communityIds],
-    });
-
-    setUserCommunities([community, ...userCommunities]);
   }
 
   //fields needed: userId and communityId
