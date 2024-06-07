@@ -29,7 +29,7 @@ function App() {
     setUserCommunities("")
   }
 
-  let API_PREFIX = 'reddit-but-better.azurewebsites.net';
+  let API_PREFIX = '3.19.27.249';
 
   function loginUser(creds) {
     const promise = fetch(`${API_PREFIX}/login`, {
