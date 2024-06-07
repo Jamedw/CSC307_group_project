@@ -263,8 +263,7 @@ function Home(props) {
 
   function getPostbyCommunityPostId(communityName, postName) {
     const promise = fetch(
-      `${PREFIX}/communityName/${communityName}/${postName}`,
-    )
+      `${PREFIX}/communityName/${encodeURI(communityName)}/${encodeURI(postName)}`,)
       .then(response => {
         if (response.status === 304) {
           response.json().then(payload => {
@@ -364,7 +363,7 @@ function Home(props) {
      */
     useEffect(() => {
       initCommunity(params.communityName);
-    }, [params]);
+    }, [params,]);
 
     try {
       return (
@@ -409,7 +408,7 @@ function Home(props) {
     try {
       useEffect(() => {
         initlanding();
-      }, [params]);
+      }, [params,]);
 
       return (
         <div className="home">
