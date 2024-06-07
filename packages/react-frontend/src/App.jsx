@@ -29,7 +29,7 @@ function App() {
     setUserCommunities("")
   }
 
-  let API_PREFIX = '3.19.27.249';
+  let API_PREFIX = 'rbb-api.azurewebsites.net';
 
   function loginUser(creds) {
     const promise = fetch(`${API_PREFIX}/login`, {
