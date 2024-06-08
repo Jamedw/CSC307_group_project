@@ -15,25 +15,6 @@ async function addUser(user) {
 async function findUserByName(username){
     return userModel.find({username: username}) 
 }
-/* async function getUserComments(id){
-    user = await findUserById(findUserById(id))
-    if (!user){
-        return undefined;
-    }
-    else{
-        commentArr = []
-
-        commentArray = user.commentId
-    }
-} */
-
-/* async function getUserPosts(id){
-
-} */
-
-/* async function getUserCommunities(id){
-
-} */
 
 
 export {
