@@ -62,9 +62,7 @@ app.post('/comment', authenticateUser, (req, res) => {
 app.get('/user/:id', authenticateUser, async (req, res) => {
   const id = req.params['id']; //or req.params.id
   let result = await findUserById(id);
-  //console.log("endpoint called");
   if (result === undefined) {
-    //console.log("got here");
     res.status(404).send('Resource not found.');
   } else {
     let communityArr = [];
@@ -158,8 +156,6 @@ new created postId to the community's postIds array and to the users
 postIds array. Furthermore, we will add the postTitle to the community's
 pstTtlArr.
 */
-/*TODO
-make sure the post title isn't within the post's pstTtlArr*/
 app.post('/user/post', authenticateUser, async (req, res) => {
   const { userId, communityId, postTitle, postContent } = req.body;
   if (!userId || !communityId || !postTitle || !postContent) {
@@ -398,14 +394,11 @@ app.get('/communityName/:name', async (req, res) => {
   if (!resCommunity.length) {
     res.status(404).send(`no coummunity with name \"${name}\" found`);
   } else {
-    //console.log(resCommunity);
     let postArr = [];
     const resCommPostIds = resCommunity[0].postIds;
-    //console.log(resCommPostIds);
     for (let i = 0; i < resCommPostIds.length; i++) {
       postArr.push(await findPostById(resCommPostIds[i]));
     }
-    //add the community posts later
     res.status(201).send({ community: resCommunity[0], postsArr: postArr });
   }
 });
@@ -423,16 +416,6 @@ app.get('/search/home/:searchBy', async (req, res) => {
   console.log(searchTerm);
   const community = await searchCommunityByTerm(searchTerm, 3);
   const post = await searchPostByTerm(searchTerm, 3);
-  /*   let commRes = undefined;
-  let postRes = undefined;
-  if(community.length){
-    commRes = community[0];
-  }
-  if(post.length){
-    postRes = post[0];
-  }
-  console.log(community);
-  console.log(post); */
   res.status(201).send({ community: community, post: post });
 });
 
