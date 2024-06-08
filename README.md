@@ -39,3 +39,5 @@ in the `/packages/react-frontend` directory.
 Wiki Link to UML diagram and Test Coverage Information: https://github.com/Jamedw/CSC307_group_project/wiki
 
 Figma link to UI prototype: https://www.figma.com/proto/Z8t4xm6Yn80Asi3uJjNF8v/wire-frame?t=EGso6PAPnt00oWIe-1
+
+Link to video: https://youtu.be/NuTeDRIxlgs
