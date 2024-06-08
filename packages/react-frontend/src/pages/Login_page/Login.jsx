@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { redirect, useNavigate } from 'react-router-dom'; // Import Link component
 import './Login.css'; // Import CSS for Login component styling
 import calpolyLogo from '../../assets/calpolylogo.png'; // Import the image
@@ -8,6 +8,12 @@ const Login = props => {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
+  useEffect(()=>{
+    if(props.token !== "INVALID_TOKEN") {
+      navigate("/")
+    }
+  },[props.token])
 
   function handleLogin() {
     // Handle login logic here, e.g., send credentials to server for authentication
@@ -59,10 +65,6 @@ const Login = props => {
               type="button"
               onClick={() => {
                 handleLogin()
-                if(props.token === "INVALD_TOKEN"){
-                }else {
-                  navigate("/");
-                }
               }}
               className="signup-button">
               Log In

@@ -9,6 +9,7 @@ import {
   createBrowserRouter,
   RouterProvider,
   useParams,
+  useNavigate,
 } from 'react-router-dom';
 import Home from './pages/Com_Home_post_pages/Home.jsx';
 import Login from './pages/Login_page/Login.jsx';
@@ -19,14 +20,14 @@ import NotFound from './pages/Com_Home_post_pages/NotFound.jsx';
 function App() {
   const INVALID_TOKEN = 'INVALID_TOKEN';
   const [token, setToken] = useState(INVALID_TOKEN);
-  const [user, setUser] = useState("")
-  const [userCommunities, setUserCommunities] = useState("")
+  const [user, setUser] = useState('');
+  const [userCommunities, setUserCommunities] = useState('');
   const [message, setMessage] = useState('');
 
-  function Logout(){
-    setToken(INVALID_TOKEN)
-    setUser("")
-    setUserCommunities("")
+  function Logout() {
+    setToken(INVALID_TOKEN);
+    setUser('');
+    setUserCommunities('');
   }
 
   let API_PREFIX = 'https://rbb-web-app-api.azurewebsites.net';
@@ -43,11 +44,13 @@ function App() {
         if (response.status === 200) {
           response.json().then(payload => {
             setUser(payload.user);
-            setUserCommunities(payload.communities)
+            setUserCommunities(payload.communities);
             setToken(payload.token);
           });
           setMessage(`Login successful; auth token saved`);
         } else {
+          alert('invalid username or password');
+          setToken(INVALID_TOKEN);
           setMessage(`Login Error ${response.status}: ${response.data}`);
         }
       })
@@ -68,11 +71,16 @@ function App() {
     })
       .then(response => {
         if (response.status === 201) {
-          response.json().then(payload => setToken(payload.token));
+          response.json().then(payload => {
+            setUser(payload.user);
+            setUserCommunities(payload.communities);
+            setToken(payload.token);
+          });
           setMessage(
             `Signup successful for user: ${creds.username}; auth token saved`,
           );
         } else {
+          alert('username already taken');
           setMessage(`Signup Error ${response.status}: ${response.data}`);
         }
       })
@@ -83,25 +91,48 @@ function App() {
     return promise;
   }
 
-
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <Home params={useParams()} logout={Logout} user={user} userCommunities={userCommunities} token={token} />,
+      element: (
+        <Home
+          params={useParams()}
+          logout={Logout}
+          user={user}
+          userCommunities={userCommunities}
+          token={token}
+        />
+      ),
       children: [
         {
           path: ':communityName',
-          element: <Home params={useParams()} logout={Logout} user={user} userCommunities={userCommunities} token={token} />,
+          element: (
+            <Home
+              params={useParams()}
+              logout={Logout}
+              user={user}
+              userCommunities={userCommunities}
+              token={token}
+            />
+          ),
         },
         {
           path: ':communityName/:postHeader',
-          element: <Home params={useParams()}  logout={Logout}  user={user} userCommunities={userCommunities} token={token} />,
+          element: (
+            <Home
+              params={useParams()}
+              logout={Logout}
+              user={user}
+              userCommunities={userCommunities}
+              token={token}
+            />
+          ),
         },
       ],
     },
     {
       path: '/Signup',
-      element: <Signup signupUser={signupUser} />,
+      element: <Signup token={token} signupUser={signupUser} />,
     },
     {
       path: '/Login',

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom'; // Import Link component
+import React, { useState, useEffect } from 'react';
+import { Navigate, useNavigate, } from 'react-router-dom'; // Import Link component
 import './Signup.css'; // Import CSS for Signup component styling
 import calpolyLogo from '../../assets/calpolylogo.png'; // Import the image
 
@@ -18,6 +18,12 @@ function Signup(props) {
     setUsername('');
     setConfirmPassword('');
   };
+
+    useEffect(()=> {
+    if(props.token !== "INVALID_TOKEN") {
+      navigate("/")
+    }
+  },[props.token])
 
   return (
     <div className="login">
