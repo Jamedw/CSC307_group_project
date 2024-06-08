@@ -350,15 +350,20 @@ app.post('/community/unfollow', authenticateUser, async (req, res) => {
 app.get('/communityName/:commName/:postName', async (req, res) => {
   const commName = decodeURI(req.params['commName']);
   const postName = decodeURI(req.params['postName']);
+  console.log(commName);
+  console.log(postName);
   const communityRes = await findCommunityByName(commName);
   if (communityRes.length === 0) {
     res.status(404).send('The given community/post could not be found');
   } else {
     const comm = communityRes[0];
-
-    found = false;
-    if (comm.pstTtlArr.includes(postName)) {
-      found = true;
+    let i = 0;
+    let found = false;
+    for (; i < comm.pstTtlArr.length; i++) {
+      if (comm.pstTtlArr[i] === postName) {
+        found = true;
+        break;
+      }
     }
 
     if (found === false) {

@@ -262,22 +262,25 @@ function Home(props) {
   }
 
   function getPostbyCommunityPostId(communityName, postName) {
-    const promise = fetch(
-      `${PREFIX}/communityName/${encodeURI(communityName)}/${encodeURI(postName)}`)
-      .then(response => {
+    const promise = fetch(`${PREFIX}/communityName/${encodeURI(communityName)}/${encodeURI(postName)}`)
+    .then(response => {
         if (response.status === 304) {
           response.json().then(payload => {
             setPost(payload.post);
             setComments(payload.comments);
-          });
+          }).catch(error => {
+            console.log(error)
+          })
         } else {
           response.json().then(payload => {
             setPost(payload.post);
             setComments(payload.comments);
+          }).catch(error => {
+            console.log(error)
           });
         }
       })
-      .catch(error => {});
+      .catch(error => {console.log(error)});
     return promise;
   }
 
@@ -363,7 +366,7 @@ function Home(props) {
      */
     useEffect(() => {
       initCommunity(params.communityName);
-    }, [params,]);
+    }, [params]);
 
     try {
       return (
@@ -408,7 +411,7 @@ function Home(props) {
     try {
       useEffect(() => {
         initlanding();
-      }, [params,]);
+      }, [params]);
 
       return (
         <div className="home">
