@@ -1,13 +1,13 @@
-import Sidebar from './componets/Sidebar';
+import Sidebar from './components/Sidebar.jsx';
 import React, { useEffect, useState } from 'react';
 import Posts from './LandingPage/Posts.jsx';
 import Comments from './PostPage/Comments.jsx';
-import Navbar from './componets/Navbar.jsx';
+import Navbar from './components/Navbar.js';
 import NotFound from './NotFound.jsx';
 import './Home.css';
 import { useParams } from 'react-router-dom';
 import CommunityPosts from './CommunityPage/CommunityPosts.jsx';
-import { cos } from 'prelude-ls';
+
 
 function Home(props) {
   let PREFIX = 'https://rbb-web-app-api.azurewebsites.net';
@@ -282,10 +282,6 @@ function Home(props) {
       })
       .catch(error => {console.log(error)});
     return promise;
-  }
-
-  function getPostCommments(post) {
-    return comments.filter(comment => post.comments.includes(comment.id));
   }
 
   //needs a userId, communityid, postTitle, postContent
