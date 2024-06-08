@@ -2,7 +2,7 @@ import Sidebar from './components/Sidebar.jsx';
 import React, { useEffect, useState } from 'react';
 import Posts from './LandingPage/Posts.jsx';
 import Comments from './PostPage/Comments.jsx';
-import Navbar from './components/Navbar.js';
+import Navbar from './components/Navbar.jsx';
 import NotFound from './NotFound.jsx';
 import './Home.css';
 import { useParams } from 'react-router-dom';
